@@ -81,6 +81,8 @@ android {
 tasks.named("preBuild") { dependsOn(prepareWebAssets) }
 
 dependencies {
+    // androidx kutubxonalari turli kotlin-stdlib-jdk7/jdk8 versiyalarini olib keladi — bitta versiyaga tekislaymiz
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
     implementation("androidx.activity:activity:1.9.3")
     implementation("androidx.core:core:1.13.1")
     implementation("androidx.webkit:webkit:1.12.1")
