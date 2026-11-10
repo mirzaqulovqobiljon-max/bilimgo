@@ -1,0 +1,173 @@
+[
+  {
+    "id": "ona-qishloq-01",
+    "level": "ona-qishloq",
+    "game": "riddle",
+    "title": "Harflardan so'z",
+    "rewardPart": "dasta",
+    "bobo": "bobo.ona-qishloq.harflar",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          { "q": "A, L, K, T, I. Qaysi so'z chiqadi?", "picture": "🔑",
+            "options": ["KALIT", "KITOB", "OLMA"], "answer": 0,
+            "hint": "Rasmga qara. Darvozani nima ochadi?" },
+          { "q": "T, O. Qaysi so'z chiqadi?", "picture": "🐴",
+            "options": ["UY", "OT", "OY"], "answer": 1,
+            "hint": "Rasmdagi hayvon nomini ayt." },
+          { "q": "Y, U. Qaysi so'z chiqadi?", "picture": "🏠",
+            "options": ["SUV", "OY", "UY"], "answer": 2,
+            "hint": "Biz unda yashaymiz." }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          { "q": "B, O, T, I, K harflaridan qaysi so'z chiqadi?",
+            "options": ["QALAM", "KITOB", "DAFTAR"], "answer": 1,
+            "hint": "Uning varaqlari bor, undan bilim olamiz." },
+          { "q": "Q, Sh, I, L, O, Q harflaridan qaysi so'z chiqadi?",
+            "options": ["QISHLOQ", "QO'SHIQ", "SHOLI"], "answer": 0,
+            "hint": "Hikmat bobo shu yerda yashaydi." },
+          { "q": "D, O, R, A, V, Z, A harflaridan qaysi so'z chiqadi?",
+            "options": ["DARAXT", "VODIY", "DARVOZA"], "answer": 2,
+            "hint": "U hozir qulflangan, biz uni ochmoqchimiz." },
+          { "q": "M, K, T, A, B, A harflaridan qaysi so'z chiqadi?",
+            "options": ["MAKTAB", "BAHOR", "TAMAKI"], "answer": 0,
+            "hint": "U yerda har kuni dars o'tiladi." }
+        ]
+      },
+      "olim": {
+        "questions": [
+          { "q": "Qaysi so'z to'g'ri yozilgan?",
+            "options": ["mo'giza", "mo'jiza", "mujiza"], "answer": 1,
+            "hint": "Lug'atga qara: birinchi bo'g'inda o yoki o' yoziladimi?" },
+          { "q": "'ONA TILI' harflaridan qaysi so'zni tuzib bo'lmaydi?",
+            "options": ["OILA", "TOLA", "NON"], "answer": 2,
+            "hint": "Har bir harf necha marta uchrashini sanab chiq." },
+          { "q": "A, T, I, R, X — bu harflardan qaysi fan nomi chiqadi?",
+            "options": ["TAXIR", "TARIX", "XIRAT"], "answer": 1,
+            "hint": "Bu fan o'tmishni o'rganadi." }
+        ]
+      }
+    }
+  },
+  {
+    "id": "ona-qishloq-02",
+    "level": "ona-qishloq",
+    "game": "puzzle",
+    "title": "Qishloq darvozasi rasmi",
+    "rewardPart": "tishlar",
+    "bobo": "bobo.ona-qishloq.puzzle",
+    "tiers": {
+      "kichik": { "image": "qishloq-darvoza", "pieces": 4, "caption": "Ona qishloq darvozasi" },
+      "karvon": { "image": "qishloq-darvoza", "pieces": 16, "caption": "Ona qishloq darvozasi" },
+      "olim": { "image": "qishloq-darvoza", "pieces": 25, "caption": "Ona qishloq darvozasi" }
+    }
+  },
+  {
+    "id": "ona-qishloq-03",
+    "level": "ona-qishloq",
+    "game": "riddle",
+    "title": "Topishmoqlar",
+    "rewardPart": "halqa",
+    "bobo": "bobo.ona-qishloq.topishmoq",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          { "q": "Oq uyda sariq qiz o'tiradi. Bu nima?",
+            "options": ["Olma", "Tuxum", "Non"], "answer": 1,
+            "hint": "Uni tovuq beradi." },
+          { "q": "Kechasi chiqadi, yerga nur sochadi. Bu nima?",
+            "options": ["Oy", "Bulut", "Daraxt"], "answer": 0,
+            "hint": "Osmonga qara. U kunduzi ko'rinmaydi." },
+          { "q": "Tili yo'q, gapiradi. Ko'zi yo'q, ko'rsatadi. Bu nima?",
+            "options": ["Soat", "Qalam", "Kitob"], "answer": 2,
+            "hint": "Dev shuni o'g'irlab ketgan." }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          { "q": "Bir qozonda ikki xil osh. Bu nima?",
+            "options": ["Tuxum", "Tarvuz", "Anor"], "answer": 0,
+            "hint": "Ichi oq va sariq qismdan iborat." },
+          { "q": "Yer ostida oltin qoziq. Bu nima?",
+            "options": ["Piyoz", "Sabzi", "Kartoshka"], "answer": 1,
+            "hint": "Rangi to'q sariq, shakli uzunchoq, palovga solinadi." },
+          { "q": "Kechasi chiqadi, yerga nur sochadi. Bu nima?",
+            "options": ["Yulduz", "Chiroq", "Oy"], "answer": 2,
+            "hint": "Goh to'lin, goh o'roqday bo'lib ko'rinadi." }
+        ]
+      },
+      "olim": {
+        "questions": [
+          { "q": "Topishmoq: \"Tili yo'q — gapiradi, ko'zi yo'q — ko'rsatadi\". Javob nima?",
+            "options": ["Ko'zgu", "Kitob", "Radio"], "answer": 1,
+            "hint": "Dev aynan shu narsani o'g'irlab ketgan." },
+          { "q": "Maqolni to'ldiring: \"Bilim — aql ...\"",
+            "options": ["chirog'i", "kaliti", "boyligi"], "answer": 0,
+            "hint": "Qorong'ida yo'l ko'rsatadigan narsani esla." },
+          { "q": "Maqolni to'ldiring: \"Sabr tagi — sariq ...\"",
+            "options": ["kumush", "oltin", "tosh"], "answer": 1,
+            "hint": "Eng qimmatli sariq metall." }
+        ]
+      }
+    }
+  },
+  {
+    "id": "ona-qishloq-04",
+    "level": "ona-qishloq",
+    "game": "riddle",
+    "title": "Maqollar",
+    "bobo": "bobo.ona-qishloq.maqol",
+    "tiers": {
+      "karvon": {
+        "questions": [
+          { "q": "Maqolni to'ldiring: \"Sabr tagi — sariq ...\"",
+            "options": ["kumush", "oltin", "tosh"], "answer": 1,
+            "hint": "Eng qimmatli sariq metall." },
+          { "q": "Maqolni to'ldiring: \"Ona yurting — oltin ...\"",
+            "options": ["beshiging", "uying", "bog'ing"], "answer": 0,
+            "hint": "Chaqaloq unda uxlaydi." },
+          { "q": "Maqolni to'ldiring: \"Bilim — aql ...\"",
+            "options": ["kaliti", "chirog'i", "boyligi"], "answer": 1,
+            "hint": "Qorong'ida yo'l ko'rsatadigan narsani esla." }
+        ]
+      },
+      "olim": {
+        "questions": [
+          { "q": "\"Yaxshi gap bilan ilon inidan chiqar\" maqolining mazmuni qaysi?",
+            "options": ["Shirin so'z har qanday ishni yengillatadi", "Ilonlardan ehtiyot bo'l", "Ko'p gapirma"],
+            "answer": 0,
+            "hint": "Maqolda so'zning kuchi haqida gap boradi." },
+          { "q": "\"Bir yigitga yetmish hunar oz\" maqolining mazmuni qaysi?",
+            "options": ["Hunar keraksiz", "Inson ko'p narsani o'rganishi kerak", "Yigitlar dangasa"],
+            "answer": 1,
+            "hint": "Maqol hunar — insonning boyligi ekani haqida." }
+        ]
+      }
+    }
+  },
+  {
+    "id": "ona-qishloq-05",
+    "level": "ona-qishloq",
+    "game": "riddle",
+    "title": "So'z turkumlari",
+    "bobo": "bobo.ona-qishloq.grammatika",
+    "tiers": {
+      "olim": {
+        "questions": [
+          { "q": "Qaysi so'z ot so'z turkumiga kiradi?",
+            "options": ["chiroyli", "yugurmoq", "bilim"], "answer": 2,
+            "hint": "Ot \"kim?\" yoki \"nima?\" so'rog'iga javob beradi." },
+          { "q": "\"Kitobim\" so'zidagi \"-im\" qo'shimchasi nimani bildiradi?",
+            "options": ["Ko'plikni", "Egalikni", "Kelishikni"], "answer": 1,
+            "hint": "Kitob kimga tegishli ekanini o'yla." },
+          { "q": "Qaysi qatorda faqat fe'llar berilgan?",
+            "options": ["kitob, qalam, daftar", "chiroyli, katta, yaxshi", "o'qimoq, yozmoq, bilmoq"],
+            "answer": 2,
+            "hint": "Fe'l \"nima qilmoq?\" so'rog'iga javob beradi." }
+        ]
+      }
+    }
+  }
+]

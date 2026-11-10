@@ -1,0 +1,37 @@
+{
+  "bobo.welcome": { "text": "Assalomu alaykum, bolam! Men Hikmat boboman." },
+  "bobo.map.intro": { "text": "Yovuz dev Bilim kitobini o'g'irladi. Keling, uni birga qaytaramiz!" },
+  "bobo.map.help": { "text": "Yonib turgan nuqtani bos. Sayohat o'sha yerdan boshlanadi." },
+  "bobo.soon": { "text": "Bu yo'l hali tayyorlanmoqda. Tez orada ochiladi!" },
+  "bobo.locked": { "text": "Avval oldingi to'siqni yengamiz, bolam." },
+
+  "bobo.ona-qishloq.intro": { "text": "Bolam, qishloq darvozasi qulflangan. Bizga kalit kerak. Kalitni uch qismdan yig'amiz!" },
+  "bobo.ona-qishloq.harflar": { "text": "Harflardan so'z tuzamiz. To'g'ri so'zni bos." },
+  "bobo.ona-qishloq.puzzle": { "text": "Rasm bo'laklarga bo'lindi. Ikki bo'lakni bosib, o'rnini almashtir." },
+  "bobo.ona-qishloq.topishmoq": { "text": "Topishmoqni diqqat bilan o'qi. Javobini top." },
+  "bobo.ona-qishloq.maqol": { "text": "Bu qo'shimcha sinov. Maqollarni yaxshi bilasanmi?" },
+  "bobo.ona-qishloq.grammatika": { "text": "Bu qo'shimcha sinov. So'z turkumlarini eslaymiz." },
+  "bobo.ona-qishloq.gate": { "text": "Kalit tayyor! Uni sumkadan darvoza qulfiga olib bor." },
+  "bobo.ona-qishloq.outro": { "text": "Barakalla! Darvoza ochildi. Oldinda qorong'i o'rmon kutmoqda." },
+
+  "bobo.praise": [
+    { "text": "Barakalla!" },
+    { "text": "Ofarin, bolam!" },
+    { "text": "Juda zo'r! Davom etamiz." },
+    { "text": "Qoyil! Aqlingga balli." }
+  ],
+  "bobo.encourage": [
+    { "text": "Hechqisi yo'q, yana urinib ko'r." },
+    { "text": "Men yoningdaman. Yana bir bor!" },
+    { "text": "Shoshilma, yaxshilab o'ylab ko'r." },
+    { "text": "Sabr tagi — sariq oltin. Yana urin!" }
+  ],
+  "bobo.hint.offer": { "text": "Bir maslahat beraymi? Sariq tugmani bos." },
+  "bobo.hint.none": { "text": "Maslahatlar tugadi. Sen o'zing uddalaysan!" },
+  "bobo.idle": { "text": "Qiyin bo'lsa, menga bos. Yordam beraman." },
+  "bobo.part.won": { "text": "Yangi qism sumkaga tushdi!" },
+  "bobo.bonus.won": { "text": "Qo'shimcha sinov ham bajarildi. Qoyil!" },
+  "bobo.kalit.won": { "text": "Mana, kaliting tayyor! Endi darvozani ochamiz." },
+  "bobo.retry": { "text": "Yana urinib ko'ramizmi? Uchinchi yulduz kutyapti!" },
+  "bobo.puzzle.preview": { "text": "Butun rasmga qarab ol. Keyin yig'amiz." }
+}
