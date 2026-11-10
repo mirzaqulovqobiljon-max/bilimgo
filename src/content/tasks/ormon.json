@@ -1,0 +1,326 @@
+[
+  {
+    "id": "ormon-01",
+    "level": "ormon",
+    "game": "memory",
+    "title": "Hayvon va uyi",
+    "rewardPart": "tayoq",
+    "bobo": "bobo.ormon.memory",
+    "tiers": {
+      "kichik": {
+        "pairs": [
+          {
+            "a": "🐔 Tovuq",
+            "b": "Katak"
+          },
+          {
+            "a": "🐦 Qush",
+            "b": "In"
+          },
+          {
+            "a": "🐟 Baliq",
+            "b": "Daryo"
+          },
+          {
+            "a": "🐴 Ot",
+            "b": "Otxona"
+          }
+        ],
+        "hint": "Har bir jonivor qayerda yashashini esla."
+      },
+      "karvon": {
+        "pairs": [
+          {
+            "a": "Sigir",
+            "b": "Buzoq"
+          },
+          {
+            "a": "Ot",
+            "b": "Toy"
+          },
+          {
+            "a": "Qo'y",
+            "b": "Qo'zi"
+          },
+          {
+            "a": "Echki",
+            "b": "Uloq"
+          },
+          {
+            "a": "Tuya",
+            "b": "Bo'taloq"
+          },
+          {
+            "a": "It",
+            "b": "Kuchuk"
+          }
+        ],
+        "hint": "Har bir hayvonning bolasi qanday atalishini esla."
+      },
+      "olim": {
+        "pairs": [
+          {
+            "a": "Yurak",
+            "b": "Qonni haydaydi"
+          },
+          {
+            "a": "O'pka",
+            "b": "Gaz almashinuvi"
+          },
+          {
+            "a": "Buyrak",
+            "b": "Qonni tozalaydi"
+          },
+          {
+            "a": "Jigar",
+            "b": "O't suyuqligi hosil qiladi"
+          },
+          {
+            "a": "Oshqozon",
+            "b": "Ovqatni hazm qiladi"
+          },
+          {
+            "a": "Bosh miya",
+            "b": "Organizmni boshqaradi"
+          }
+        ],
+        "hint": "Har bir a'zoning asosiy vazifasini esla."
+      }
+    }
+  },
+  {
+    "id": "ormon-02",
+    "level": "ormon",
+    "game": "puzzle",
+    "title": "O'rmon rasmi",
+    "rewardPart": "latta",
+    "bobo": "bobo.ormon.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "ormon",
+        "pieces": 9,
+        "caption": "Sehrli o'rmon"
+      },
+      "karvon": {
+        "image": "ormon",
+        "pieces": 16,
+        "caption": "Sehrli o'rmon"
+      },
+      "olim": {
+        "image": "ormon",
+        "pieces": 25,
+        "caption": "Sehrli o'rmon"
+      }
+    }
+  },
+  {
+    "id": "ormon-03",
+    "level": "ormon",
+    "game": "riddle",
+    "title": "O'rmon topishmoqlari",
+    "rewardPart": "chaqmoqtosh",
+    "bobo": "bobo.ormon.topishmoq",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "Uzun quloq, kalta dum. Sabzi yeydi. Bu kim?",
+            "options": [
+              "Tulki",
+              "Quyon",
+              "Mushuk"
+            ],
+            "answer": 1,
+            "hint": "U juda tez sakraydi."
+          },
+          {
+            "q": "Ignalari bor, kechasi yuradi. Bu kim?",
+            "options": [
+              "Tipratikan",
+              "Toshbaqa",
+              "Sichqon"
+            ],
+            "answer": 0,
+            "hint": "U xavf bo'lsa, to'p bo'lib o'raladi."
+          },
+          {
+            "q": "Daraxtda yashaydi, yong'oq yig'adi. Bu kim?",
+            "options": [
+              "Kirpi",
+              "Olmaxon",
+              "Ayiq"
+            ],
+            "answer": 1,
+            "hint": "Dumi momiq, rangi malla."
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "Qaysi hayvon qishni uyquda o'tkazadi?",
+            "options": [
+              "Bo'ri",
+              "Ayiq",
+              "Tulki"
+            ],
+            "answer": 1,
+            "hint": "U kuzda ko'p yeb, yog' to'playdi."
+          },
+          {
+            "q": "Qaysi biri hasharot?",
+            "options": [
+              "O'rgimchak",
+              "Chumoli",
+              "Chuvalchang"
+            ],
+            "answer": 1,
+            "hint": "Hasharotning oltita oyog'i bor."
+          },
+          {
+            "q": "Qaysi qush kechasi ov qiladi?",
+            "options": [
+              "Boyqush",
+              "Chumchuq",
+              "Musicha"
+            ],
+            "answer": 0,
+            "hint": "Ko'zlari katta, boshini orqaga bura oladi."
+          },
+          {
+            "q": "Daraxt yoshini qanday aniqlash mumkin?",
+            "options": [
+              "Kesimidagi halqalar soni bo'yicha",
+              "Barglari soni bo'yicha",
+              "Balandligi bo'yicha"
+            ],
+            "answer": 0,
+            "hint": "Har yili tanasida bitta yangi qatlam o'sadi."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Fotosintezda o'simlik havoga qaysi gazni chiqaradi?",
+            "options": [
+              "Kislorod",
+              "Karbonat angidrid",
+              "Azot"
+            ],
+            "answer": 0,
+            "hint": "Biz nafas olish uchun aynan shu gazga muhtojmiz."
+          },
+          {
+            "q": "Qaysi organizm ekotizimda redutsent (parchalovchi) hisoblanadi?",
+            "options": [
+              "Zamburug'",
+              "Bo'ri",
+              "Bug'doy"
+            ],
+            "answer": 0,
+            "hint": "U o'lik organik moddalarni parchalab, tuproqqa qaytaradi."
+          },
+          {
+            "q": "\"O't → quyon → bo'ri\" zanjirida produtsent qaysi?",
+            "options": [
+              "O't",
+              "Quyon",
+              "Bo'ri"
+            ],
+            "answer": 0,
+            "hint": "Quyosh energiyasini o'zi to'playdigan organizm."
+          },
+          {
+            "q": "O'zbekiston Qizil kitobiga kiritilgan yirtqich hayvon qaysi?",
+            "options": [
+              "Qor qoploni",
+              "Tulki",
+              "Chiyabo'ri"
+            ],
+            "answer": 0,
+            "hint": "U baland tog'larda yashaydi, terisi kulrang-dog'li."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "ormon-04",
+    "level": "ormon",
+    "game": "sorting",
+    "title": "Kattadan kichikka",
+    "bobo": "bobo.ormon.sorting",
+    "tiers": {
+      "karvon": {
+        "prompt": "Hayvonlarni kattaligi bo'yicha tartibla",
+        "items": [
+          "Chumoli",
+          "Sichqon",
+          "Quyon",
+          "Bo'ri",
+          "Ayiq"
+        ],
+        "topLabel": "Eng kichik",
+        "bottomLabel": "Eng katta",
+        "hint": "Eng kichigi — hasharot."
+      },
+      "olim": {
+        "prompt": "Tirik organizmning tuzilish darajalarini tartiblang",
+        "items": [
+          "Hujayra",
+          "To'qima",
+          "Organ",
+          "Organlar sistemasi",
+          "Organizm"
+        ],
+        "topLabel": "Eng kichik daraja",
+        "bottomLabel": "Eng katta daraja",
+        "hint": "Eng kichik tirik birlikdan boshlang."
+      }
+    }
+  },
+  {
+    "id": "ormon-05",
+    "level": "ormon",
+    "game": "riddle",
+    "title": "Ekologiya",
+    "bobo": "bobo.ormon.ekologiya",
+    "tiers": {
+      "olim": {
+        "questions": [
+          {
+            "q": "Atmosferada qaysi gaz ko'payishi issiqxona effektini kuchaytiradi?",
+            "options": [
+              "Karbonat angidrid",
+              "Kislorod",
+              "Geliy"
+            ],
+            "answer": 0,
+            "hint": "Yonish va nafas olishda ajraladigan gaz."
+          },
+          {
+            "q": "Orol dengizi qurishining asosiy sababi nima?",
+            "options": [
+              "Amudaryo va Sirdaryo suvining sug'orishga ko'p olinishi",
+              "Zilzila",
+              "Dengiz suvining muzlashi"
+            ],
+            "answer": 0,
+            "hint": "Ikki daryo suvi qayerga sarflanganini o'yla."
+          },
+          {
+            "q": "Ov qilish va daraxt kesish taqiqlangan muhofaza hududi qanday ataladi?",
+            "options": [
+              "Qo'riqxona",
+              "Bozor",
+              "Shaharcha"
+            ],
+            "answer": 0,
+            "hint": "Bunday joyda tabiat qonun bilan saqlanadi."
+          }
+        ]
+      }
+    }
+  }
+]

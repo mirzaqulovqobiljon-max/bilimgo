@@ -1,0 +1,368 @@
+[
+  {
+    "id": "daryo-01",
+    "level": "daryo",
+    "game": "crossword",
+    "title": "Raqamli krossvord",
+    "rewardPart": "taxta",
+    "bobo": "bobo.daryo.krossvord",
+    "tiers": {
+      "kichik": {
+        "words": [
+          {
+            "q": "2 + 3 = ?",
+            "a": "BESH",
+            "picture": "✋"
+          },
+          {
+            "q": "10 − 6 = ?",
+            "a": "TO'RT"
+          },
+          {
+            "q": "4 + 4 = ?",
+            "a": "SAKKIZ"
+          },
+          {
+            "q": "1 + 1 = ?",
+            "a": "IKKI",
+            "picture": "✌️"
+          },
+          {
+            "q": "9 − 8 = ?",
+            "a": "BIR",
+            "picture": "☝️"
+          }
+        ]
+      },
+      "karvon": {
+        "words": [
+          {
+            "q": "Uch tomonli shakl",
+            "a": "UCHBURCHAK"
+          },
+          {
+            "q": "Barcha tomonlari teng to'rtburchak",
+            "a": "KVADRAT"
+          },
+          {
+            "q": "Doiraning chegarasi",
+            "a": "AYLANA"
+          },
+          {
+            "q": "Ko'paytirish amalining natijasi",
+            "a": "KO'PAYTMA"
+          },
+          {
+            "q": "Qo'shish amalining natijasi",
+            "a": "YIG'INDI"
+          },
+          {
+            "q": "Ayirish amalining natijasi",
+            "a": "AYIRMA"
+          },
+          {
+            "q": "Bo'lish amalining natijasi",
+            "a": "BO'LINMA"
+          },
+          {
+            "q": "To'g'ri burchak necha gradus? (so'z bilan)",
+            "a": "TO'QSON"
+          },
+          {
+            "q": "Kasr chizig'i ostidagi son",
+            "a": "MAXRAJ"
+          },
+          {
+            "q": "Kasr chizig'i ustidagi son",
+            "a": "SURAT"
+          }
+        ]
+      },
+      "olim": {
+        "words": [
+          {
+            "q": "To'g'ri burchakka yopishgan tomon",
+            "a": "KATET"
+          },
+          {
+            "q": "To'g'ri burchak qarshisidagi tomon",
+            "a": "GIPOTENUZA"
+          },
+          {
+            "q": "Markazdan aylanagacha masofa",
+            "a": "RADIUS"
+          },
+          {
+            "q": "Markazdan o'tuvchi vatar",
+            "a": "DIAMETR"
+          },
+          {
+            "q": "Qarshi katetning gipotenuzaga nisbati",
+            "a": "SINUS"
+          },
+          {
+            "q": "Yopishgan katetning gipotenuzaga nisbati",
+            "a": "KOSINUS"
+          },
+          {
+            "q": "a ning qaysi darajasi b ga tengligini topish amali",
+            "a": "LOGARIFM"
+          },
+          {
+            "q": "Kvadrat tenglamada b² − 4ac",
+            "a": "DISKRIMINANT"
+          },
+          {
+            "q": "Yo'nalishga ega kesma",
+            "a": "VEKTOR"
+          },
+          {
+            "q": "Uchburchak uchidan qarshi tomon o'rtasiga tushirilgan kesma",
+            "a": "MEDIANA"
+          },
+          {
+            "q": "Burchakni teng ikkiga bo'luvchi nur",
+            "a": "BISSEKTRISA"
+          },
+          {
+            "q": "Shakl tomonlari uzunliklarining yig'indisi",
+            "a": "PERIMETR"
+          },
+          {
+            "q": "Ikki nisbatning tengligi",
+            "a": "PROPORSIYA"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "daryo-02",
+    "level": "daryo",
+    "game": "puzzle",
+    "title": "Daryo bo'yi",
+    "rewardPart": "eshkak",
+    "bobo": "bobo.daryo.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "daryo",
+        "pieces": 9,
+        "caption": "Katta daryo"
+      },
+      "karvon": {
+        "image": "daryo",
+        "pieces": 16,
+        "caption": "Katta daryo"
+      },
+      "olim": {
+        "image": "daryo",
+        "pieces": 25,
+        "caption": "Katta daryo"
+      }
+    }
+  },
+  {
+    "id": "daryo-03",
+    "level": "daryo",
+    "game": "riddle",
+    "title": "Misollar zanjiri",
+    "rewardPart": "yelkan",
+    "bobo": "bobo.daryo.misollar",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "Qayiqqa 3 ta taxta kerak, bizda 1 ta bor. Yana nechta kerak?",
+            "options": [
+              "1",
+              "2",
+              "3"
+            ],
+            "answer": 1,
+            "hint": "Uchdan birni ayir.",
+            "picture": "🪵"
+          },
+          {
+            "q": "5 ta baliqdan 2 tasi suzib ketdi. Nechta qoldi?",
+            "options": [
+              "3",
+              "2",
+              "7"
+            ],
+            "answer": 0,
+            "hint": "Barmoqlaringda sanab ko'r.",
+            "picture": "🐟"
+          },
+          {
+            "q": "Bitta eshkakni 2 qo'l ushlaydi. 2 ta eshkakni-chi?",
+            "options": [
+              "2",
+              "3",
+              "4"
+            ],
+            "answer": 2,
+            "hint": "2 ga yana 2 ni qo'sh.",
+            "picture": "🛶"
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "Daryo 120 m keng, qayiq daqiqasiga 15 m suzadi. Necha daqiqada o'tamiz?",
+            "options": [
+              "6",
+              "8",
+              "10"
+            ],
+            "answer": 1,
+            "hint": "Masofani tezlikka bo'l."
+          },
+          {
+            "q": "Qayiq 4 ta taxtadan iborat, har biri 12 kg. Qayiq og'irligi qancha?",
+            "options": [
+              "16 kg",
+              "48 kg",
+              "36 kg"
+            ],
+            "answer": 1,
+            "hint": "Bitta taxta og'irligini taxtalar soniga ko'paytir."
+          },
+          {
+            "q": "Qayiq 3 soatda 36 km yurdi. Uning tezligi qancha?",
+            "options": [
+              "12 km/soat",
+              "9 km/soat",
+              "108 km/soat"
+            ],
+            "answer": 0,
+            "hint": "Yo'lni vaqtga bo'l."
+          },
+          {
+            "q": "Yelkan uchun 5 m × 4 m mato kerak. Uning yuzi qancha?",
+            "options": [
+              "9 m²",
+              "18 m²",
+              "20 m²"
+            ],
+            "answer": 2,
+            "hint": "To'g'ri to'rtburchak yuzi = bo'yi × eni."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Oqim tezligi 2 m/s, qayiq tezligi (suvga nisbatan) 3 m/s. Qarshi qirg'oqqa tik borish uchun qayiq qanday yo'nalishda suzishi kerak?",
+            "options": [
+              "Oqimga qarshi, tik yo'nalishdan ≈42° burilib",
+              "Qirg'oqqa tik",
+              "Oqim bo'ylab ≈42° burilib"
+            ],
+            "answer": 0,
+            "hint": "Qayiq tezligining oqimga qarshi tashkil etuvchisi oqim tezligiga teng bo'lishi kerak: sin α = 2/3."
+          },
+          {
+            "q": "x² − 5x + 6 = 0 tenglamaning ildizlari?",
+            "options": [
+              "2 va 3",
+              "−2 va −3",
+              "1 va 6"
+            ],
+            "answer": 0,
+            "hint": "Viyet teoremasi: yig'indi 5, ko'paytma 6."
+          },
+          {
+            "q": "log₂ 32 = ?",
+            "options": [
+              "4",
+              "5",
+              "16"
+            ],
+            "answer": 1,
+            "hint": "2 ni necha marta o'ziga ko'paytirsak 32 bo'ladi?"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "daryo-04",
+    "level": "daryo",
+    "game": "sorting",
+    "title": "Taxtalarni og'irligi bo'yicha",
+    "bobo": "bobo.daryo.sorting",
+    "tiers": {
+      "karvon": {
+        "prompt": "Taxtalarni og'irligi bo'yicha tartibla",
+        "items": [
+          "1,5 kg",
+          "2 kg 300 g",
+          "2 kg 450 g",
+          "3 kg",
+          "3200 g"
+        ],
+        "topLabel": "Eng yengil",
+        "bottomLabel": "Eng og'ir",
+        "hint": "Hammasini grammga aylantirib ko'r."
+      },
+      "olim": {
+        "prompt": "Sonlarni o'sish tartibida joylashtiring",
+        "items": [
+          "−√5",
+          "−2",
+          "0,3",
+          "1/3",
+          "π",
+          "√10"
+        ],
+        "topLabel": "Eng kichik",
+        "bottomLabel": "Eng katta",
+        "hint": "Ildiz va kasrlarni taxminiy o'nli kasrga aylantiring."
+      }
+    }
+  },
+  {
+    "id": "daryo-05",
+    "level": "daryo",
+    "game": "riddle",
+    "title": "Olimlar uchun masalalar",
+    "bobo": "bobo.daryo.olim",
+    "tiers": {
+      "olim": {
+        "questions": [
+          {
+            "q": "Arifmetik progressiya: 3, 7, 11, ... Uning 10-hadi?",
+            "options": [
+              "39",
+              "43",
+              "40"
+            ],
+            "answer": 0,
+            "hint": "aₙ = a₁ + (n − 1)·d formulasini qo'llang."
+          },
+          {
+            "q": "Doira yuzi formulasi qaysi?",
+            "options": [
+              "πr²",
+              "2πr",
+              "πd"
+            ],
+            "answer": 0,
+            "hint": "Yuz — kvadrat birliklarda o'lchanadi."
+          },
+          {
+            "q": "Tanga 2 marta tashlansa, ikkala safar ham 'gerb' tushish ehtimoli?",
+            "options": [
+              "1/2",
+              "1/4",
+              "1/3"
+            ],
+            "answer": 1,
+            "hint": "Mustaqil hodisalar ehtimollari ko'paytiriladi."
+          }
+        ]
+      }
+    }
+  }
+]

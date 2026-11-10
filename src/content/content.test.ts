@@ -5,6 +5,7 @@ import { longestSentenceWords, parseContent, tasksForTier } from './validate';
 
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
 type AnyRec = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const T = (r: { tasks: AnyRec[] }, id: string) => r.tasks.find((t) => t.id === id)!;
 const raw = () => clone(RAW_CONTENT) as { levels: AnyRec[]; items: AnyRec[]; tasks: AnyRec[]; bobo: AnyRec };
 const errorsOf = (r: ReturnType<typeof raw>) => parseContent(r, PICTURE_KEYS).errors;
 
@@ -14,10 +15,21 @@ describe('real content', () => {
     expect(() => loadContent()).not.toThrow();
   });
 
-  it('has 7 levels and only the first one has content in the prototype', () => {
+  it('has 7 levels, all with content, every tier 3/4/5 tasks', () => {
     const c = loadContent();
     expect(c.levels.map((l) => l.order)).toEqual([1, 2, 3, 4, 5, 6, 7]);
-    expect(c.levels.filter((l) => l.tasks.length > 0).map((l) => l.id)).toEqual(['ona-qishloq']);
+    for (const l of c.levels) {
+      expect(tasksForTier(l, c.tasks, 'kichik')).toHaveLength(3);
+      expect(tasksForTier(l, c.tasks, 'karvon')).toHaveLength(4);
+      expect(tasksForTier(l, c.tasks, 'olim')).toHaveLength(5);
+    }
+    expect(c.tasks).toHaveLength(35);
+  });
+
+  it('uses all 5 first-version mini-games; dev battle only in the cave', () => {
+    const c = loadContent();
+    expect(new Set(c.tasks.map((t) => t.game))).toEqual(new Set(['riddle', 'puzzle', 'crossword', 'memory', 'sorting']));
+    expect(c.levels.filter((l) => l.obstacle.battle).map((l) => l.id)).toEqual(['gor']);
   });
 
   it('gives 3 / 4 / 5 tasks to kichik / karvon / olim on Ona qishloq', () => {
@@ -64,7 +76,7 @@ describe('validator catches broken content', () => {
 
   it('hint that gives away the answer', () => {
     const r = raw();
-    r.tasks[0]!.tiers.kichik.questions[0].hint = 'Javob — kalit.';
+    T(r, 'ona-qishloq-01').tiers.kichik.questions[0].hint = 'Javob — kalit.';
     expect(errorsOf(r).join('\n')).toMatch(/maslahat javobni oshkor/);
   });
 
@@ -82,9 +94,9 @@ describe('validator catches broken content', () => {
 
   it('answer index outside options and duplicate options', () => {
     const r = raw();
-    const q = r.tasks[0]!.tiers.karvon.questions[0];
+    const q = T(r, 'ona-qishloq-01').tiers.karvon.questions[0];
     q.answer = 9;
-    r.tasks[0]!.tiers.karvon.questions[1].options = ['A', 'A'];
+    T(r, 'ona-qishloq-01').tiers.karvon.questions[1].options = ['A', 'A'];
     const e = errorsOf(r).join('\n');
     expect(e).toMatch(/answer variantlar ichida emas/);
     expect(e).toMatch(/variantlar takrorlangan/);
@@ -110,8 +122,8 @@ describe('validator catches broken content', () => {
 
   it('unknown bobo key and unknown reward part', () => {
     const r = raw();
-    r.tasks[0]!.bobo = 'bobo.yoq';
-    r.tasks[0]!.rewardPart = 'eshkak';
+    T(r, 'ona-qishloq-01').bobo = 'bobo.yoq';
+    T(r, 'ona-qishloq-01').rewardPart = 'eshkak';
     const e = errorsOf(r).join('\n');
     expect(e).toMatch(/bobo gapi topilmadi "bobo.yoq"/);
     expect(e).toMatch(/rewardPart "eshkak"/);
@@ -122,6 +134,30 @@ describe('sentence length helper', () => {
   it('counts words per sentence, ignoring dashes', () => {
     expect(longestSentenceWords('Sabr tagi — sariq oltin. Yana urin!')).toBe(4);
     expect(longestSentenceWords('')).toBe(0);
+  });
+});
+
+describe('phase 3 rules', () => {
+  it('multi-part rewards: every part must exist; dev battle needs enough questions', () => {
+    const r = raw();
+    T(r, 'gor-01').rewardPart = ['tig', 'yoq-qism'];
+    r.levels.find((l) => l.id === 'gor')!.obstacle.battle.olim.questions.splice(3);
+    const e = errorsOf(r).join('\n');
+    expect(e).toMatch(/rewardPart "yoq-qism"/);
+    expect(e).toMatch(/level gor \[olim\]: dev jangi uchun kamida 7 savol/);
+  });
+
+  it('short answers are checked as whole words in hints', () => {
+    const r = raw();
+    const qs = r.levels.find((l) => l.id === 'gor')!.obstacle.battle.kichik.questions;
+    qs[0].hint = 'Javob 7 ga teng.';
+    expect(errorsOf(r).join('\n')).toMatch(/jang \[kichik\] savol 1: maslahat javobni oshkor/);
+  });
+
+  it('each content level needs obstacle and item-won phrases', () => {
+    const r = raw();
+    delete r.bobo['bobo.tog.obstacle'];
+    expect(errorsOf(r).join('\n')).toMatch(/level tog: bobo gapi topilmadi "bobo.tog.obstacle"/);
   });
 });
 

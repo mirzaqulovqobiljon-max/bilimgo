@@ -1,0 +1,395 @@
+[
+  {
+    "id": "qizilqum-01",
+    "level": "qizilqum",
+    "game": "riddle",
+    "title": "Yo'l topamiz",
+    "rewardPart": "egar",
+    "bobo": "bobo.qizilqum.yol",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "Quyosh qaysi tomondan chiqadi?",
+            "options": [
+              "G'arbdan",
+              "Sharqdan",
+              "Janubdan"
+            ],
+            "answer": 1,
+            "hint": "Ertalab quyoshga qarab tur.",
+            "picture": "🌅"
+          },
+          {
+            "q": "Cho'lda nima ko'p?",
+            "options": [
+              "Qum",
+              "Muz",
+              "Daraxt"
+            ],
+            "answer": 0,
+            "hint": "Oyog'ing botib ketadigan sariq zarralar.",
+            "picture": "🏜️"
+          },
+          {
+            "q": "Qaysi hayvon suvsiz ko'p yura oladi?",
+            "options": [
+              "Ot",
+              "Tuya",
+              "Sigir"
+            ],
+            "answer": 1,
+            "hint": "Uning orqasida o'rkachi bor."
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "Qizilqum cho'li qaysi ikki daryo oralig'ida joylashgan?",
+            "options": [
+              "Amudaryo va Sirdaryo",
+              "Zarafshon va Chirchiq",
+              "Volga va Ural"
+            ],
+            "answer": 0,
+            "hint": "Ikkalasi ham Orol dengiziga quyilgan."
+          },
+          {
+            "q": "Kompas strelkasi qaysi tomonni ko'rsatadi?",
+            "options": [
+              "Shimolni",
+              "Janubni",
+              "Sharqni"
+            ],
+            "answer": 0,
+            "hint": "Qutb yulduzi ham shu tomonda."
+          },
+          {
+            "q": "Xaritada 1 sm = 10 km. Xaritadagi 5 sm qancha?",
+            "options": [
+              "15 km",
+              "50 km",
+              "500 km"
+            ],
+            "answer": 1,
+            "hint": "Masshtabni santimetrlar soniga ko'paytir."
+          },
+          {
+            "q": "O'zbekistondagi eng baland cho'qqi qaysi?",
+            "options": [
+              "Hazrati Sulton",
+              "Chimyon",
+              "Beshtor"
+            ],
+            "answer": 0,
+            "hint": "U Hisor tizmasida, balandligi 4643 metr."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Qizilqumdagi Muruntau koni nima bilan mashhur?",
+            "options": [
+              "Oltin",
+              "Neft",
+              "Ko'mir"
+            ],
+            "answer": 0,
+            "hint": "Dunyodagi eng yirik ochiq usuldagi qimmatbaho metall konlaridan biri."
+          },
+          {
+            "q": "Toshkent taxminan qaysi geografik kenglikda?",
+            "options": [
+              "41° sh.k.",
+              "55° sh.k.",
+              "23° j.k."
+            ],
+            "answer": 0,
+            "hint": "Shimoliy yarimsharning mo'tadil kengliklarida."
+          },
+          {
+            "q": "Cho'lda kunduz va tun harorati farqi katta bo'lishining sababi?",
+            "options": [
+              "Havo quruq, bulut kam — issiqlik tez tarqaladi",
+              "Cho'l dengizga yaqin",
+              "Quyosh kechasi ham isitadi"
+            ],
+            "answer": 0,
+            "hint": "Bulutlar tunda yerni ko'rpadek yopib turadi."
+          },
+          {
+            "q": "Buyuk Ipak yo'li qaysi mintaqalarni bog'lagan?",
+            "options": [
+              "Xitoy va O'rta yer dengizi bo'yini",
+              "Afrika va Amerikani",
+              "Avstraliya va Hindistonni"
+            ],
+            "answer": 0,
+            "hint": "Sharqdagi ipak vatani va g'arbdagi Rim."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "qizilqum-02",
+    "level": "qizilqum",
+    "game": "puzzle",
+    "title": "Cho'l manzarasi",
+    "rewardPart": "jilov",
+    "bobo": "bobo.qizilqum.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "chol",
+        "pieces": 9,
+        "caption": "Qizilqum cho'li"
+      },
+      "karvon": {
+        "image": "chol",
+        "pieces": 16,
+        "caption": "Qizilqum cho'li"
+      },
+      "olim": {
+        "image": "chol",
+        "pieces": 25,
+        "caption": "Qizilqum cho'li"
+      }
+    }
+  },
+  {
+    "id": "qizilqum-03",
+    "level": "qizilqum",
+    "game": "crossword",
+    "title": "Geografik krossvord",
+    "rewardPart": "mesh",
+    "bobo": "bobo.qizilqum.krossvord",
+    "tiers": {
+      "kichik": {
+        "words": [
+          {
+            "q": "Cho'lda yuradi, o'rkachi bor",
+            "a": "TUYA",
+            "picture": "🐪"
+          },
+          {
+            "q": "Cho'lda oyoq botadi",
+            "a": "QUM"
+          },
+          {
+            "q": "Meshga nima solamiz?",
+            "a": "SUV",
+            "picture": "💧"
+          },
+          {
+            "q": "Kechasi osmonda yonadi",
+            "a": "OY",
+            "picture": "🌙"
+          },
+          {
+            "q": "Tunda yo'l ko'rsatadi",
+            "a": "YULDUZ",
+            "picture": "⭐"
+          }
+        ]
+      },
+      "karvon": {
+        "words": [
+          {
+            "q": "O'zbekiston poytaxti",
+            "a": "TOSHKENT"
+          },
+          {
+            "q": "Registon maydoni joylashgan shahar",
+            "a": "SAMARQAND"
+          },
+          {
+            "q": "Ichan qal'a joylashgan shahar",
+            "a": "XIVA"
+          },
+          {
+            "q": "Qoraqalpog'iston poytaxti",
+            "a": "NUKUS"
+          },
+          {
+            "q": "O'rta Osiyodagi eng uzun daryo",
+            "a": "AMUDARYO"
+          },
+          {
+            "q": "Bobur tug'ilgan shahar",
+            "a": "ANDIJON"
+          },
+          {
+            "q": "Minorai Kalon joylashgan shahar",
+            "a": "BUXORO"
+          },
+          {
+            "q": "Mamlakatning eng janubiy viloyat markazi",
+            "a": "TERMIZ"
+          },
+          {
+            "q": "Yer sharining kichik modeli",
+            "a": "GLOBUS"
+          },
+          {
+            "q": "Dunyo tomonlarini ko'rsatuvchi asbob",
+            "a": "KOMPAS"
+          }
+        ]
+      },
+      "olim": {
+        "words": [
+          {
+            "q": "Ekvatordan shimol yoki janubgacha burchak masofasi",
+            "a": "KENGLIK"
+          },
+          {
+            "q": "Bosh meridiandan sharq yoki g'arbgacha burchak masofasi",
+            "a": "UZUNLIK"
+          },
+          {
+            "q": "Yerni shimoliy va janubiy yarimsharlarga bo'luvchi chiziq",
+            "a": "EKVATOR"
+          },
+          {
+            "q": "Qutbdan qutbga o'tuvchi chiziq",
+            "a": "MERIDIAN"
+          },
+          {
+            "q": "Xaritadagi masofaning haqiqiy masofaga nisbati",
+            "a": "MASSHTAB"
+          },
+          {
+            "q": "Yer yuzasi notekisliklari majmui",
+            "a": "RELYEF"
+          },
+          {
+            "q": "Yerning havo qobig'i",
+            "a": "ATMOSFERA"
+          },
+          {
+            "q": "Yerning suv qobig'i",
+            "a": "GIDROSFERA"
+          },
+          {
+            "q": "Yerning qattiq tosh qobig'i",
+            "a": "LITOSFERA"
+          },
+          {
+            "q": "Shamol hosil qilgan o'roqsimon qum tepalik",
+            "a": "BARXAN"
+          },
+          {
+            "q": "Cho'l ichidagi suvli, yashil joy",
+            "a": "VOHA"
+          },
+          {
+            "q": "Daryo quyilish joyidagi tarmoqlangan qism",
+            "a": "DELTA"
+          },
+          {
+            "q": "Joyning ko'p yillik ob-havo rejimi",
+            "a": "IQLIM"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "qizilqum-04",
+    "level": "qizilqum",
+    "game": "memory",
+    "title": "Shahar va obida",
+    "bobo": "bobo.qizilqum.memory",
+    "tiers": {
+      "karvon": {
+        "pairs": [
+          {
+            "a": "Samarqand",
+            "b": "Registon"
+          },
+          {
+            "a": "Buxoro",
+            "b": "Ark qal'asi"
+          },
+          {
+            "a": "Xiva",
+            "b": "Ichan qal'a"
+          },
+          {
+            "a": "Toshkent",
+            "b": "Teleminora"
+          },
+          {
+            "a": "Shahrisabz",
+            "b": "Oqsaroy"
+          },
+          {
+            "a": "Qo'qon",
+            "b": "Xudoyorxon o'rdasi"
+          }
+        ],
+        "hint": "Har bir shahar qaysi obidasi bilan mashhurligini esla."
+      },
+      "olim": {
+        "pairs": [
+          {
+            "a": "Qozog'iston",
+            "b": "Astana"
+          },
+          {
+            "a": "Qirg'iziston",
+            "b": "Bishkek"
+          },
+          {
+            "a": "Tojikiston",
+            "b": "Dushanbe"
+          },
+          {
+            "a": "Turkmaniston",
+            "b": "Ashxobod"
+          },
+          {
+            "a": "Afg'oniston",
+            "b": "Kobul"
+          },
+          {
+            "a": "Xitoy",
+            "b": "Pekin"
+          },
+          {
+            "a": "Eron",
+            "b": "Tehron"
+          },
+          {
+            "a": "Turkiya",
+            "b": "Anqara"
+          }
+        ],
+        "hint": "Har bir davlat poytaxtini esla."
+      }
+    }
+  },
+  {
+    "id": "qizilqum-05",
+    "level": "qizilqum",
+    "game": "sorting",
+    "title": "Daryolar uzunligi",
+    "bobo": "bobo.qizilqum.sorting",
+    "tiers": {
+      "olim": {
+        "prompt": "Daryolarni uzunligi bo'yicha tartiblang",
+        "items": [
+          "Amudaryo",
+          "Sirdaryo",
+          "Zarafshon",
+          "Chirchiq"
+        ],
+        "topLabel": "Eng uzun",
+        "bottomLabel": "Eng qisqa",
+        "hint": "Orol dengiziga quyilgan daryolar eng uzunlari."
+      }
+    }
+  }
+]

@@ -49,6 +49,87 @@ function GateVisual({ open, phase }: { open: boolean; phase: Phase }) {
   );
 }
 
+/** Har bir to'siq turi uchun sahna. `open` — buyum ishlatilgandan keyingi holat. */
+function SceneVisual({ type, open, icon }: { type: string; open: boolean; icon: string }) {
+  const sky = <rect width="300" height="260" fill={open ? '#bfe3f2' : '#9fc6d9'} />;
+  switch (type) {
+    case 'dark':
+      return (
+        <svg viewBox="0 0 300 260" className={`scene-svg${open ? ' open' : ''}`} aria-hidden="true">
+          <rect width="300" height="260" fill="#1f3b2a" />
+          {[30, 90, 150, 210, 270].map((x, i) => (
+            <path key={x} d={`M${x - 28} ${210 - (i % 2) * 20} L${x} ${40 + (i % 3) * 15} L${x + 28} ${210 - (i % 2) * 20}Z`} fill="#2e6b3a" />
+          ))}
+          <rect y="200" width="300" height="60" fill="#3d5a2a" />
+          <g className="scene-reveal">
+            <circle cx="70" cy="190" r="10" fill="#f9a825" /><text x="60" y="196" fontSize="16">🦔</text>
+            <text x="200" y="120" fontSize="22">🦉</text><text x="230" y="200" fontSize="22">🐇</text>
+          </g>
+          <rect className="scene-dark" width="300" height="260" fill="#000" opacity="0.82" />
+          {open && <text x="135" y="175" fontSize="44" className="scene-item-in">{icon}</text>}
+        </svg>
+      );
+    case 'river':
+      return (
+        <svg viewBox="0 0 300 260" className={`scene-svg${open ? ' open' : ''}`} aria-hidden="true">
+          {sky}
+          <rect y="70" width="300" height="40" fill="#9ccc65" />
+          <rect y="110" width="300" height="90" fill="#3d9bd1" />
+          <path d="M0 140 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0" stroke="#bfe6fb" strokeWidth="4" fill="none" />
+          <path d="M0 175 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0" stroke="#bfe6fb" strokeWidth="4" fill="none" />
+          <rect y="200" width="300" height="60" fill="#9ccc65" />
+          <text x="130" y="248" fontSize="34" className={open ? 'scene-cross' : ''}>{open ? icon : '🧒'}</text>
+        </svg>
+      );
+    case 'desert':
+      return (
+        <svg viewBox="0 0 300 260" className={`scene-svg${open ? ' open' : ''}`} aria-hidden="true">
+          <rect width="300" height="260" fill="#f6d58e" />
+          <circle cx="240" cy="50" r="28" fill="#ffb300" />
+          <path d="M0 170 Q75 120 150 170 T300 160 V260 H0Z" fill="#e7b75f" />
+          <path d="M0 210 Q90 170 180 215 T300 205 V260 H0Z" fill="#d9a04a" />
+          <text x="20" y="150" fontSize="26">🌵</text>
+          <text x="40" y="240" fontSize="40" className={open ? 'scene-ride' : ''}>{open ? icon : '🧒'}</text>
+        </svg>
+      );
+    case 'cliff':
+      return (
+        <svg viewBox="0 0 300 260" className={`scene-svg${open ? ' open' : ''}`} aria-hidden="true">
+          {sky}
+          <path d="M0 120 L110 120 L110 260 L0 260Z" fill="#8d9fb0" />
+          <path d="M190 120 L300 120 L300 260 L190 260Z" fill="#8d9fb0" />
+          <path d="M110 120 L190 120 L170 260 L130 260Z" fill="#3b4a58" />
+          {open && <path d="M110 122 Q150 150 190 122" stroke="#a1724a" strokeWidth="6" fill="none" className="scene-rope" />}
+          <text x="60" y="112" fontSize="30">🧒</text>
+        </svg>
+      );
+    case 'castle':
+      return (
+        <svg viewBox="0 0 300 260" className={`scene-svg${open ? ' open' : ''}`} aria-hidden="true">
+          <rect width="300" height="260" fill="#4a3f6b" />
+          <rect x="40" y="70" width="220" height="160" fill="#6d6d78" />
+          {[40, 80, 120, 160, 200, 240].map((x) => <rect key={x} x={x} y="56" width="20" height="16" fill="#6d6d78" />)}
+          <rect x="20" y="40" width="40" height="190" fill="#5c5c68" /><rect x="240" y="40" width="40" height="190" fill="#5c5c68" />
+          <path d="M110 230 V150 Q150 110 190 150 V230Z" fill={open ? '#ffe082' : '#2b1a0e'} className="castle-door" />
+          {!open && <circle cx="150" cy="180" r="34" fill="none" stroke="#c5f" strokeWidth="5" strokeDasharray="6 6" className="magic-ring" />}
+          {open && <text x="128" y="200" fontSize="40">📖</text>}
+        </svg>
+      );
+    default:
+      return <div className="obstacle-emoji" aria-hidden="true">🚧</div>;
+  }
+}
+
+/** To'siq turiga qarab "nishon" joyi (buyum shu yerga olib boriladi). */
+const TARGET_POS: Record<string, { left: string; top: string }> = {
+  gate: { left: '36%', top: '42%' },
+  dark: { left: '30%', top: '30%' },
+  river: { left: '25%', top: '42%' },
+  desert: { left: '10%', top: '55%' },
+  cliff: { left: '33%', top: '42%' },
+  castle: { left: '33%', top: '50%' },
+};
+
 /**
  * Buyumni to'siqqa ishlatish: bola buyumni sumkadan sudrab to'siqqa olib boradi
  * ("men o'zim yutdim" tuyg'usi). Sudrash qiyin bo'lsa: buyumni bos, keyin to'siqni bos.
@@ -88,7 +169,7 @@ export function ObstacleScene({ level, item, onDone, animationMs = 1600 }: Props
     }
     if (phase === 'idle') {
       setPhase('holding');
-      bobo.say({ text: `Endi ${level.obstacle.title.toLowerCase()}ni bos.` });
+      bobo.say({ text: 'Endi yonib turgan joyni bos.' });
     } else if (phase === 'holding') setPhase('idle');
   };
 
@@ -137,11 +218,12 @@ export function ObstacleScene({ level, item, onDone, animationMs = 1600 }: Props
         {level.obstacle.type === 'gate' ? (
           <GateVisual open={phase === 'opened'} phase={phase} />
         ) : (
-          <div className="obstacle-emoji" aria-hidden="true">🚧</div>
+          <SceneVisual type={level.obstacle.type} open={phase === 'opened'} icon={item.icon} />
         )}
         <button
           ref={targetRef}
           type="button"
+          style={TARGET_POS[level.obstacle.type] ?? TARGET_POS.gate}
           className="obstacle-target"
           onClick={onTargetClick}
           aria-label={`${level.obstacle.title}: ${item.name.toLowerCase()}ni shu yerga qo'y`}

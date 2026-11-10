@@ -1,37 +1,264 @@
 {
-  "bobo.welcome": { "text": "Assalomu alaykum, bolam! Men Hikmat boboman." },
-  "bobo.map.intro": { "text": "Yovuz dev Bilim kitobini o'g'irladi. Keling, uni birga qaytaramiz!" },
-  "bobo.map.help": { "text": "Yonib turgan nuqtani bos. Sayohat o'sha yerdan boshlanadi." },
-  "bobo.soon": { "text": "Bu yo'l hali tayyorlanmoqda. Tez orada ochiladi!" },
-  "bobo.locked": { "text": "Avval oldingi to'siqni yengamiz, bolam." },
-
-  "bobo.ona-qishloq.intro": { "text": "Bolam, qishloq darvozasi qulflangan. Bizga kalit kerak. Kalitni uch qismdan yig'amiz!" },
-  "bobo.ona-qishloq.harflar": { "text": "Harflardan so'z tuzamiz. To'g'ri so'zni bos." },
-  "bobo.ona-qishloq.puzzle": { "text": "Rasm bo'laklarga bo'lindi. Ikki bo'lakni bosib, o'rnini almashtir." },
-  "bobo.ona-qishloq.topishmoq": { "text": "Topishmoqni diqqat bilan o'qi. Javobini top." },
-  "bobo.ona-qishloq.maqol": { "text": "Bu qo'shimcha sinov. Maqollarni yaxshi bilasanmi?" },
-  "bobo.ona-qishloq.grammatika": { "text": "Bu qo'shimcha sinov. So'z turkumlarini eslaymiz." },
-  "bobo.ona-qishloq.gate": { "text": "Kalit tayyor! Uni sumkadan darvoza qulfiga olib bor." },
-  "bobo.ona-qishloq.outro": { "text": "Barakalla! Darvoza ochildi. Oldinda qorong'i o'rmon kutmoqda." },
-
+  "bobo.welcome": {
+    "text": "Assalomu alaykum, bolam! Men Hikmat boboman."
+  },
+  "bobo.map.intro": {
+    "text": "Yovuz dev Bilim kitobini o'g'irladi. Keling, uni birga qaytaramiz!"
+  },
+  "bobo.map.help": {
+    "text": "Yonib turgan nuqtani bos. Sayohat o'sha yerdan boshlanadi."
+  },
+  "bobo.soon": {
+    "text": "Bu yo'l hali tayyorlanmoqda. Tez orada ochiladi!"
+  },
+  "bobo.locked": {
+    "text": "Avval oldingi to'siqni yengamiz, bolam."
+  },
+  "bobo.ona-qishloq.intro": {
+    "text": "Bolam, qishloq darvozasi qulflangan. Bizga kalit kerak. Kalitni uch qismdan yig'amiz!"
+  },
+  "bobo.ona-qishloq.harflar": {
+    "text": "Harflardan so'z tuzamiz. To'g'ri so'zni bos."
+  },
+  "bobo.ona-qishloq.puzzle": {
+    "text": "Rasm bo'laklarga bo'lindi. Ikki bo'lakni bosib, o'rnini almashtir."
+  },
+  "bobo.ona-qishloq.topishmoq": {
+    "text": "Topishmoqni diqqat bilan o'qi. Javobini top."
+  },
+  "bobo.ona-qishloq.maqol": {
+    "text": "Bu qo'shimcha sinov. Maqollarni yaxshi bilasanmi?"
+  },
+  "bobo.ona-qishloq.grammatika": {
+    "text": "Bu qo'shimcha sinov. So'z turkumlarini eslaymiz."
+  },
+  "bobo.ona-qishloq.obstacle": {
+    "text": "Kalit tayyor! Uni sumkadan darvoza qulfiga olib bor."
+  },
+  "bobo.ona-qishloq.outro": {
+    "text": "Barakalla! Darvoza ochildi. Oldinda qorong'i o'rmon kutmoqda."
+  },
   "bobo.praise": [
-    { "text": "Barakalla!" },
-    { "text": "Ofarin, bolam!" },
-    { "text": "Juda zo'r! Davom etamiz." },
-    { "text": "Qoyil! Aqlingga balli." }
+    {
+      "text": "Barakalla!"
+    },
+    {
+      "text": "Ofarin, bolam!"
+    },
+    {
+      "text": "Juda zo'r! Davom etamiz."
+    },
+    {
+      "text": "Qoyil! Aqlingga balli."
+    }
   ],
   "bobo.encourage": [
-    { "text": "Hechqisi yo'q, yana urinib ko'r." },
-    { "text": "Men yoningdaman. Yana bir bor!" },
-    { "text": "Shoshilma, yaxshilab o'ylab ko'r." },
-    { "text": "Sabr tagi — sariq oltin. Yana urin!" }
+    {
+      "text": "Hechqisi yo'q, yana urinib ko'r."
+    },
+    {
+      "text": "Men yoningdaman. Yana bir bor!"
+    },
+    {
+      "text": "Shoshilma, yaxshilab o'ylab ko'r."
+    },
+    {
+      "text": "Sabr tagi — sariq oltin. Yana urin!"
+    }
   ],
-  "bobo.hint.offer": { "text": "Bir maslahat beraymi? Sariq tugmani bos." },
-  "bobo.hint.none": { "text": "Maslahatlar tugadi. Sen o'zing uddalaysan!" },
-  "bobo.idle": { "text": "Qiyin bo'lsa, menga bos. Yordam beraman." },
-  "bobo.part.won": { "text": "Yangi qism sumkaga tushdi!" },
-  "bobo.bonus.won": { "text": "Qo'shimcha sinov ham bajarildi. Qoyil!" },
-  "bobo.kalit.won": { "text": "Mana, kaliting tayyor! Endi darvozani ochamiz." },
-  "bobo.retry": { "text": "Yana urinib ko'ramizmi? Uchinchi yulduz kutyapti!" },
-  "bobo.puzzle.preview": { "text": "Butun rasmga qarab ol. Keyin yig'amiz." }
+  "bobo.hint.offer": {
+    "text": "Bir maslahat beraymi? Sariq tugmani bos."
+  },
+  "bobo.hint.none": {
+    "text": "Maslahatlar tugadi. Sen o'zing uddalaysan!"
+  },
+  "bobo.idle": {
+    "text": "Qiyin bo'lsa, menga bos. Yordam beraman."
+  },
+  "bobo.part.won": {
+    "text": "Yangi qism sumkaga tushdi!"
+  },
+  "bobo.bonus.won": {
+    "text": "Qo'shimcha sinov ham bajarildi. Qoyil!"
+  },
+  "bobo.kalit.won": {
+    "text": "Mana, kaliting tayyor! Endi darvozani ochamiz."
+  },
+  "bobo.retry": {
+    "text": "Yana urinib ko'ramizmi? Uchinchi yulduz kutyapti!"
+  },
+  "bobo.puzzle.preview": {
+    "text": "Butun rasmga qarab ol. Keyin yig'amiz."
+  },
+  "bobo.ormon.intro": {
+    "text": "O'rmon juda qorong'i, bolam. Mash'al yasaymiz! Uch qism kerak."
+  },
+  "bobo.ormon.memory": {
+    "text": "Kartalarni ochib, juftini top. Yaxshilab eslab qol!"
+  },
+  "bobo.ormon.puzzle": {
+    "text": "O'rmon rasmini yig'amiz. Ikki bo'lakni bosib almashtir."
+  },
+  "bobo.ormon.topishmoq": {
+    "text": "O'rmon jonivorlari haqida topishmoqlar. Diqqat bilan o'qi."
+  },
+  "bobo.ormon.sorting": {
+    "text": "Hayvonlarni to'g'ri tartibga qo'y. Keyin tekshir."
+  },
+  "bobo.ormon.ekologiya": {
+    "text": "Bu qo'shimcha sinov. Tabiatni asrash haqida."
+  },
+  "bobo.ormon.obstacle": {
+    "text": "Mash'al tayyor! Uni qorong'i o'rmonga olib bor."
+  },
+  "bobo.mashal.won": {
+    "text": "Mana, mash'aling tayyor! Endi o'rmonni yoritamiz."
+  },
+  "bobo.ormon.outro": {
+    "text": "O'rmon yorishdi! Oldinda katta daryo kutmoqda."
+  },
+  "bobo.daryo.intro": {
+    "text": "Bolam, oldimizda katta daryo. Qayiqsiz o'tolmaymiz. Keling, qayiq yasaymiz!"
+  },
+  "bobo.daryo.krossvord": {
+    "text": "Bu krossvordda sonlar yashiringan. Har biri qayiqqa yordam beradi."
+  },
+  "bobo.daryo.puzzle": {
+    "text": "Daryo rasmini yig'amiz. Bo'laklarni joyiga qo'y."
+  },
+  "bobo.daryo.misollar": {
+    "text": "Misollarni yechamiz. Shoshilmay hisobla."
+  },
+  "bobo.daryo.sorting": {
+    "text": "Tartiblab chiq, keyin tekshir. Bu qo'shimcha sinov."
+  },
+  "bobo.daryo.olim": {
+    "text": "Bu olimlar uchun masalalar. Qog'ozda yechib ko'r."
+  },
+  "bobo.daryo.obstacle": {
+    "text": "Qayiq tayyor! Uni daryoga sudrab olib bor."
+  },
+  "bobo.qayiq.won": {
+    "text": "Mana, qayig'ing tayyor! Endi daryodan suzib o'tamiz."
+  },
+  "bobo.daryo.outro": {
+    "text": "Daryodan o'tdik! Endi Qizilqum cho'li kutmoqda."
+  },
+  "bobo.qizilqum.intro": {
+    "text": "Cho'l yo'li uzoq, suv yo'q. Ot va mesh kerak!"
+  },
+  "bobo.qizilqum.yol": {
+    "text": "To'g'ri yo'lni topamiz. Savolni diqqat bilan o'qi."
+  },
+  "bobo.qizilqum.puzzle": {
+    "text": "Cho'l rasmini yig'amiz. Shoshilmasdan joyla."
+  },
+  "bobo.qizilqum.krossvord": {
+    "text": "Geografik krossvord. Savolni bos va javobni yoz."
+  },
+  "bobo.qizilqum.memory": {
+    "text": "Kartalarni ochib, juftini top. Bu qo'shimcha sinov."
+  },
+  "bobo.qizilqum.sorting": {
+    "text": "Daryolarni tartiblang. Bu qo'shimcha sinov."
+  },
+  "bobo.qizilqum.obstacle": {
+    "text": "Ot ham, mesh ham tayyor! Ularni cho'lga olib bor."
+  },
+  "bobo.ot-mesh.won": {
+    "text": "Otimiz egarlandi, meshimiz to'la! Cho'ldan o'tamiz."
+  },
+  "bobo.qizilqum.outro": {
+    "text": "Cho'ldan eson-omon o'tdik. Oldinda baland tog'."
+  },
+  "bobo.tog.intro": {
+    "text": "Tog'da chuqur jarlik bor. Arqon kerak, bolam!"
+  },
+  "bobo.tog.boshqotirma": {
+    "text": "Bosh qotirmalar! Yaxshilab o'ylab, javobni tanla."
+  },
+  "bobo.tog.algoritm": {
+    "text": "Qadamlarni to'g'ri tartibga qo'y. Keyin tekshir."
+  },
+  "bobo.tog.puzzle": {
+    "text": "Tog' rasmini yig'amiz. Bo'laklarni almashtir."
+  },
+  "bobo.tog.memory": {
+    "text": "Juftlarni top. Bu qo'shimcha sinov."
+  },
+  "bobo.tog.krossvord": {
+    "text": "Informatika krossvordi. Bu qo'shimcha sinov."
+  },
+  "bobo.tog.obstacle": {
+    "text": "Arqon tayyor! Uni jarlikka tashla."
+  },
+  "bobo.arqon.won": {
+    "text": "Uch bo'lak tugun bilan bog'landi. Arqon tayyor!"
+  },
+  "bobo.tog.outro": {
+    "text": "Jarlikdan o'tdik! Endi dev g'ori yaqin."
+  },
+  "bobo.gor.intro": {
+    "text": "Bu dev g'ori. Qilich va qalqon kerak bo'ladi."
+  },
+  "bobo.gor.tarix": {
+    "text": "Voqealarni vaqt bo'yicha tartibla. Keyin tekshir."
+  },
+  "bobo.gor.puzzle": {
+    "text": "G'or rasmini yig'amiz. Qo'rqma, men yoningdaman."
+  },
+  "bobo.gor.savollar": {
+    "text": "Tarix savollari. O'tmishni bilgan yo'ldan adashmaydi."
+  },
+  "bobo.gor.memory": {
+    "text": "Juftlarni top. Bu qo'shimcha sinov."
+  },
+  "bobo.gor.aralash": {
+    "text": "Aralash savollar. Bu qo'shimcha sinov."
+  },
+  "bobo.gor.obstacle": {
+    "text": "Dev savol beradi. To'g'ri javob — qilich zarbasi!"
+  },
+  "bobo.qilich-qalqon.won": {
+    "text": "Qilich ham, qalqon ham tayyor! Endi devning oldiga boramiz."
+  },
+  "bobo.gor.outro": {
+    "text": "Dev yengildi! Endi dev qal'asiga boramiz."
+  },
+  "bobo.qala.intro": {
+    "text": "Bu dev qal'asi. Darvoza sehrlangan. Sehrli tumor kerak!"
+  },
+  "bobo.qala.sinov1": {
+    "text": "Hamma bilganingni esla. Savolni diqqat bilan o'qi."
+  },
+  "bobo.qala.memory": {
+    "text": "Butun sayohatimizni eslaymiz. Juftini top."
+  },
+  "bobo.qala.puzzle": {
+    "text": "Bilim kitobi sahifalari yirtilgan. Ularni yig'amiz!"
+  },
+  "bobo.qala.sinov2": {
+    "text": "Matematika va geografiya. Bu qo'shimcha sinov."
+  },
+  "bobo.qala.sorting": {
+    "text": "Karvon yo'lini tartiblang. Bu qo'shimcha sinov."
+  },
+  "bobo.qala.obstacle": {
+    "text": "Tumor tayyor! Uni sehrlangan darvozaga olib bor."
+  },
+  "bobo.tumor.won": {
+    "text": "Sehrli tumor tayyor! Endi darvozani ochamiz."
+  },
+  "bobo.qala.outro": {
+    "text": "Bilim kitobi qaytdi! Maktablarda harflar yana yondi. Rahmat, bolam!"
+  },
+  "bobo.battle.block": {
+    "text": "Qalqon seni himoya qildi! Yana urin."
+  },
+  "bobo.battle.won": {
+    "text": "Dev yengildi! Bilim kitobi bizniki."
+  },
+  "bobo.battle.won.kichik": {
+    "text": "Devning sehri sindi! U kechirim so'rab qochdi."
+  }
 }

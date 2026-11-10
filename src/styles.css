@@ -271,7 +271,9 @@ legend { font-weight: 700; margin-bottom: 8px; }
 
 /* ---------- Crossword ---------- */
 .crossword, .memory, .sorting { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px; }
-.cw-grid { display: grid; gap: 2px; width: 100%; max-width: 420px; margin: 0 auto 12px; }
+.cw-scroll { overflow-x: auto; margin: 0 -4px 12px; padding: 0 4px; }
+.cw-grid { display: grid; gap: 2px; margin: 0 auto; }
+.crossword, .memory, .sorting, .riddle, .puzzle, .battle { min-width: 0; overflow-wrap: anywhere; }
 .cw-cell {
   position: relative; background: #fff; border: 2px solid #8a5a2b; border-radius: 4px; display: grid; place-items: center;
   font-weight: 800; font-size: clamp(0.7rem, 3.6vw, 1.2rem); aspect-ratio: 1; min-width: 0; text-transform: uppercase;
@@ -280,13 +282,14 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .cw-cell.empty { background: transparent; border-color: transparent; }
 .cw-cell.active { background: #fff6d6; border-color: var(--gold); }
 .cw-cell.solved { background: #e9f7e1; border-color: var(--green); }
-.cw-answer { display: grid; gap: 8px; margin-bottom: 10px; }
+.cw-answer { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-bottom: 10px; }
 .cw-clue { margin: 0; font-size: 1.05rem; }
 .tier-kichik .cw-clue { font-size: 1.2rem; }
 .cw-pic { font-size: 2.2rem; margin-right: 6px; vertical-align: middle; }
-.cw-row { display: flex; gap: 8px; }
+.cw-row { display: flex; gap: 8px; min-width: 0; }
+.cw-row .btn { flex: none; }
 .cw-row input {
-  flex: 1; min-width: 0; font: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  flex: 1; min-width: 0; width: 100%; font: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
   padding: 10px 12px; border-radius: 12px; border: 2px solid var(--sand-2);
 }
 .cw-clues { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
@@ -321,3 +324,57 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .sort-arrows { display: grid; gap: 4px; }
 .sort-arrows button { border: 0; border-radius: 8px; width: 44px; flex: 1; background: var(--sand); font-size: 0.9rem; min-height: 24px; }
 .sort-actions { display: grid; gap: 8px; margin-top: 10px; }
+
+/* ---------- Obstacle scenes ---------- */
+.scene-svg { width: 100%; display: block; border-radius: 12px; }
+.scene-dark { transition: opacity 1s ease; }
+.scene-svg.open .scene-dark { opacity: 0; }
+.scene-cross { animation: cross 1.4s ease-in-out forwards; }
+@keyframes cross { from { transform: translateY(0); } to { transform: translateY(-150px); } }
+.scene-ride { animation: ride 1.4s ease-in-out forwards; }
+@keyframes ride { to { transform: translateX(200px); } }
+.scene-rope { stroke-dasharray: 120; animation: rope 0.8s ease-out; }
+@keyframes rope { from { stroke-dashoffset: 120; } to { stroke-dashoffset: 0; } }
+.magic-ring { animation: spin 4s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.castle-door { transition: fill 0.8s; }
+
+/* ---------- Dev battle ---------- */
+.battle { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px; text-align: center; }
+.hp { display: flex; gap: 4px; justify-content: center; margin-bottom: 6px; }
+.hp-seg { width: 30px; height: 12px; border-radius: 6px; background: #ddd; }
+.hp-seg.on { background: linear-gradient(90deg, #8e44ad, #c56cf0); }
+.battle-stage { position: relative; display: flex; align-items: center; justify-content: center; gap: 4px; }
+.dev { width: 150px; height: 160px; transition: transform 0.4s, opacity 0.8s; }
+.dev-hit { animation: shake 0.3s; }
+.phase-hit .sword { animation: swing 0.4s; }
+.phase-block .shield { animation: block 0.4s; }
+@keyframes swing { 50% { transform: translateX(-40px) rotate(-40deg); } }
+@keyframes block { 50% { transform: scale(1.4); } }
+.weapon { font-size: 2.6rem; }
+.dev-won.dev-soft { transform: scale(0.45) translateX(220px); opacity: 0.4; }
+.dev-won:not(.dev-soft) { opacity: 0; filter: blur(6px); transform: scale(1.2); }
+.dev-magic { animation: pulse 1.2s infinite; transform-box: fill-box; transform-origin: center; }
+.dev-says { background: #f3e9ff; border-radius: 14px; padding: 10px; margin: 8px 0; font-weight: 700; }
+.battle-stage .dev-says { position: absolute; bottom: -6px; left: 0; right: 0; }
+.timer { font-weight: 800; color: var(--terra); margin: 0 0 6px; }
+
+/* ---------- Certificate ---------- */
+.certificate {
+  background: #fffdf5; border: 6px double var(--gold); border-radius: 12px; padding: 18px 14px; text-align: center; margin: 6px 0;
+}
+.certificate h1 { margin: 2px 0; letter-spacing: 0.2em; color: var(--lapis); }
+.cert-top { margin: 0; color: var(--muted); font-weight: 700; }
+.cert-badge { display: inline-block; background: var(--gold); border-radius: 999px; padding: 4px 14px; font-weight: 800; margin: 4px 0; }
+.cert-kumush .cert-badge { background: #cfd8dc; }
+.cert-bronza .cert-badge { background: #e0a272; }
+.cert-name { font-size: 1.6rem; font-weight: 800; margin: 4px 0; color: var(--terra); }
+.cert-stars { font-weight: 800; }
+.cert-sign { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 0.85rem; margin: 10px 0; }
+@media print {
+  .topbar, .bobo, .result-actions, .no-print, .done-emoji, .done h1, .done > .result-card > p { display: none !important; }
+  .app { padding: 0; }
+  .certificate { border-width: 10px; margin: 0; page-break-inside: avoid; }
+}
+.cw-swipe { margin: 0 0 4px; font-size: 0.8rem; text-align: center; }
+.cw-scroll { background: linear-gradient(90deg, rgba(0,0,0,.05), transparent 12px, transparent calc(100% - 12px), rgba(0,0,0,.05)); }

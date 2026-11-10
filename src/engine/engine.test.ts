@@ -55,7 +55,7 @@ describe('starsFor', () => {
 describe('recordTask — nothing is ever taken away', () => {
   it('gives the part and 10 coins the first time', () => {
     const o = recordTask(withKid(), task('ona-qishloq-01'), village, 2, 1);
-    expect(o.newPart).toBe('dasta');
+    expect(o.newParts).toEqual(['dasta']);
     expect(o.coinsEarned).toBe(10);
     expect(o.progress.inventory.kalit).toEqual(['dasta']);
     expect(o.progress.tasks['ona-qishloq-01']).toEqual({ stars: 2, plays: 1, bestMistakes: 1 });
@@ -68,7 +68,7 @@ describe('recordTask — nothing is ever taken away', () => {
     expect(p.tasks['ona-qishloq-01']).toEqual({ stars: 3, plays: 2, bestMistakes: 0 });
     expect(p.coins).toBe(10);
     expect(p.inventory.kalit).toEqual(['dasta']);
-    expect(worse.newPart).toBeNull();
+    expect(worse.newParts).toEqual([]);
     expect(worse.starsImproved).toBe(false);
   });
 
@@ -79,7 +79,7 @@ describe('recordTask — nothing is ever taken away', () => {
 
   it('bonus tasks give coins/stars but no part', () => {
     const o = recordTask(withKid(6), task('ona-qishloq-04'), village, 3, 0);
-    expect(o.newPart).toBeNull();
+    expect(o.newParts).toEqual([]);
     expect(o.coinsEarned).toBe(10);
     expect(o.progress.inventory).toEqual({});
   });
@@ -109,7 +109,7 @@ describe('item and level flow', () => {
     expect(c.levels.map((l) => levelStatus(p, c.levels, l))).toEqual(['open', 'locked', 'locked', 'locked', 'locked', 'locked', 'locked']);
     p = completeLevel(collectKey(p), village, c.items);
     expect(levelStatus(p, c.levels, village)).toBe('done');
-    expect(levelStatus(p, c.levels, forest)).toBe('soon'); // ochiq, lekin mazmun hali yozilmagan
+    expect(levelStatus(p, c.levels, forest)).toBe('open');
     expect(levelStatus(p, c.levels, river)).toBe('locked');
   });
 
@@ -231,6 +231,7 @@ describe('moslashuvchan qiyinlik', () => {
     expect(effectiveTier(t01, 'olim', 1)).toBe('olim');
     expect(effectiveTier(t04, 'karvon', -1)).toBe('karvon');
     expect(effectiveTier(t01, 'kichik', -1)).toBe('kichik');
+    expect(effectiveTier(t01, 'kichik', 1)).toBe('kichik'); // kichiklar uchun matn qoidasi
   });
 
   it('recordTask updates adaptive state and best time', () => {
@@ -249,5 +250,12 @@ describe('moslashuvchan qiyinlik', () => {
     const old = { version: 1, profile: { name: 'A', grade: 3 }, coins: 10, inventory: {}, completedLevels: [], tasks: {}, hintsUsed: {} };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(old));
     expect(createLocalStore().load().adaptive).toEqual({ shift: 0, streak: 0 });
+  });
+});
+
+describe('soon status', () => {
+  it('a level without tasks shows as "soon" once unlocked', () => {
+    const p = completeLevel(collectKey(withKid()), village, c.items);
+    expect(levelStatus(p, c.levels, { ...forest, tasks: [] })).toBe('soon');
   });
 });

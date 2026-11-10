@@ -1,0 +1,329 @@
+[
+  {
+    "id": "qala-01",
+    "level": "qala",
+    "game": "riddle",
+    "title": "Ona tili va tabiat",
+    "rewardPart": "kok-tosh",
+    "bobo": "bobo.qala.sinov1",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "Qaysi so'z to'g'ri yozilgan?",
+            "options": [
+              "Kitob",
+              "Kitop",
+              "Kiteb"
+            ],
+            "answer": 0,
+            "hint": "Oxirgi harfni sekin ayt.",
+            "picture": "📖"
+          },
+          {
+            "q": "Qaysi hayvon tuxum qo'yadi?",
+            "options": [
+              "Mushuk",
+              "Tovuq",
+              "Sigir"
+            ],
+            "answer": 1,
+            "hint": "U katakda yashaydi."
+          },
+          {
+            "q": "Bahorda daraxtda nima paydo bo'ladi?",
+            "options": [
+              "Qor",
+              "Gul",
+              "Muz"
+            ],
+            "answer": 1,
+            "hint": "U chiroyli va xushbo'y."
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "Qaysi gapda ot so'z turkumidagi so'z ajratilgan: \"Bola KITOB o'qidi\"?",
+            "options": [
+              "KITOB",
+              "o'qidi",
+              "Bola va o'qidi"
+            ],
+            "answer": 0,
+            "hint": "Ot \"nima?\" so'rog'iga javob beradi."
+          },
+          {
+            "q": "Qaysi biri sut emizuvchi?",
+            "options": [
+              "Delfin",
+              "Akula",
+              "Timsoh"
+            ],
+            "answer": 0,
+            "hint": "U bolasini sut bilan boqadi, dengizda yashaydi."
+          },
+          {
+            "q": "\"Sabr tagi — sariq ...\"",
+            "options": [
+              "oltin",
+              "kumush",
+              "mis"
+            ],
+            "answer": 0,
+            "hint": "Eng qimmatli sariq metall."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Qaysi qatorda faqat sifatlar berilgan?",
+            "options": [
+              "katta, yashil, aqlli",
+              "yugurmoq, kitob, tez",
+              "bilim, maktab, ustoz"
+            ],
+            "answer": 0,
+            "hint": "Sifat \"qanday?\" so'rog'iga javob beradi."
+          },
+          {
+            "q": "Hujayraning \"energiya stansiyasi\" qaysi organoid?",
+            "options": [
+              "Mitoxondriya",
+              "Ribosoma",
+              "Lizosoma"
+            ],
+            "answer": 0,
+            "hint": "Unda hujayra nafasi kechadi va ATF hosil bo'ladi."
+          },
+          {
+            "q": "Qaysi o'simlik O'zbekistonda \"oq oltin\" deb ataladi?",
+            "options": [
+              "Paxta",
+              "Bug'doy",
+              "Sholi"
+            ],
+            "answer": 0,
+            "hint": "Undan ip va mato tayyorlanadi."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "qala-02",
+    "level": "qala",
+    "game": "memory",
+    "title": "Butun sayohat xotirasi",
+    "rewardPart": "oltin-zanjir",
+    "bobo": "bobo.qala.memory",
+    "tiers": {
+      "kichik": {
+        "pairs": [
+          {
+            "a": "🔑",
+            "b": "Darvoza"
+          },
+          {
+            "a": "🔥",
+            "b": "O'rmon"
+          },
+          {
+            "a": "⛵",
+            "b": "Daryo"
+          },
+          {
+            "a": "🐎",
+            "b": "Cho'l"
+          }
+        ],
+        "hint": "Har bir buyum qaysi to'siqni yenggan edi?"
+      },
+      "karvon": {
+        "pairs": [
+          {
+            "a": "🔑 Kalit",
+            "b": "Darvoza"
+          },
+          {
+            "a": "🔥 Mash'al",
+            "b": "Qorong'i o'rmon"
+          },
+          {
+            "a": "⛵ Qayiq",
+            "b": "Katta daryo"
+          },
+          {
+            "a": "🐎 Ot",
+            "b": "Qizilqum"
+          },
+          {
+            "a": "🪢 Arqon",
+            "b": "Jarlik"
+          },
+          {
+            "a": "🛡️ Qalqon",
+            "b": "Dev"
+          }
+        ],
+        "hint": "Har bir buyum qaysi to'siqni yenggan edi?"
+      },
+      "olim": {
+        "pairs": [
+          {
+            "a": "Ona tili",
+            "b": "Ona qishloq"
+          },
+          {
+            "a": "Biologiya",
+            "b": "Qorong'i o'rmon"
+          },
+          {
+            "a": "Matematika",
+            "b": "Katta daryo"
+          },
+          {
+            "a": "Geografiya",
+            "b": "Qizilqum"
+          },
+          {
+            "a": "Mantiq",
+            "b": "Baland tog'"
+          },
+          {
+            "a": "Tarix",
+            "b": "Dev g'ori"
+          }
+        ],
+        "hint": "Har bir bosqichda qaysi fan ustun edi?"
+      }
+    }
+  },
+  {
+    "id": "qala-03",
+    "level": "qala",
+    "game": "puzzle",
+    "title": "Bilim kitobi sahifalari",
+    "rewardPart": "sehrli-yozuv",
+    "bobo": "bobo.qala.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "kitob",
+        "pieces": 9,
+        "caption": "Bilim kitobi"
+      },
+      "karvon": {
+        "image": "kitob",
+        "pieces": 16,
+        "caption": "Bilim kitobi"
+      },
+      "olim": {
+        "image": "kitob",
+        "pieces": 25,
+        "caption": "Bilim kitobi"
+      }
+    }
+  },
+  {
+    "id": "qala-04",
+    "level": "qala",
+    "game": "riddle",
+    "title": "Matematika va geografiya",
+    "bobo": "bobo.qala.sinov2",
+    "tiers": {
+      "karvon": {
+        "questions": [
+          {
+            "q": "Kvadratning tomoni 7 sm. Perimetri qancha?",
+            "options": [
+              "28 sm",
+              "49 sm",
+              "14 sm"
+            ],
+            "answer": 0,
+            "hint": "Kvadratning to'rtta teng tomoni bor."
+          },
+          {
+            "q": "Orol dengizi qaysi davlatlar hududida?",
+            "options": [
+              "O'zbekiston va Qozog'iston",
+              "Turkmaniston va Eron",
+              "Tojikiston va Xitoy"
+            ],
+            "answer": 0,
+            "hint": "Unga Amudaryo va Sirdaryo quyilgan."
+          },
+          {
+            "q": "0,25 qaysi kasrga teng?",
+            "options": [
+              "1/4",
+              "1/2",
+              "2/5"
+            ],
+            "answer": 0,
+            "hint": "Butunni to'rtta teng bo'lakka bo'l."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Funksiya f(x) = x² ning hosilasi?",
+            "options": [
+              "2x",
+              "x",
+              "x³/3"
+            ],
+            "answer": 0,
+            "hint": "Daraja oldinga tushadi va bittaga kamayadi."
+          },
+          {
+            "q": "Yer o'z o'qi atrofida necha soatda bir marta aylanadi?",
+            "options": [
+              "Taxminan 24 soatda",
+              "365 kunda",
+              "12 soatda"
+            ],
+            "answer": 0,
+            "hint": "Bir kecha-kunduz shuncha davom etadi."
+          },
+          {
+            "q": "Sinus 30° = ?",
+            "options": [
+              "1/2",
+              "√3/2",
+              "1"
+            ],
+            "answer": 0,
+            "hint": "30° li burchak qarshisidagi katet gipotenuzaning yarmiga teng."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "qala-05",
+    "level": "qala",
+    "game": "sorting",
+    "title": "Ipak yo'li karvoni",
+    "bobo": "bobo.qala.sorting",
+    "tiers": {
+      "olim": {
+        "prompt": "Ipak yo'li shaharlarini sharqdan g'arbga tartiblang",
+        "items": [
+          "Chang'an (Si'an)",
+          "Qashqar",
+          "Samarqand",
+          "Buxoro",
+          "Marv",
+          "Bag'dod"
+        ],
+        "topLabel": "Sharq",
+        "bottomLabel": "G'arb",
+        "hint": "Xitoy poytaxtidan boshlang, Mesopotamiyada tugating."
+      }
+    }
+  }
+]

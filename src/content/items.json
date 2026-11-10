@@ -1,43 +1,171 @@
 [
-  { "id": "kalit", "name": "Kalit", "icon": "🔑",
+  {
+    "id": "kalit",
+    "name": "Kalit",
+    "icon": "🔑",
     "parts": [
-      { "id": "dasta", "name": "Kalit dastasi", "icon": "🟤" },
-      { "id": "tishlar", "name": "Kalit tishlari", "icon": "⚙️" },
-      { "id": "halqa", "name": "Kalit halqasi", "icon": "⭕" }
-    ] },
-  { "id": "mashal", "name": "Mash'al", "icon": "🔥",
+      {
+        "id": "dasta",
+        "name": "Kalit dastasi",
+        "icon": "🟤"
+      },
+      {
+        "id": "tishlar",
+        "name": "Kalit tishlari",
+        "icon": "⚙️"
+      },
+      {
+        "id": "halqa",
+        "name": "Kalit halqasi",
+        "icon": "⭕"
+      }
+    ]
+  },
+  {
+    "id": "mashal",
+    "name": "Mash'al",
+    "icon": "🔥",
     "parts": [
-      { "id": "tayoq", "name": "Tayoq", "icon": "🪵" },
-      { "id": "latta", "name": "Latta", "icon": "🧣" },
-      { "id": "chaqmoqtosh", "name": "Chaqmoqtosh", "icon": "🪨" }
-    ] },
-  { "id": "qayiq", "name": "Qayiq", "icon": "⛵",
+      {
+        "id": "tayoq",
+        "name": "Tayoq",
+        "icon": "🪵"
+      },
+      {
+        "id": "latta",
+        "name": "Latta",
+        "icon": "🧣"
+      },
+      {
+        "id": "chaqmoqtosh",
+        "name": "Chaqmoqtosh",
+        "icon": "🪨"
+      }
+    ]
+  },
+  {
+    "id": "qayiq",
+    "name": "Qayiq",
+    "icon": "⛵",
     "parts": [
-      { "id": "taxta", "name": "Taxta", "icon": "🪵" },
-      { "id": "eshkak", "name": "Eshkak", "icon": "🏏" },
-      { "id": "yelkan", "name": "Yelkan", "icon": "🏳️" }
-    ] },
-  { "id": "ot-mesh", "name": "Ot va suv meshi", "icon": "🐎",
+      {
+        "id": "taxta",
+        "name": "Taxta",
+        "icon": "🪵"
+      },
+      {
+        "id": "eshkak",
+        "name": "Eshkak",
+        "icon": "🏏"
+      },
+      {
+        "id": "yelkan",
+        "name": "Yelkan",
+        "icon": "🏳️"
+      }
+    ]
+  },
+  {
+    "id": "ot-mesh",
+    "name": "Ot va suv meshi",
+    "icon": "🐎",
     "parts": [
-      { "id": "egar", "name": "Egar", "icon": "🪑" },
-      { "id": "jilov", "name": "Jilov", "icon": "➰" },
-      { "id": "mesh", "name": "Suv meshi", "icon": "💧" }
-    ] },
-  { "id": "arqon", "name": "Arqon", "icon": "🪢",
+      {
+        "id": "egar",
+        "name": "Egar",
+        "icon": "🪑"
+      },
+      {
+        "id": "jilov",
+        "name": "Jilov",
+        "icon": "➰"
+      },
+      {
+        "id": "mesh",
+        "name": "Suv meshi",
+        "icon": "💧"
+      }
+    ]
+  },
+  {
+    "id": "arqon",
+    "name": "Arqon",
+    "icon": "🪢",
     "parts": [
-      { "id": "bolak-1", "name": "1-arqon bo'lagi", "icon": "〰️" },
-      { "id": "bolak-2", "name": "2-arqon bo'lagi", "icon": "〰️" },
-      { "id": "bolak-3", "name": "3-arqon bo'lagi", "icon": "〰️" }
-    ] },
-  { "id": "qilich-qalqon", "name": "Qilich va qalqon", "icon": "🛡️",
+      {
+        "id": "bolak-1",
+        "name": "1-arqon bo'lagi",
+        "icon": "〰️"
+      },
+      {
+        "id": "bolak-2",
+        "name": "2-arqon bo'lagi",
+        "icon": "〰️"
+      },
+      {
+        "id": "bolak-3",
+        "name": "3-arqon bo'lagi",
+        "icon": "〰️"
+      }
+    ]
+  },
+  {
+    "id": "qilich-qalqon",
+    "name": "Qilich va qalqon",
+    "icon": "🛡️",
     "parts": [
-      { "id": "tig", "name": "Qilich tig'i", "icon": "🗡️" },
-      { "id": "sop", "name": "Qilich dastasi", "icon": "🟫" },
-      { "id": "qin", "name": "Qilich qini", "icon": "📏" },
-      { "id": "temir-1", "name": "1-temir bo'lak", "icon": "🔩" },
-      { "id": "temir-2", "name": "2-temir bo'lak", "icon": "🔩" },
-      { "id": "temir-3", "name": "3-temir bo'lak", "icon": "🔩" }
-    ] },
-  { "id": "tumor", "name": "Sehrli kalit-tumor", "icon": "🧿",
-    "parts": [ { "id": "tumor", "name": "Tumor", "icon": "🧿" } ] }
+      {
+        "id": "tig",
+        "name": "Qilich tig'i",
+        "icon": "🗡️"
+      },
+      {
+        "id": "sop",
+        "name": "Qilich dastasi",
+        "icon": "🟫"
+      },
+      {
+        "id": "qin",
+        "name": "Qilich qini",
+        "icon": "📏"
+      },
+      {
+        "id": "temir-1",
+        "name": "1-temir bo'lak",
+        "icon": "🔩"
+      },
+      {
+        "id": "temir-2",
+        "name": "2-temir bo'lak",
+        "icon": "🔩"
+      },
+      {
+        "id": "temir-3",
+        "name": "3-temir bo'lak",
+        "icon": "🔩"
+      }
+    ]
+  },
+  {
+    "id": "tumor",
+    "name": "Sehrli kalit-tumor",
+    "icon": "🧿",
+    "parts": [
+      {
+        "id": "kok-tosh",
+        "name": "Ko'k tosh",
+        "icon": "💎"
+      },
+      {
+        "id": "oltin-zanjir",
+        "name": "Oltin zanjir",
+        "icon": "📿"
+      },
+      {
+        "id": "sehrli-yozuv",
+        "name": "Sehrli yozuv",
+        "icon": "📜"
+      }
+    ]
+  }
 ]

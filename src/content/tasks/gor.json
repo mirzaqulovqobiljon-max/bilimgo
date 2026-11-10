@@ -1,0 +1,333 @@
+[
+  {
+    "id": "gor-01",
+    "level": "gor",
+    "game": "sorting",
+    "title": "Vaqt chizig'i",
+    "rewardPart": [
+      "tig",
+      "temir-1"
+    ],
+    "bobo": "bobo.gor.tarix",
+    "tiers": {
+      "kichik": {
+        "prompt": "Inson hayoti bosqichlarini tartibla",
+        "items": [
+          "Chaqaloq",
+          "Bola",
+          "O'smir",
+          "Katta odam",
+          "Qariya"
+        ],
+        "topLabel": "Eng kichik yosh",
+        "bottomLabel": "Eng katta yosh",
+        "hint": "Eng kichik yoshdan boshla."
+      },
+      "karvon": {
+        "prompt": "Allomalarni yashagan davri bo'yicha tartibla",
+        "items": [
+          "Al-Xorazmiy",
+          "Ibn Sino",
+          "Amir Temur",
+          "Mirzo Ulug'bek",
+          "Alisher Navoiy",
+          "Zahiriddin Bobur"
+        ],
+        "topLabel": "Eng qadimgi",
+        "bottomLabel": "Eng keyingi",
+        "hint": "Temur Ulug'bekning bobosi bo'lgan."
+      },
+      "olim": {
+        "prompt": "Voqealarni xronologik tartibda joylashtiring",
+        "items": [
+          "Iskandar Zulqarnaynning O'rta Osiyoga yurishi",
+          "Arablarning Movarounnahrni bosib olishi",
+          "Somoniylar davlati",
+          "Mo'g'ullar istilosi",
+          "Temuriylar davlatining tashkil topishi",
+          "O'zbekiston mustaqilligi"
+        ],
+        "topLabel": "Eng qadimgi",
+        "bottomLabel": "Eng yangi",
+        "hint": "Mo'g'ullar istilosi Temurdan oldin bo'lgan."
+      }
+    }
+  },
+  {
+    "id": "gor-02",
+    "level": "gor",
+    "game": "puzzle",
+    "title": "Dev g'ori",
+    "rewardPart": [
+      "sop",
+      "temir-2"
+    ],
+    "bobo": "bobo.gor.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "gor",
+        "pieces": 9,
+        "caption": "Dev g'ori"
+      },
+      "karvon": {
+        "image": "gor",
+        "pieces": 16,
+        "caption": "Dev g'ori"
+      },
+      "olim": {
+        "image": "gor",
+        "pieces": 25,
+        "caption": "Dev g'ori"
+      }
+    }
+  },
+  {
+    "id": "gor-03",
+    "level": "gor",
+    "game": "riddle",
+    "title": "Tarix savollari",
+    "rewardPart": [
+      "qin",
+      "temir-3"
+    ],
+    "bobo": "bobo.gor.savollar",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "O'zbekiston poytaxti qaysi shahar?",
+            "options": [
+              "Samarqand",
+              "Toshkent",
+              "Buxoro"
+            ],
+            "answer": 1,
+            "hint": "Eng katta shahrimiz, metrosi bor."
+          },
+          {
+            "q": "Registon qaysi shaharda?",
+            "options": [
+              "Samarqand",
+              "Xiva",
+              "Toshkent"
+            ],
+            "answer": 0,
+            "hint": "U yerda Ulug'bek rasadxonasi bor."
+          },
+          {
+            "q": "Mustaqillik kuni qachon nishonlanadi?",
+            "options": [
+              "1-sentabr",
+              "1-yanvar",
+              "8-mart"
+            ],
+            "answer": 0,
+            "hint": "Kuz boshlanadigan kun."
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "\"Boburnoma\" asarining muallifi kim?",
+            "options": [
+              "Bobur",
+              "Navoiy",
+              "Ibn Sino"
+            ],
+            "answer": 0,
+            "hint": "U Andijonda tug'ilib, Hindistonda saltanat qurgan."
+          },
+          {
+            "q": "Ulug'bek rasadxonasi qaysi shaharda?",
+            "options": [
+              "Buxoro",
+              "Samarqand",
+              "Termiz"
+            ],
+            "answer": 1,
+            "hint": "Registon ham shu shaharda."
+          },
+          {
+            "q": "\"Algebra\" so'zi qaysi alloma kitobidan kelib chiqqan?",
+            "options": [
+              "Al-Xorazmiy",
+              "Beruniy",
+              "Farg'oniy"
+            ],
+            "answer": 0,
+            "hint": "Uning ismidan \"algoritm\" so'zi ham kelib chiqqan."
+          },
+          {
+            "q": "Ibn Sino asosan qaysi soha bilan mashhur?",
+            "options": [
+              "Tibbiyot",
+              "Astronomiya",
+              "Me'morlik"
+            ],
+            "answer": 0,
+            "hint": "\"Tib qonunlari\" kitobini yozgan."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "Amir Temur davlatining poytaxti qaysi shahar edi?",
+            "options": [
+              "Shahrisabz",
+              "Samarqand",
+              "Hirot"
+            ],
+            "answer": 1,
+            "hint": "U yerda Go'ri Amir maqbarasi bor."
+          },
+          {
+            "q": "Somoniylar davlatining poytaxti qaysi shahar edi?",
+            "options": [
+              "Buxoro",
+              "Samarqand",
+              "Marv"
+            ],
+            "answer": 0,
+            "hint": "Ismoil Somoniy maqbarasi shu shaharda."
+          },
+          {
+            "q": "Buyuk Ipak yo'li qachondan faol ishlay boshlagan?",
+            "options": [
+              "Mil. avv. II asrdan",
+              "XV asrdan",
+              "XIX asrdan"
+            ],
+            "answer": 0,
+            "hint": "Xitoydagi Xan sulolasi davri."
+          },
+          {
+            "q": "1991-yil 31-avgustda nima bo'lgan?",
+            "options": [
+              "O'zbekiston mustaqilligi e'lon qilingan",
+              "Toshkent metrosi ochilgan",
+              "Toshkentda zilzila bo'lgan"
+            ],
+            "answer": 0,
+            "hint": "Bayram ertasi kuni nishonlanadi."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "gor-04",
+    "level": "gor",
+    "game": "memory",
+    "title": "Allomalar",
+    "bobo": "bobo.gor.memory",
+    "tiers": {
+      "karvon": {
+        "pairs": [
+          {
+            "a": "Al-Xorazmiy",
+            "b": "Algebra"
+          },
+          {
+            "a": "Ibn Sino",
+            "b": "Tibbiyot"
+          },
+          {
+            "a": "Ulug'bek",
+            "b": "Astronomiya"
+          },
+          {
+            "a": "Navoiy",
+            "b": "\"Xamsa\""
+          },
+          {
+            "a": "Bobur",
+            "b": "\"Boburnoma\""
+          },
+          {
+            "a": "Behzod",
+            "b": "Miniatura"
+          }
+        ],
+        "hint": "Har bir allomaning eng mashhur ishini esla."
+      },
+      "olim": {
+        "pairs": [
+          {
+            "a": "\"Tib qonunlari\"",
+            "b": "Ibn Sino"
+          },
+          {
+            "a": "\"Hindiston\"",
+            "b": "Beruniy"
+          },
+          {
+            "a": "\"Ziji Ko'ragoniy\"",
+            "b": "Ulug'bek"
+          },
+          {
+            "a": "\"Xamsa\"",
+            "b": "Navoiy"
+          },
+          {
+            "a": "\"Boburnoma\"",
+            "b": "Bobur"
+          },
+          {
+            "a": "\"Devonu lug'otit turk\"",
+            "b": "Mahmud Koshg'ariy"
+          },
+          {
+            "a": "\"Qutadg'u bilig\"",
+            "b": "Yusuf Xos Hojib"
+          }
+        ],
+        "hint": "Har bir kitob muallifini esla."
+      }
+    }
+  },
+  {
+    "id": "gor-05",
+    "level": "gor",
+    "game": "riddle",
+    "title": "Aralash sinov",
+    "bobo": "bobo.gor.aralash",
+    "tiers": {
+      "olim": {
+        "questions": [
+          {
+            "q": "Nyutonning ikkinchi qonuni qaysi formula bilan ifodalanadi?",
+            "options": [
+              "F = ma",
+              "E = mc²",
+              "P = UI"
+            ],
+            "answer": 0,
+            "hint": "Kuch massa va tezlanish bilan bog'liq."
+          },
+          {
+            "q": "\"Knowledge\" so'zining tarjimasi?",
+            "options": [
+              "Bilim",
+              "Kitob",
+              "Maktab"
+            ],
+            "answer": 0,
+            "hint": "Hikoyamizdagi o'g'irlangan kitob nomida bor."
+          },
+          {
+            "q": "H₂O formulasi qaysi moddaga tegishli?",
+            "options": [
+              "Suv",
+              "Tuz",
+              "Shakar"
+            ],
+            "answer": 0,
+            "hint": "Ikki vodorod va bir kislorod atomi."
+          }
+        ]
+      }
+    }
+  }
+]

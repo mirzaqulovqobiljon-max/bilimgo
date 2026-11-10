@@ -20,12 +20,26 @@ export const ItemSchema = z.object({
 export type Item = z.infer<typeof ItemSchema>;
 
 // ---------- Levels ----------
+// (RiddleQuestionSchema pastda e'lon qilingan — dev jangi savollari uchun lazy)
+const BattleSchema = z.lazy(() =>
+  z.object({
+    kichik: z.object({ questions: z.array(RiddleQuestionSchema).min(1) }),
+    karvon: z.object({ questions: z.array(RiddleQuestionSchema).min(1) }),
+    olim: z.object({ questions: z.array(RiddleQuestionSchema).min(1) }),
+  }),
+);
 export const LevelSchema = z.object({
   id,
   order: z.number().int().positive(),
   title: z.string().min(1),
   subject: z.string().min(1),
-  obstacle: z.object({ type: z.string().min(1), title: z.string().min(1), requires: id }),
+  obstacle: z.object({
+    type: z.string().min(1),
+    title: z.string().min(1),
+    requires: id,
+    /** Bo'lsa — to'siq buyumni sudrash emas, dev bilan savol-javob jangi. */
+    battle: BattleSchema.optional(),
+  }),
   reward: id,
   intro: boboKey,
   outro: boboKey.optional(),
@@ -120,7 +134,8 @@ export const TaskSchema = z
     level: id,
     game: z.enum(GAME_TYPES as [GameType, ...GameType[]]),
     title: z.string().min(1),
-    rewardPart: id.optional(), // bonus tasks give only stars/coins
+    // bitta qism yoki bir nechta (qilich-qalqon 6 qism, kichiklarda 3 topshiriq); yo'q — bonus topshiriq
+    rewardPart: z.union([id, z.array(id).min(1)]).optional(),
     bobo: boboKey,
     tiers: TierMapSchema,
   })
@@ -153,3 +168,9 @@ export type BoboDict = z.infer<typeof BoboDictSchema>;
 export type RiddleTask = Task & { game: 'riddle' };
 export type PuzzleTask = Task & { game: 'puzzle' };
 export type GameContent<G extends GameType> = z.infer<(typeof GAME_CONTENT_SCHEMAS)[G]>;
+
+/** Topshiriq beradigan qismlar ro'yxati. */
+export function partsOf(task: Pick<Task, 'rewardPart'>): string[] {
+  if (!task.rewardPart) return [];
+  return Array.isArray(task.rewardPart) ? task.rewardPart : [task.rewardPart];
+}

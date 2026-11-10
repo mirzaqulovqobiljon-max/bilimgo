@@ -6,6 +6,7 @@ import {
   REST_GAMES,
   TIERS,
   TaskSchema,
+  partsOf,
   type BoboDict,
   type Item,
   type Level,
@@ -50,6 +51,34 @@ export function tasksForTier(level: Level, tasks: readonly Task[], tier: Tier): 
   return level.tasks
     .map((id) => byId.get(id))
     .filter((t): t is Task => t !== undefined && t.tiers[tier] !== undefined);
+}
+
+/** Dev jangi: zarbalar soni (jon chizig'i). Rejada: 5 zarba; olim — 7 savol. */
+export const BATTLE_HP: Record<Tier, number> = { kichik: 5, karvon: 5, olim: 7 };
+
+type Question = { q: string; options: string[]; answer: number; hint: string };
+
+function checkQuestions(qs: Question[], w: string, tier: Tier): string[] {
+  const errors: string[] = [];
+  qs.forEach((q, i) => {
+    const answer = q.options[q.answer] ?? '';
+    // Bobo javobni hech qachon to'g'ridan-to'g'ri aytmaydi.
+    const a = normalize(answer);
+    // 1-2 belgili javoblar (A, 7, 12) har qanday matnda uchraydi — ularni alohida so'z sifatida qidiramiz.
+    const leaks =
+      a.length > 2
+        ? normalize(q.hint).includes(a)
+        : a.length > 0 && q.hint.split(/[\s,.;:!?()"'«»—-]+/).some((t) => normalize(t) === a);
+    if (leaks) {
+      errors.push(`${w} [${tier}] savol ${i + 1}: maslahat javobni oshkor qilyapti ("${answer}")`);
+    }
+    if (tier === 'kichik') {
+      for (const [field, text] of [['q', q.q], ['hint', q.hint]] as const) {
+        if (longestSentenceWords(text) > MAX_WORDS_KICHIK) errors.push(`${w} [kichik] savol ${i + 1}.${field}: gap juda uzun`);
+      }
+    }
+  });
+  return errors;
 }
 
 const normalize = (s: string) => s.toLocaleLowerCase('uz').replace(/[^\p{L}\p{N}]/gu, '');
@@ -113,6 +142,17 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
       if (!t) errors.push(`${w}: topshiriq topilmadi "${tid}"`);
       else if (t.level !== level.id) errors.push(`${w}: ${tid}.level = "${t.level}"`);
     }
+    if (level.tasks.length > 0) {
+      boboKey(`bobo.${level.id}.obstacle`, w);
+      boboKey(`bobo.${level.reward}.won`, w);
+    }
+    if (level.obstacle.battle) {
+      for (const tier of TIERS) {
+        const qs = level.obstacle.battle[tier].questions;
+        if (qs.length < BATTLE_HP[tier]) errors.push(`${w} [${tier}]: dev jangi uchun kamida ${BATTLE_HP[tier]} savol kerak`);
+        errors.push(...checkQuestions(qs, `${w} jang`, tier));
+      }
+    }
     if (level.tasks.length === 0 || !reward) continue;
 
     for (const tier of TIERS) {
@@ -122,7 +162,7 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
         errors.push(`${tw}: ${TASKS_PER_TIER[tier]} ta topshiriq kerak, ${seq.length} ta bor`);
       }
       // Every tier must be able to assemble the full item — a weak pupil must be able to finish.
-      const given = seq.map((t) => t.rewardPart).filter((p): p is string => !!p);
+      const given = seq.flatMap(partsOf);
       for (const part of reward.parts) {
         if (!given.includes(part.id)) errors.push(`${tw}: "${part.id}" qismini beradigan topshiriq yo'q`);
       }
@@ -144,31 +184,19 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
     boboKey(task.bobo, w);
     const level = b.levels.find((l) => l.id === task.level);
     if (!level) errors.push(`${w}: level topilmadi "${task.level}"`);
-    if (task.rewardPart && level) {
+    if (level) {
       const item = itemById.get(level.reward);
-      if (item && !item.parts.some((p) => p.id === task.rewardPart)) {
-        errors.push(`${w}: rewardPart "${task.rewardPart}" ${item.id} qismlari ichida yo'q`);
+      for (const part of partsOf(task)) {
+        if (item && !item.parts.some((p) => p.id === part)) {
+          errors.push(`${w}: rewardPart "${part}" ${item.id} qismlari ichida yo'q`);
+        }
       }
     }
     for (const tier of TIERS) {
       const c = task.tiers[tier] as Record<string, unknown> | undefined;
       if (!c) continue;
       if (task.game === 'riddle') {
-        const qs = (c as { questions: { q: string; options: string[]; answer: number; hint: string }[] }).questions;
-        qs.forEach((q, i) => {
-          const answer = q.options[q.answer] ?? '';
-          // Bobo javobni hech qachon to'g'ridan-to'g'ri aytmaydi.
-          if (normalize(q.hint).includes(normalize(answer))) {
-            errors.push(`${w} [${tier}] savol ${i + 1}: maslahat javobni oshkor qilyapti ("${answer}")`);
-          }
-          if (tier === 'kichik') {
-            for (const [field, text] of [['q', q.q], ['hint', q.hint]] as const) {
-              if (longestSentenceWords(text) > MAX_WORDS_KICHIK) {
-                errors.push(`${w} [kichik] savol ${i + 1}.${field}: gap juda uzun`);
-              }
-            }
-          }
-        });
+        errors.push(...checkQuestions((c as { questions: Question[] }).questions, w, tier));
       }
       if (task.game === 'crossword') {
         const words = (c as { words: { q: string; a: string }[] }).words;

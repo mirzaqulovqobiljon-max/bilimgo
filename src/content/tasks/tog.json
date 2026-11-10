@@ -1,0 +1,335 @@
+[
+  {
+    "id": "tog-01",
+    "level": "tog",
+    "game": "riddle",
+    "title": "Bosh qotirmalar",
+    "rewardPart": "bolak-1",
+    "bobo": "bobo.tog.boshqotirma",
+    "tiers": {
+      "kichik": {
+        "questions": [
+          {
+            "q": "Qatorni davom ettir: 🔴🔵🔴🔵🔴 ...",
+            "options": [
+              "🔵",
+              "🔴",
+              "🟢"
+            ],
+            "answer": 0,
+            "hint": "Ranglar navbatma-navbat keladi."
+          },
+          {
+            "q": "Qaysi biri ortiqcha: olma, nok, sabzi, uzum?",
+            "options": [
+              "Olma",
+              "Sabzi",
+              "Uzum"
+            ],
+            "answer": 1,
+            "hint": "Uchtasi meva, bittasi sabzavot."
+          },
+          {
+            "q": "2, 4, 6, 8 ... Keyingisi qaysi?",
+            "options": [
+              "9",
+              "10",
+              "12"
+            ],
+            "answer": 1,
+            "hint": "Har safar 2 ga oshadi."
+          }
+        ]
+      },
+      "karvon": {
+        "questions": [
+          {
+            "q": "Qatorni davom ettiring: 1, 1, 2, 3, 5, 8, ...",
+            "options": [
+              "11",
+              "13",
+              "16"
+            ],
+            "answer": 1,
+            "hint": "Har bir son oldingi ikkitasining yig'indisi."
+          },
+          {
+            "q": "Ali Validan baland, Vali Salimdan baland. Eng past kim?",
+            "options": [
+              "Ali",
+              "Vali",
+              "Salim"
+            ],
+            "answer": 2,
+            "hint": "Uchalasini bo'yi bo'yicha chizib ko'r."
+          },
+          {
+            "q": "Oilada 5 aka-uka bor, har birining bitta singlisi bor. Oilada nechta bola?",
+            "options": [
+              "6",
+              "10",
+              "7"
+            ],
+            "answer": 0,
+            "hint": "Singil hammaga bitta va o'sha bitta qiz."
+          },
+          {
+            "q": "Ikkilik sanoq sistemasidagi 101 o'nlik sistemada qaysi son?",
+            "options": [
+              "3",
+              "5",
+              "101"
+            ],
+            "answer": 1,
+            "hint": "Razryadlar qiymati o'ngdan: 1, 2, 4."
+          }
+        ]
+      },
+      "olim": {
+        "questions": [
+          {
+            "q": "\"Barcha qushlar ucha oladi\" degan gapni qaysi misol rad etadi?",
+            "options": [
+              "Pingvin",
+              "Burgut",
+              "Chumchuq"
+            ],
+            "answer": 0,
+            "hint": "Antarktidada yashaydigan qushni esla."
+          },
+          {
+            "q": "Ikkilik sistemada 1101 + 11 = ?",
+            "options": [
+              "10000",
+              "1110",
+              "10010"
+            ],
+            "answer": 0,
+            "hint": "Avval o'nlik sistemaga o'tkazib qo'shing."
+          },
+          {
+            "q": "A = 1, B = 0 bo'lsa, (A VA B) YOKI (EMAS B) qiymati?",
+            "options": [
+              "1",
+              "0"
+            ],
+            "answer": 0,
+            "hint": "Avval qavslar ichini hisoblang."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "tog-02",
+    "level": "tog",
+    "game": "sorting",
+    "title": "Algoritm qadamlari",
+    "rewardPart": "bolak-2",
+    "bobo": "bobo.tog.algoritm",
+    "tiers": {
+      "kichik": {
+        "prompt": "Choy damlash qadamlarini tartibla",
+        "items": [
+          "Suv qaynat",
+          "Choynakka choy sol",
+          "Qaynoq suv quy",
+          "Bir oz kut",
+          "Piyolaga quy"
+        ],
+        "topLabel": "Birinchi",
+        "bottomLabel": "Oxirgi",
+        "hint": "Avval suv qaynashi kerak."
+      },
+      "karvon": {
+        "prompt": "Robotni xonadan chiqarish algoritmini tartibla",
+        "items": [
+          "Boshlash",
+          "Eshik tomonga buril",
+          "3 qadam yur",
+          "Eshikni och",
+          "Tashqariga chiq",
+          "To'xtash"
+        ],
+        "topLabel": "Birinchi",
+        "bottomLabel": "Oxirgi",
+        "hint": "Eshikni ochishdan oldin unga yetib borish kerak."
+      },
+      "olim": {
+        "prompt": "Axborot o'lchov birliklarini kichikdan kattaga tartiblang",
+        "items": [
+          "Bit",
+          "Bayt",
+          "Kilobayt",
+          "Megabayt",
+          "Gigabayt",
+          "Terabayt"
+        ],
+        "topLabel": "Eng kichik",
+        "bottomLabel": "Eng katta",
+        "hint": "1 bayt = 8 bit."
+      }
+    }
+  },
+  {
+    "id": "tog-03",
+    "level": "tog",
+    "game": "puzzle",
+    "title": "Tog' manzarasi",
+    "rewardPart": "bolak-3",
+    "bobo": "bobo.tog.puzzle",
+    "tiers": {
+      "kichik": {
+        "image": "tog",
+        "pieces": 9,
+        "caption": "Baland tog'"
+      },
+      "karvon": {
+        "image": "tog",
+        "pieces": 16,
+        "caption": "Baland tog'"
+      },
+      "olim": {
+        "image": "tog",
+        "pieces": 25,
+        "caption": "Baland tog'"
+      }
+    }
+  },
+  {
+    "id": "tog-04",
+    "level": "tog",
+    "game": "memory",
+    "title": "Shakllar",
+    "bobo": "bobo.tog.memory",
+    "tiers": {
+      "karvon": {
+        "pairs": [
+          {
+            "a": "Uchburchak",
+            "b": "3 tomon"
+          },
+          {
+            "a": "Kvadrat",
+            "b": "4 teng tomon"
+          },
+          {
+            "a": "Beshburchak",
+            "b": "5 tomon"
+          },
+          {
+            "a": "Oltiburchak",
+            "b": "6 tomon"
+          },
+          {
+            "a": "Doira",
+            "b": "Burchagi yo'q"
+          },
+          {
+            "a": "To'g'ri to'rtburchak",
+            "b": "Qarama-qarshi tomonlari teng"
+          }
+        ],
+        "hint": "Tomonlarini sanab ko'r."
+      },
+      "olim": {
+        "pairs": [
+          {
+            "a": "Konyunksiya (VA)",
+            "b": "∧"
+          },
+          {
+            "a": "Dizyunksiya (YOKI)",
+            "b": "∨"
+          },
+          {
+            "a": "Inkor (EMAS)",
+            "b": "¬"
+          },
+          {
+            "a": "Implikatsiya",
+            "b": "→"
+          },
+          {
+            "a": "Ekvivalensiya",
+            "b": "↔"
+          },
+          {
+            "a": "Istisno YOKI (XOR)",
+            "b": "⊕"
+          }
+        ],
+        "hint": "Har bir mantiqiy amalning belgisini esla."
+      }
+    }
+  },
+  {
+    "id": "tog-05",
+    "level": "tog",
+    "game": "crossword",
+    "title": "Informatika krossvordi",
+    "bobo": "bobo.tog.krossvord",
+    "tiers": {
+      "olim": {
+        "words": [
+          {
+            "q": "Masalani yechish uchun aniq qadamlar ketma-ketligi",
+            "a": "ALGORITM"
+          },
+          {
+            "q": "Kompyuter bajaradigan buyruqlar to'plami",
+            "a": "DASTUR"
+          },
+          {
+            "q": "Kompyuterning hisoblovchi 'miyasi'",
+            "a": "PROTSESSOR"
+          },
+          {
+            "q": "Tasvir chiqaruvchi qurilma",
+            "a": "MONITOR"
+          },
+          {
+            "q": "Matn kiritish qurilmasi",
+            "a": "KLAVIATURA"
+          },
+          {
+            "q": "Axborotning eng kichik o'lchov birligi",
+            "a": "BIT"
+          },
+          {
+            "q": "8 bitdan iborat birlik",
+            "a": "BAYT"
+          },
+          {
+            "q": "Diskda nomlangan ma'lumotlar to'plami",
+            "a": "FAYL"
+          },
+          {
+            "q": "Kirish uchun maxfiy so'z",
+            "a": "PAROL"
+          },
+          {
+            "q": "Butun dunyo kompyuter tarmoqlari tarmog'i",
+            "a": "INTERNET"
+          },
+          {
+            "q": "Veb-sahifalarni ochuvchi dastur",
+            "a": "BRAUZER"
+          },
+          {
+            "q": "Buyruqlarni takrorlovchi tuzilma",
+            "a": "SIKL"
+          },
+          {
+            "q": "Dasturda qiymat saqlovchi nomlangan joy",
+            "a": "O'ZGARUVCHI"
+          },
+          {
+            "q": "Bir xil turdagi elementlar ketma-ketligi",
+            "a": "MASSIV"
+          }
+        ]
+      }
+    }
+  }
+]

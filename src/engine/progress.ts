@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Item, Level, Task, Tier } from '../content/schema';
+import { partsOf, type Item, type Level, type Task, type Tier } from '../content/schema';
 import { tasksForTier } from '../content/validate';
 import { COINS_PER_TASK, HINTS_PER_LEVEL, gradeToTier } from './rules';
 
@@ -63,7 +63,8 @@ export interface TaskOutcome {
   progress: Progress;
   firstTime: boolean;
   starsImproved: boolean;
-  newPart: string | null;
+  /** Shu safar sumkaga tushgan qismlar (qayta o'ynashda bo'sh). */
+  newParts: string[];
   coinsEarned: number;
 }
 
@@ -89,15 +90,9 @@ export function recordTask(
     : { stars, plays: 1, bestMistakes: mistakes };
   if (bestTimeMs !== undefined) result.bestTimeMs = bestTimeMs;
 
-  let inventory = p.inventory;
-  let newPart: string | null = null;
-  if (task.rewardPart) {
-    const have = p.inventory[level.reward] ?? [];
-    if (!have.includes(task.rewardPart)) {
-      inventory = { ...p.inventory, [level.reward]: [...have, task.rewardPart] };
-      newPart = task.rewardPart;
-    }
-  }
+  const have = p.inventory[level.reward] ?? [];
+  const newParts = partsOf(task).filter((part) => !have.includes(part));
+  const inventory = newParts.length ? { ...p.inventory, [level.reward]: [...have, ...newParts] } : p.inventory;
   const coinsEarned = firstTime ? COINS_PER_TASK : 0;
   return {
     progress: {
@@ -109,7 +104,7 @@ export function recordTask(
     },
     firstTime,
     starsImproved: !!prev && stars > prev.stars,
-    newPart,
+    newParts,
     coinsEarned,
   };
 }
@@ -180,6 +175,8 @@ export function nextAdaptive(a: Progress['adaptive'], mistakes: number): Progres
 
 /** Topshiriq qaysi darajadagi mazmun bilan o'ynalishi kerak (mavjud bo'lmasa — o'z darajasi). */
 export function effectiveTier(task: Task, base: Tier, shift: number): Tier {
+  // Kichiklar (7-10) yuqori daraja matnlarini olmaydi: ular uchun gaplar 10 so'zdan kam bo'lishi shart.
+  if (base === 'kichik' && shift > 0) return base;
   const i = Math.min(2, Math.max(0, TIER_ORDER.indexOf(base) + shift));
   const t = TIER_ORDER[i]!;
   return task.tiers[t] !== undefined ? t : base;

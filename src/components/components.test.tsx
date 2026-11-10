@@ -77,7 +77,7 @@ describe('Hikmat bobo', () => {
 describe('Sumka', () => {
   it('shows half-collected items as n/3 and the parts that are there', async () => {
     let p = setProfile(initialProgress(), { name: 'Ali', grade: 3 });
-    p = recordTask(p, content.tasks[0]!, village, 3, 0).progress;
+    p = recordTask(p, content.tasks.find((t) => t.id === 'ona-qishloq-01')!, village, 3, 0).progress;
     p = recordTask(p, content.tasks.find((t) => t.id === 'ona-qishloq-02')!, village, 3, 0).progress;
     render(<Bag items={content.items} progress={p} />);
     await userEvent.click(screen.getByRole('button', { name: /Sumka/ }));

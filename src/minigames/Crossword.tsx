@@ -40,6 +40,15 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
     return () => clearTimeout(t);
   }, [done, delayMs, content.words.length]);
 
+  // Katta to'rda faol so'z ko'rinadigan joyga suriladi.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const p = grid.placements.find((x) => x.index === active);
+    if (!p) return;
+    const el = scrollRef.current?.querySelector<HTMLElement>(`[data-k="${wordCells(p)[0]}"]`);
+    el?.scrollIntoView?.({ block: 'nearest', inline: 'center' });
+  }, [active, grid]);
+
   const select = (index: number) => {
     if (solved.includes(index)) return;
     setActive(index);
@@ -85,27 +94,6 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
 
   return (
     <section className={`crossword tier-${tier}`} aria-label="Krossvord">
-      <div
-        className="cw-grid"
-        style={{ gridTemplateColumns: `repeat(${grid.cols}, 1fr)`, aspectRatio: `${grid.cols} / ${grid.rows}` }}
-        aria-hidden="true"
-      >
-        {Array.from({ length: grid.rows * grid.cols }, (_, i) => {
-          const r = Math.floor(i / grid.cols);
-          const c = i % grid.cols;
-          const k = `${r},${c}`;
-          const letter = grid.cells.get(k);
-          if (letter === undefined) return <span key={k} className="cw-cell empty" />;
-          const show = solvedCells.has(k) || revealed.has(k);
-          return (
-            <span key={k} className={`cw-cell${activeCells.has(k) ? ' active' : ''}${solvedCells.has(k) ? ' solved' : ''}`}>
-              {numberAt.has(k) && <small>{numberAt.get(k)}</small>}
-              {show ? letter : ''}
-            </span>
-          );
-        })}
-      </div>
-
       {!done && (
         <form className="cw-answer" onSubmit={submit}>
           <p className="cw-clue">
@@ -138,6 +126,34 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
           )}
         </form>
       )}
+
+      {grid.cols > 12 && <p className="cw-swipe muted">↔ To'rni barmoq bilan surib ko'rish mumkin</p>}
+      <div className="cw-scroll" ref={scrollRef}>
+      <div
+        className="cw-grid"
+        style={{
+          gridTemplateColumns: `repeat(${grid.cols}, 1fr)`,
+          // barmoq tegishi uchun katak kamida 26px; katta to'r yon tomonga suriladi
+          width: `max(min(100%, 420px), ${grid.cols * 26}px)`,
+        }}
+        aria-hidden="true"
+      >
+        {Array.from({ length: grid.rows * grid.cols }, (_, i) => {
+          const r = Math.floor(i / grid.cols);
+          const c = i % grid.cols;
+          const k = `${r},${c}`;
+          const letter = grid.cells.get(k);
+          if (letter === undefined) return <span key={k} className="cw-cell empty" />;
+          const show = solvedCells.has(k) || revealed.has(k);
+          return (
+            <span key={k} data-k={k} className={`cw-cell${activeCells.has(k) ? ' active' : ''}${solvedCells.has(k) ? ' solved' : ''}`}>
+              {numberAt.has(k) && <small>{numberAt.get(k)}</small>}
+              {show ? letter : ''}
+            </span>
+          );
+        })}
+      </div>
+      </div>
 
       <ol className="cw-clues" aria-label="Savollar">
         {grid.placements.map((p) => (

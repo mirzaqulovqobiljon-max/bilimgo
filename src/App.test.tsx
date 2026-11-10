@@ -111,12 +111,14 @@ describe('1-bosqich: Ona qishloq — to\'liq o\'yin (Kichik sayyoh)', () => {
     expect(screen.getByLabelText('Jami yulduz: 8')).toBeInTheDocument();
     expect(screen.getByLabelText('Jami tanga: 30')).toBeInTheDocument();
 
-    // Xarita: 2-nuqta endi ochiq (mazmuni hali yo'q — "tez orada")
+    // Xarita: 2-nuqta endi ochiq
     await u.click(screen.getByRole('button', { name: 'Xaritaga qaytish' }));
     const nav2 = screen.getByRole('navigation', { name: 'Bosqichlar' });
     within(nav2).getByRole('button', { name: /1\. Ona qishloq — o'tildi/ });
-    await u.click(within(nav2).getByRole('button', { name: /2\. Qorong'i o'rmon — tez orada/ }));
-    expect(bubble()).toMatch(/Tez orada/);
+    within(nav2).getByRole('button', { name: /3\. Katta daryo — qulflangan/ });
+    await u.click(within(nav2).getByRole('button', { name: /2\. Qorong'i o'rmon — ochiq/ }));
+    expect(bubble()).toMatch(/Mash'al yasaymiz/);
+    await u.click(screen.getByRole('button', { name: '← Xarita' }));
 
     // Sahifani yangilash: progress saqlangan
     unmount();

@@ -1,24 +1,363 @@
 [
-  { "id": "ona-qishloq", "order": 1, "title": "Ona qishloq", "subject": "Ona tili",
-    "obstacle": { "type": "gate", "title": "Qulflangan darvoza", "requires": "kalit" },
-    "reward": "kalit", "intro": "bobo.ona-qishloq.intro", "outro": "bobo.ona-qishloq.outro",
-    "tasks": ["ona-qishloq-01", "ona-qishloq-04", "ona-qishloq-02", "ona-qishloq-03", "ona-qishloq-05"] },
-  { "id": "ormon", "order": 2, "title": "Qorong'i o'rmon", "subject": "Tabiatshunoslik",
-    "obstacle": { "type": "dark", "title": "Hech narsa ko'rinmaydi", "requires": "mashal" },
-    "reward": "mashal", "intro": "bobo.soon", "tasks": [] },
-  { "id": "daryo", "order": 3, "title": "Katta daryo", "subject": "Matematika",
-    "obstacle": { "type": "river", "title": "Ko'prik yo'q", "requires": "qayiq" },
-    "reward": "qayiq", "intro": "bobo.soon", "tasks": [] },
-  { "id": "qizilqum", "order": 4, "title": "Qizilqum cho'li", "subject": "Geografiya",
-    "obstacle": { "type": "desert", "title": "Uzoq yo'l, suv yo'q", "requires": "ot-mesh" },
-    "reward": "ot-mesh", "intro": "bobo.soon", "tasks": [] },
-  { "id": "tog", "order": 5, "title": "Baland tog'", "subject": "Mantiq",
-    "obstacle": { "type": "cliff", "title": "Jarlik", "requires": "arqon" },
-    "reward": "arqon", "intro": "bobo.soon", "tasks": [] },
-  { "id": "gor", "order": 6, "title": "Dev g'ori", "subject": "Tarix",
-    "obstacle": { "type": "cave", "title": "G'or devi", "requires": "qilich-qalqon" },
-    "reward": "qilich-qalqon", "intro": "bobo.soon", "tasks": [] },
-  { "id": "qala", "order": 7, "title": "Dev qal'asi", "subject": "Hamma fanlar",
-    "obstacle": { "type": "castle", "title": "Sehrlangan darvoza", "requires": "tumor" },
-    "reward": "tumor", "intro": "bobo.soon", "tasks": [] }
+  {
+    "id": "ona-qishloq",
+    "order": 1,
+    "title": "Ona qishloq",
+    "subject": "Ona tili",
+    "obstacle": {
+      "type": "gate",
+      "title": "Qulflangan darvoza",
+      "requires": "kalit"
+    },
+    "reward": "kalit",
+    "intro": "bobo.ona-qishloq.intro",
+    "outro": "bobo.ona-qishloq.outro",
+    "tasks": [
+      "ona-qishloq-01",
+      "ona-qishloq-04",
+      "ona-qishloq-02",
+      "ona-qishloq-03",
+      "ona-qishloq-05"
+    ]
+  },
+  {
+    "id": "ormon",
+    "order": 2,
+    "title": "Qorong'i o'rmon",
+    "subject": "Tabiatshunoslik",
+    "obstacle": {
+      "type": "dark",
+      "title": "Hech narsa ko'rinmaydi",
+      "requires": "mashal"
+    },
+    "reward": "mashal",
+    "intro": "bobo.ormon.intro",
+    "tasks": [
+      "ormon-01",
+      "ormon-04",
+      "ormon-02",
+      "ormon-03",
+      "ormon-05"
+    ],
+    "outro": "bobo.ormon.outro"
+  },
+  {
+    "id": "daryo",
+    "order": 3,
+    "title": "Katta daryo",
+    "subject": "Matematika",
+    "obstacle": {
+      "type": "river",
+      "title": "Ko'prik yo'q",
+      "requires": "qayiq"
+    },
+    "reward": "qayiq",
+    "intro": "bobo.daryo.intro",
+    "tasks": [
+      "daryo-01",
+      "daryo-04",
+      "daryo-02",
+      "daryo-03",
+      "daryo-05"
+    ],
+    "outro": "bobo.daryo.outro"
+  },
+  {
+    "id": "qizilqum",
+    "order": 4,
+    "title": "Qizilqum cho'li",
+    "subject": "Geografiya",
+    "obstacle": {
+      "type": "desert",
+      "title": "Uzoq yo'l, suv yo'q",
+      "requires": "ot-mesh"
+    },
+    "reward": "ot-mesh",
+    "intro": "bobo.qizilqum.intro",
+    "tasks": [
+      "qizilqum-01",
+      "qizilqum-04",
+      "qizilqum-02",
+      "qizilqum-03",
+      "qizilqum-05"
+    ],
+    "outro": "bobo.qizilqum.outro"
+  },
+  {
+    "id": "tog",
+    "order": 5,
+    "title": "Baland tog'",
+    "subject": "Mantiq",
+    "obstacle": {
+      "type": "cliff",
+      "title": "Jarlik",
+      "requires": "arqon"
+    },
+    "reward": "arqon",
+    "intro": "bobo.tog.intro",
+    "tasks": [
+      "tog-01",
+      "tog-04",
+      "tog-02",
+      "tog-03",
+      "tog-05"
+    ],
+    "outro": "bobo.tog.outro"
+  },
+  {
+    "id": "gor",
+    "order": 6,
+    "title": "Dev g'ori",
+    "subject": "Tarix",
+    "obstacle": {
+      "type": "cave",
+      "title": "G'or devi",
+      "requires": "qilich-qalqon",
+      "battle": {
+        "kichik": {
+          "questions": [
+            {
+              "q": "3 + 4 nechaga teng?",
+              "options": [
+                "6",
+                "7",
+                "8"
+              ],
+              "answer": 1,
+              "hint": "Barmoqlaringda sanab ko'r."
+            },
+            {
+              "q": "Qaysi biri meva?",
+              "options": [
+                "Sabzi",
+                "Piyoz",
+                "Olma"
+              ],
+              "answer": 2,
+              "hint": "U daraxtda pishadi."
+            },
+            {
+              "q": "Tuya qayerda yashaydi?",
+              "options": [
+                "Cho'lda",
+                "Dengizda",
+                "Muzda"
+              ],
+              "answer": 0,
+              "hint": "U yerda qum ko'p, suv kam."
+            },
+            {
+              "q": "Qaysi harf unli?",
+              "options": [
+                "B",
+                "A",
+                "D"
+              ],
+              "answer": 1,
+              "hint": "Uni cho'zib aytsa bo'ladi."
+            },
+            {
+              "q": "Bir haftada necha kun bor?",
+              "options": [
+                "5",
+                "7",
+                "10"
+              ],
+              "answer": 1,
+              "hint": "Dushanbadan yakshanbagacha sana."
+            },
+            {
+              "q": "Quyosh qaysi tomondan chiqadi?",
+              "options": [
+                "G'arbdan",
+                "Sharqdan",
+                "Shimoldan"
+              ],
+              "answer": 1,
+              "hint": "Ertalab qaragan tomoningni esla."
+            }
+          ]
+        },
+        "karvon": {
+          "questions": [
+            {
+              "q": "12 × 12 = ?",
+              "options": [
+                "124",
+                "144",
+                "154"
+              ],
+              "answer": 1,
+              "hint": "10 × 12 ga yana 2 × 12 ni qo'sh."
+            },
+            {
+              "q": "O'simlikda fotosintez asosan qayerda bo'ladi?",
+              "options": [
+                "Ildizda",
+                "Bargda",
+                "Gulda"
+              ],
+              "answer": 1,
+              "hint": "Yashil xlorofill eng ko'p joy."
+            },
+            {
+              "q": "'Apple' so'zining tarjimasi?",
+              "options": [
+                "Nok",
+                "Olma",
+                "Uzum"
+              ],
+              "answer": 1,
+              "hint": "Qizil yoki yashil, daraxtda o'sadigan meva."
+            },
+            {
+              "q": "Dunyodagi eng katta okean qaysi?",
+              "options": [
+                "Atlantika okeani",
+                "Hind okeani",
+                "Tinch okeani"
+              ],
+              "answer": 2,
+              "hint": "U Osiyo va Amerika orasida."
+            },
+            {
+              "q": "Registon maydoni qaysi shaharda?",
+              "options": [
+                "Buxoro",
+                "Samarqand",
+                "Xiva"
+              ],
+              "answer": 1,
+              "hint": "Ulug'bek rasadxonasi ham shu shaharda."
+            },
+            {
+              "q": "Uchburchak ichki burchaklari yig'indisi necha gradus?",
+              "options": [
+                "90°",
+                "180°",
+                "360°"
+              ],
+              "answer": 1,
+              "hint": "Yoyilgan burchakka teng."
+            }
+          ]
+        },
+        "olim": {
+          "questions": [
+            {
+              "q": "√144 = ?",
+              "options": [
+                "12",
+                "14",
+                "72"
+              ],
+              "answer": 0,
+              "hint": "Qaysi son o'z-o'ziga ko'paytirilsa 144 bo'ladi?"
+            },
+            {
+              "q": "Suvning kimyoviy formulasi qaysi?",
+              "options": [
+                "CO₂",
+                "H₂O",
+                "NaCl"
+              ],
+              "answer": 1,
+              "hint": "Ikki vodorod va bitta kislorod atomi."
+            },
+            {
+              "q": "Vakuumda yorug'lik tezligi taxminan qancha?",
+              "options": [
+                "300 000 km/s",
+                "3000 km/s",
+                "340 m/s"
+              ],
+              "answer": 0,
+              "hint": "340 m/s — bu tovush tezligi."
+            },
+            {
+              "q": "Mendeleyev jadvalidagi 1-element?",
+              "options": [
+                "Geliy",
+                "Kislorod",
+                "Vodorod"
+              ],
+              "answer": 2,
+              "hint": "Eng yengil gaz, Quyoshning asosiy tarkibi."
+            },
+            {
+              "q": "\"Xamsa\" dostonlar turkumi muallifi?",
+              "options": [
+                "Alisher Navoiy",
+                "Bobur",
+                "Ogahiy"
+              ],
+              "answer": 0,
+              "hint": "U Hirotda yashagan, o'zbek adabiy tilining asoschisi."
+            },
+            {
+              "q": "O'nlik sistemadagi 8 soni ikkilik sistemada qanday yoziladi?",
+              "options": [
+                "100",
+                "1000",
+                "111"
+              ],
+              "answer": 1,
+              "hint": "8 = 2³"
+            },
+            {
+              "q": "DNK eukariot hujayrada asosan qayerda joylashgan?",
+              "options": [
+                "Yadroda",
+                "Hujayra qobig'ida",
+                "Vakuolada"
+              ],
+              "answer": 0,
+              "hint": "Irsiy axborotning 'markazi'."
+            },
+            {
+              "q": "Ekvatorda yil davomida kun va tun uzunligi qanday?",
+              "options": [
+                "Deyarli teng",
+                "Kun doim uzun",
+                "Tun doim uzun"
+              ],
+              "answer": 0,
+              "hint": "Quyosh u yerda deyarli tik nur sochadi."
+            }
+          ]
+        }
+      }
+    },
+    "reward": "qilich-qalqon",
+    "intro": "bobo.gor.intro",
+    "tasks": [
+      "gor-01",
+      "gor-04",
+      "gor-02",
+      "gor-03",
+      "gor-05"
+    ],
+    "outro": "bobo.gor.outro"
+  },
+  {
+    "id": "qala",
+    "order": 7,
+    "title": "Dev qal'asi",
+    "subject": "Hamma fanlar",
+    "obstacle": {
+      "type": "castle",
+      "title": "Sehrlangan darvoza",
+      "requires": "tumor"
+    },
+    "reward": "tumor",
+    "intro": "bobo.qala.intro",
+    "tasks": [
+      "qala-01",
+      "qala-04",
+      "qala-02",
+      "qala-03",
+      "qala-05"
+    ],
+    "outro": "bobo.qala.outro"
+  }
 ]
