@@ -237,7 +237,9 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .obstacle-target {
   position: absolute; left: 36%; top: 42%; width: 28%; height: 32%; border: 0; background: transparent; border-radius: 16px;
 }
-.phase-holding .obstacle-target { box-shadow: 0 0 0 4px var(--gold); animation: pulse 1s infinite; }
+.phase-holding .obstacle-target { box-shadow: 0 0 0 4px var(--gold); animation: glow 1s ease-in-out infinite; }
+/* nishon qimirlamaydi (tegish oson) — faqat porlaydi */
+@keyframes glow { 50% { box-shadow: 0 0 0 7px rgba(242, 177, 52, 0.55), 0 0 18px rgba(242, 177, 52, 0.8); } }
 .door { transition: transform 0.8s ease-in-out; transform-box: fill-box; }
 .door-left { transform-origin: left center; }
 .door-right { transform-origin: right center; }
@@ -378,3 +380,31 @@ legend { font-weight: 700; margin-bottom: 8px; }
 }
 .cw-swipe { margin: 0 0 4px; font-size: 0.8rem; text-align: center; }
 .cw-scroll { background: linear-gradient(90deg, rgba(0,0,0,.05), transparent 12px, transparent calc(100% - 12px), rgba(0,0,0,.05)); }
+
+/* ---------- Join & sync ---------- */
+.code-input { letter-spacing: 0.3em; font-weight: 800; text-transform: uppercase; }
+.form-error { color: #b3261e; background: #fdecea; border-radius: 10px; padding: 8px 10px; margin: 0; }
+.class-line { margin: 14px 0 0; }
+.name-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.name-btn { width: 100%; }
+.small { font-size: 0.85rem; }
+.sync { font-size: 1rem; }
+.class-goal { margin: 8px 12px 0; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 8px 12px; }
+.class-goal p { margin: 0 0 6px; font-size: 0.95rem; }
+.goal-bar { height: 12px; background: var(--sand-2); border-radius: 6px; overflow: hidden; }
+.goal-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #f7d36b); }
+.ranking { margin: 6px 0 0; padding-left: 0; list-style: none; font-size: 0.85rem; }
+
+/* ---------- Teacher panel ---------- */
+.teacher { max-width: 900px; margin: 0 auto; padding: 16px; }
+.teacher.narrow { max-width: 460px; }
+.teacher h1 { color: var(--lapis); }
+.t-head { display: flex; justify-content: space-between; align-items: center; }
+.t-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; margin: 12px 0; }
+.t-card h2 { margin: 0 0 8px; font-size: 1.1rem; }
+.t-classes { list-style: none; padding: 0; display: grid; gap: 8px; }
+.big-code { font-size: 2.6rem; font-weight: 800; letter-spacing: 0.25em; color: var(--lapis); margin: 4px 0; font-family: ui-monospace, monospace; }
+.t-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.t-table th, .t-table td { text-align: left; padding: 6px; border-bottom: 1px solid var(--sand-2); vertical-align: top; }
+.toggle { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+.register-form select { font: inherit; font-size: 1.05rem; padding: 12px; border-radius: 12px; border: 2px solid var(--sand-2); background: #fff; }
