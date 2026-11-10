@@ -64,7 +64,7 @@ function rateLimit(bucket: string, max: number, windowMs: number) {
   };
 }
 
-const Name = z.string().trim().min(1).max(30).regex(/^[\p{L}\p{M}' ʻ’-]+$/u, 'faqat harflar');
+const Name = z.string().trim().min(1).max(30).regex(/^[\p{L}\p{M}' ʻ’.-]+$/u, 'faqat harflar'); // "Aziza R." — ikki bir xil ism uchun
 
 export function createApp(opts: AppOptions) {
   const { db } = opts;

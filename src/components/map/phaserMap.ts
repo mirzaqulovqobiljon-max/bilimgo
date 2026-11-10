@@ -64,6 +64,12 @@ class MapScene extends Phaser.Scene {
       sampled.forEach((p, i) => i % 2 === 0 && g.fillCircle(p.x, p.y, 3));
     }
 
+    // Optimallashtirish: statik fon (yuzlab shakl) har kadrda qayta chizilmasin —
+    // bir marta teksturaga "pishiramiz" va oddiy rasm sifatida ko'rsatamiz.
+    g.generateTexture('map-bg', MAP_W, MAP_H);
+    g.destroy();
+    this.add.image(0, 0, 'map-bg').setOrigin(0, 0).setDepth(-1);
+
     for (const node of this.nodes) {
       const color = COLORS[node.status];
       const ring = this.add.circle(node.x, node.y, 30, 0xffffff, 0.9).setStrokeStyle(4, color);
@@ -97,7 +103,7 @@ export function createMap(parent: HTMLElement, nodes: MapNode[], onSelect: (id: 
     backgroundColor: '#f3dfb3',
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     audio: { noAudio: true },
-    fps: { target: 30 }, // batareya va eski telefonlar uchun
+    fps: { target: 30, limit: 30 }, // batareya va eski telefonlar uchun: 30 kadrdan ortiq chizilmaydi
     banner: false,
     scene: new MapScene(nodes, onSelect),
   });

@@ -1,63 +1,76 @@
-# Ipak Yo'li sarguzashti: 1-bosqich (Prototip)
+# Ipak Yo'li sarguzashti
 
-1-bosqich: Ona qishloq. Xarita (7 nuqta), Hikmat bobo, sumka, kalit (3 qism), 2 ta mini-o'yin (bosh qotirma, puzzle), kalitni darvozaga sudrash va progressni brauzerda saqlash.
+O'zbekiston maktablari (7–18 yosh) uchun ta'limiy sarguzasht o'yini. Bunda 7 bosqich, 3 yosh darajasi, 5 xil mini-o'yin, dev jangi va sertifikat bor. O'qituvchi paneli, sinf kodi bilan kirish va internetsiz ishlash ham qo'llab-quvvatlanadi.
+
+## Holat (rejadagi 5 bosqich)
+
+| Bosqich | Natija | Avtomatik sinov | Bolalar bilan sinov |
+|---|---|---|---|
+| 1. Prototip | Ona qishloq, xarita (Phaser), Hikmat bobo, sumka, kalit, bosh qotirma, puzzle | ✓ | ⏳ `docs/bolalar-bilan-sinov.md` |
+| 2. Mini-o'yinlar dvigateli | + krossvord, xotira kartalari, tartiblash, JSON avto-yuklovchi, moslashuvchan qiyinlik | ✓ | ⏳ 3 yosh guruhida |
+| 3. To'liq sarguzasht | 7 bosqich × 3 daraja (35 topshiriq), barcha buyumlar va to'siqlar, dev jangi, final, sertifikat | ✓ (robot-o'yinchi + real Chrome) | ⏳ bitta sinf bilan |
+| 4. Backend va o'qituvchi paneli | Express + PostgreSQL, sinf kodi, sinxronlash, statistika | ✓ (API + offline/online) | — |
+| 5. Pilot | PWA (internetsiz), "arzon telefon" tezlik byudjetlari, pilot materiallari | ✓ (emulyatsiya) | ⏳ `docs/pilot-rejasi.md` |
 
 ## Ishga tushirish
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173 (telefonda: npm run dev -- --host)
-npm test             # Vitest: 70 ta test
-npm run typecheck    # TypeScript strict
-npm run build        # dist/ papkasi
-npm run test:e2e     # build'dan keyin real Chrome'da butun bosqichni o'ynab chiqadi
-                     # (CHROME_PATH=/path/to/chrome bilan boshqa brauzer)
+npm run dev                  # faqat o'yin (mehmon rejimi): http://localhost:5173
+
+# server bilan (sinf kodi, o'qituvchi paneli):
+npm run build
+cd server && npm install && cp .env.example .env   # DATABASE_URL ni to'ldiring
+npm run migrate && npm start                       # http://localhost:8080  (o'qituvchi: /#oqituvchi)
+```
+
+To'liq o'rnatish yo'riqnomasi: [`docs/ornatish.md`](docs/ornatish.md).
+
+## Sinovlar
+
+```bash
+npm test                 # Vitest: dvigatel, mazmun qoidalari, komponentlar, 3 darajada butun o'yin (146)
+npm run test:server      # API + offline→online sinxronlash, haqiqiy PostgreSQL bilan (21)
+npm run build
+node e2e/play.mjs        # 1-bosqich real Chrome'da (360×740)
+npm run test:e2e:full    # 7 bosqich × 3 daraja real Chrome'da
+node e2e/backend.mjs     # o'qituvchi → bola → INTERNETSIZ o'yin → sinxronlash → statistika
+node e2e/perf.mjs        # CPU 6x sekin + Slow/Fast 3G: tezlik byudjetlari
 ```
 
 ## Tuzilma
 
 ```
-src/content/          MAZMUN (dasturchi kerak emas)
-  levels.json         7 bosqich: to'siq, buyum, topshiriqlar tartibi
-  items.json          buyumlar va ularning qismlari
-  tasks/ona-qishloq.json  topshiriqlar: tiers.kichik / karvon / olim
-  bobo.uz.json        bobo gaplari (matn + ixtiyoriy audio)
-  pictures.ts         puzzle rasmlari (vaqtincha SVG)
-  schema.ts           zod sxemalari va TS tiplari
-  validate.ts         bog'lanish va pedagogik qoidalarni tekshirish
-src/engine/           dvigatel (React'siz, sof funksiyalar)
-  progress.ts         progress, sumka, yulduz, tanga, bosqich ochilishi, maslahat byudjeti
-  rules.ts            sinf->daraja, yulduz formulasi, konstantalar
-  storage.ts          localStorage (interfeys keyin IndexedDB+server bilan almashadi)
-src/minigames/        Riddle, Puzzle; registry.ts orqali ulanadi
-src/components/       Bobo, Sumka, ObstacleScene (darvoza), map/ (Phaser)
-src/screens/          Register, Map, Level
-e2e/play.mjs          real brauzer sinovi + skrinshotlar
+src/content/        MAZMUN (JSON) + zod sxemalari + qoidalar validatori      → docs/mazmun-yozish.md
+src/engine/         dvigatel: progress, qoidalar, moslashuvchan qiyinlik, birlashtirish (merge)
+src/minigames/      Riddle, Puzzle, Crossword (+avtomatik to'r), Memory, Sorting — har biri alohida
+src/components/     Hikmat bobo, sumka, to'siq sahnalari, dev jangi, sertifikat, xarita (Phaser)
+src/screens/        ro'yxatdan o'tish / sinf kodi, xarita, bosqich
+src/net/            API klient, IndexedDB navbat, sinxronlash
+src/teacher/        o'qituvchi paneli (#oqituvchi)
+server/             Express + PostgreSQL (migrations/, src/, test/)
+e2e/                real brauzer sinovlari va tezlik sinovi
+docs/               o'qituvchi qo'llanmasi, pilot rejasi, o'rnatish, mazmun yozish, bolalar bilan sinov
 ```
 
-## Mazmun qoidalari avtomatik tekshiriladi
-
-Kontent xato bo'lsa, `npm test` yiqiladi va o'yin xabarni ekranga chiqaradi:
-
-- har bir yosh darajasi kalitning 3 qismini ham yig'a oladi (zaif o'quvchi ham oxirigacha yetadi);
-- topshiriqlar soni: kichik 3, karvon 4, olim 5;
-- bir xil mini-o'yin ketma-ket 2 martadan ortiq kelmaydi, har darajada "dam olish" o'yini bor;
-- bobo gaplarida va kichiklar savol/maslahatlarida har bir gap 10 so'zdan kam;
-- maslahat javobni ichida saqlamaydi (bobo javobni aytmaydi);
-- maqtov va dalda gaplari kamida 3 xil, ketma-ket takrorlanmaydi;
-- barcha id, bobo kalitlari va rasmlar mavjud.
-
-## Rejadan chetga chiqishlar va taxminlar
+## Asosiy qarorlar va rejadan chetga chiqishlar
 
 | Nima | Qaror | Sabab |
 |---|---|---|
-| Kalitni darvozaga sudrash animatsiyasi | React + SVG + CSS (Phaser emas) | Testing Library bilan sinab bo'ladi; sudrashga qo'shimcha "bos, keyin bos" usuli bor (7 yoshlilar va ekran o'quvchilar uchun). Xarita Phaser'da. |
-| `item.parts` | `{id, name, icon}` obyektlari | UI qism nomini ko'rsatishi kerak. |
-| Karvon/olim qo'shimcha topshiriqlari | `rewardPart`siz, faqat yulduz va tanga beradi | Kalitda 3 qism bor, karvonda esa 4, olimda 5 topshiriq. |
-| Tanga | faqat birinchi bajarishda 10 ta | Qayta o'ynab tanga yig'ishning oldini olish uchun. Yulduz esa eng yaxshi natija bo'yicha saqlanadi. |
-| Bobo ovozi | `audio` maydoni bor, MP3 yo'q | Ochiq savol. Fayl qo'yilsa o'zi ijro etadi. Kichiklarda ovoz yoqiq, kattalarda o'chiq. |
-| Rasmlar | qo'lda chizilgan SVG va emoji | Ochiq savol (rassom). Kontent JSON o'zgarmaydi. |
-| Ro'yxatdan o'tish | faqat ism va sinf (qurilmada) | Maktab va sinf kodi 4-bosqichda backend bilan qo'shiladi. |
-| Mazmun matnlari | dasturchi qoralamasi | O'qituvchi tekshiruvi kerak (ochiq savol). |
+| Backend | Express (NestJS emas) | Rejada ikkalasiga ham ruxsat bor. Kichik API uchun Express yengilroq, oddiy va test qilish oson |
+| To'siq va dev jangi animatsiyalari | React + SVG/CSS | Xarita Phaser'da. To'siq sahnalarini Testing Library bilan sinash mumkin, ularda "bos-bos" muqobil usuli bor |
+| Qilich-qalqon (6 qism) | Bitta topshiriq 2 ta qism beradi | Kichiklarda atigi 3 ta topshiriq bor |
+| Sehrli tumor | 3 qism (ko'k tosh, oltin zanjir, sehrli yozuv) | Rejada qismlari ko'rsatilmagan |
+| Tanga | Faqat birinchi bajarishda | Qayta o'ynab tanga yig'ishning oldini olish uchun |
+| Moslashuvchan qiyinlik | Kichiklar yuqori darajaga chiqarilmaydi | "Kichiklar uchun gap < 10 so'z" qoidasi |
+| Dev jangi | Xato javob berilgan savol bitta savoldan keyin yana so'raladi | Bola uni o'rganib olishi uchun |
+| Sinxronlash | Holatga asoslangan birlashtirish (faqat "o'sadi") | Offline navbatni qayta yuborish xavfsiz. "Hech narsa olib qo'yilmaydi" qoidasi kafolatlanadi |
+| Bolalar kirishi | Sinf kodi + ro'yxatdan ism tanlash (parolsiz) | Rejaga mos. Kod tarqalsa, o'qituvchi yangilaydi |
 
-2-bosqichga qoldirilganlar: moslashuvchan qiyinlik (3 xatodan keyin osonroq variant), vaqt bo'yicha bonus yulduz, PWA/offline kesh, sir sandiq, Phaser'ning yengil maxsus build'i.
+**Hali qilinmaganlar:** avatar do'koni (tangalar sarflanadigan joy; `avatar_items` jadvali tayyor), sir sandiq, kunlik vazifa, nishonlar, qolgan 9 ta mini-o'yin, kirill yozuvi va rus tili (`bobo.uz-cyrl.json` va `bobo.ru.json` uchun tuzilma tayyor).
+
+**Ochiq savollar** bo'yicha qilingan taxminlar:
+- **Bobo ovozi:** `audio` maydoni bor, lekin MP3 fayllar yo'q.
+- **Rasmlar:** qo'lda chizilgan SVG va emoji.
+- **Mazmun:** dasturchi qoralamasi, fan o'qituvchilari tekshirishi kerak.
+- **Domen:** alohida sayt sifatida mo'ljallangan, `base: './'` tufayli istalgan papkada ishlaydi.

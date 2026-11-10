@@ -408,3 +408,5 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .t-table th, .t-table td { text-align: left; padding: 6px; border-bottom: 1px solid var(--sand-2); vertical-align: top; }
 .toggle { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
 .register-form select { font: inherit; font-size: 1.05rem; padding: 12px; border-radius: 12px; border: 2px solid var(--sand-2); background: #fff; }
+.map-canvas[data-state='loading'], .map-canvas[data-state='failed'] { height: 0; min-height: 0; }
+.map-loading { position: static; margin: 8px 0 0; }

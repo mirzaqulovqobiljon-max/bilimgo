@@ -8,6 +8,17 @@ import { ApiClient } from './net/api';
 import { TeacherApp } from './teacher/TeacherApp';
 import './styles.css';
 
+// PWA: oflayn ishlash uchun service worker. Ba'zi muhitlarda (iframe/sandbox) taqiqlangan — jim o'tkazib yuboramiz.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    try {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    } catch {
+      /* ignore */
+    }
+  });
+}
+
 const root = createRoot(document.getElementById('root')!);
 const api = new ApiClient();
 const store = createLocalStore();

@@ -1,10 +1,45 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
+
+const isVitest = !!(globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env.VITEST;
 
 export default defineConfig({
   base: './', // nisbiy yo'llar: istalgan papka yoki hostingda ishlaydi
-  plugins: [react()],
+  plugins: [
+    react(),
+    // PWA: maktab interneti uzilsa ham o'yin ochiladi (barcha fayllar oldindan keshlanadi).
+    !isVitest &&
+      VitePWA({
+        injectRegister: null, // ro'yxatdan o'tkazish main.tsx'da (xavfsiz try/catch bilan)
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
+        manifest: {
+          name: "Ipak Yo'li sarguzashti",
+          short_name: "Ipak Yo'li",
+          description: "O'zbekiston maktablari uchun ta'limiy sarguzasht o'yini",
+          lang: 'uz',
+          start_url: './',
+          scope: './',
+          display: 'standalone',
+          orientation: 'portrait',
+          background_color: '#f6ead2',
+          theme_color: '#1e9fb8',
+          icons: [
+            { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+            { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+          ],
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}'],
+          maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // Phaser ~1.5 MB
+          navigateFallback: 'index.html',
+          navigateFallbackDenylist: [/^\/api\//],
+          cleanupOutdatedCaches: true,
+        },
+      }),
+  ],
   build: {
     target: 'es2018',
     rollupOptions: {

@@ -24,3 +24,26 @@ Reja: 5-10 nafar bola, qog'ozda va brauzerda. Har bir bola uchun alohida varaq. 
 Bola ma'lumoti: faqat ism (yoki raqam), sinf, yosh darajasi. Telefon va manzil yozilmaydi.
 
 **Keyingi bosqichga o'tish sharti:** bolalarning kamida 80% kalitni yordamsiz yig'ib, darvozani ochishi kerak. Qiynalgan joylar 2-bosqich rejasiga yoziladi.
+
+
+---
+
+## 2-bosqich: 3 yosh guruhida sinov
+
+Har bir guruhdan (Kichik sayyoh, Karvonboshi, Olim) 3–5 bola bilan krossvord, xotira kartalari va tartiblash o'yinlari sinab ko'riladi.
+
+| Kuzatiladigan narsa | Kichik | Karvon | Olim |
+|---|---|---|---|
+| Krossvordda javobni yozish oson bo'ldimi (telefon klaviaturasi)? | | | |
+| Katta krossvord to'rini barmoq bilan surishni tushundimi? | | | |
+| Xotira kartalarida zerikmadimi? | | | |
+| Tartiblashda "bos, keyin bos" usulini tushundimi? | | | |
+| Topshiriq yoshiga mos keldimi (juda oson / mos / juda qiyin)? | | | |
+
+## 3-bosqich: bitta sinf bilan to'liq o'ynash
+
+Bitta sinf o'yinni 7 bosqich bo'ylab oxirigacha o'ynab chiqadi. Kuzatuvchi bolalar **qaysi joyda qiynalganini** yozib boradi. O'qituvchi panelidagi "Qayerda qiynalishyapti?" ro'yxati bilan solishtiring.
+
+| Bosqich | Qiynalgan topshiriq | Nechta bola | Nima sababdan (mazmun / interfeys / qiyinlik) |
+|---|---|---|---|
+| | | | |

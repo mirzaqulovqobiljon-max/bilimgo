@@ -117,6 +117,8 @@ describe("o'quvchi: sinf kodi bilan kirish va progress", () => {
     expect((await request(app).post('/api/join').send({ code, name: 'aziza' })).status).toBe(409);
     expect((await request(app).post('/api/join').send({ code, name: '<script>' })).status).toBe(400);
     expect((await request(app).post('/api/join').send({ code, name: 'x'.repeat(31) })).status).toBe(400);
+    // bir xil ismli ikkinchi bola bosh harf bilan farqlanadi (familiya emas)
+    expect((await request(app).post('/api/join').send({ code, name: 'Aziza R.' })).status).toBe(200);
   });
 
   it('picks own name on another device and gets the same progress', async () => {

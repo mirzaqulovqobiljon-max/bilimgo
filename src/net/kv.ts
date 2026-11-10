@@ -12,7 +12,7 @@ export function memoryKV(): KV {
   const m = new Map<string, unknown>();
   return {
     get: async <T,>(k: string) => m.get(k) as T | undefined,
-    set: async (k, v) => void m.set(k, structuredClone(v)),
+    set: async (k, v) => void m.set(k, JSON.parse(JSON.stringify(v))), // structuredClone eski brauzerlarda yo'q
     del: async (k) => void m.delete(k),
   };
 }
