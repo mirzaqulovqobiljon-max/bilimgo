@@ -16,6 +16,7 @@ export const TaskResultSchema = z.object({
   stars: z.number().int().min(1).max(3),
   plays: z.number().int().min(1),
   bestMistakes: z.number().int().min(0),
+  bestTimeMs: z.number().int().min(0).optional(),
 });
 export type TaskResult = z.infer<typeof TaskResultSchema>;
 
@@ -29,11 +30,24 @@ export const ProgressSchema = z.object({
   completedLevels: z.array(z.string()),
   tasks: z.record(TaskResultSchema),
   hintsUsed: z.record(z.number().int().min(0)),
+  /** Moslashuvchan qiyinlik: -1 osonroq, 0 o'z darajasi, +1 qiyinroq. */
+  adaptive: z
+    .object({ shift: z.number().int().min(-1).max(1), streak: z.number().int().min(0) })
+    .default({ shift: 0, streak: 0 }),
 });
 export type Progress = z.infer<typeof ProgressSchema>;
 
 export function initialProgress(): Progress {
-  return { version: PROGRESS_VERSION, profile: null, coins: 0, inventory: {}, completedLevels: [], tasks: {}, hintsUsed: {} };
+  return {
+    version: PROGRESS_VERSION,
+    profile: null,
+    coins: 0,
+    inventory: {},
+    completedLevels: [],
+    tasks: {},
+    hintsUsed: {},
+    adaptive: { shift: 0, streak: 0 },
+  };
 }
 
 export function setProfile(p: Progress, profile: Profile): Progress {
@@ -58,12 +72,22 @@ export interface TaskOutcome {
  * - buyum qismi, tanga va yulduz hech qachon olib qo'yilmaydi (yulduz — eng yaxshisi saqlanadi);
  * - tanga faqat birinchi bajarishda beriladi (qayta o'ynab tanga "dehqonchilik" qilinmasin).
  */
-export function recordTask(p: Progress, task: Task, level: Level, stars: 1 | 2 | 3, mistakes: number): TaskOutcome {
+export function recordTask(
+  p: Progress,
+  task: Task,
+  level: Level,
+  stars: 1 | 2 | 3,
+  mistakes: number,
+  timeMs?: number,
+): TaskOutcome {
   const prev = p.tasks[task.id];
   const firstTime = !prev;
+  const bestTimeMs =
+    timeMs === undefined ? prev?.bestTimeMs : prev?.bestTimeMs === undefined ? Math.round(timeMs) : Math.min(prev.bestTimeMs, Math.round(timeMs));
   const result: TaskResult = prev
     ? { stars: Math.max(prev.stars, stars), plays: prev.plays + 1, bestMistakes: Math.min(prev.bestMistakes, mistakes) }
     : { stars, plays: 1, bestMistakes: mistakes };
+  if (bestTimeMs !== undefined) result.bestTimeMs = bestTimeMs;
 
   let inventory = p.inventory;
   let newPart: string | null = null;
@@ -76,7 +100,13 @@ export function recordTask(p: Progress, task: Task, level: Level, stars: 1 | 2 |
   }
   const coinsEarned = firstTime ? COINS_PER_TASK : 0;
   return {
-    progress: { ...p, inventory, tasks: { ...p.tasks, [task.id]: result }, coins: p.coins + coinsEarned },
+    progress: {
+      ...p,
+      inventory,
+      tasks: { ...p.tasks, [task.id]: result },
+      coins: p.coins + coinsEarned,
+      adaptive: nextAdaptive(p.adaptive, mistakes),
+    },
     firstTime,
     starsImproved: !!prev && stars > prev.stars,
     newPart,
@@ -128,4 +158,29 @@ export function totalStars(p: Progress): number {
 /** Navbatdagi bajarilmagan topshiriq (tavsiya sifatida yoritiladi; bola istalganini tanlashi mumkin). */
 export function nextTask(p: Progress, level: Level, tasks: readonly Task[], tier: Tier): Task | null {
   return tasksForTier(level, tasks, tier).find((t) => !p.tasks[t.id]) ?? null;
+}
+
+// ---------- Moslashuvchan qiyinlik (rejadagi 6-bo'lim) ----------
+export const EASIER_AFTER_MISTAKES = 3;
+export const HARDER_AFTER_FLAWLESS = 5;
+const TIER_ORDER: Tier[] = ['kichik', 'karvon', 'olim'];
+
+/**
+ * 3+ xato -> keyingi topshiriqlar osonroq variantda; xatosiz topshiriq -> o'z darajasiga qaytadi;
+ * ketma-ket 5 ta xatosiz -> biroz qiyinroq. Bola bu haqda hech narsa ko'rmaydi (tamg'a yo'q).
+ */
+export function nextAdaptive(a: Progress['adaptive'], mistakes: number): Progress['adaptive'] {
+  if (mistakes >= EASIER_AFTER_MISTAKES) return { shift: Math.max(-1, a.shift - 1), streak: 0 };
+  if (mistakes > 0) return { shift: a.shift, streak: 0 };
+  if (a.shift < 0) return { shift: 0, streak: 1 };
+  const streak = a.streak + 1;
+  if (streak >= HARDER_AFTER_FLAWLESS) return { shift: Math.min(1, a.shift + 1), streak: 0 };
+  return { shift: a.shift, streak };
+}
+
+/** Topshiriq qaysi darajadagi mazmun bilan o'ynalishi kerak (mavjud bo'lmasa — o'z darajasi). */
+export function effectiveTier(task: Task, base: Tier, shift: number): Tier {
+  const i = Math.min(2, Math.max(0, TIER_ORDER.indexOf(base) + shift));
+  const t = TIER_ORDER[i]!;
+  return task.tiers[t] !== undefined ? t : base;
 }

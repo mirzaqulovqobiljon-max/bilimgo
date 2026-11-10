@@ -24,6 +24,8 @@ export interface ContentBundle {
 export const TASKS_PER_TIER: Record<Tier, number> = { kichik: 3, karvon: 4, olim: 5 };
 /** Kichiklar uchun bitta gapda 10 tadan kam so'z (2-bo'lim). */
 export const MAX_WORDS_KICHIK = 9;
+/** Krossvord so'zlari soni (6-bo'lim jadvali). */
+export const CROSSWORD_WORDS: Record<Tier, [number, number]> = { kichik: [4, 5], karvon: [8, 10], olim: [12, 15] };
 /** Bir xil mini-o'yin ketma-ket 2 martadan ortiq kelmaydi (5-bo'lim). */
 export const MAX_SAME_GAME_IN_ROW = 2;
 
@@ -167,6 +169,27 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
             }
           }
         });
+      }
+      if (task.game === 'crossword') {
+        const words = (c as { words: { q: string; a: string }[] }).words;
+        const [min, max] = CROSSWORD_WORDS[tier];
+        if (words.length < min || words.length > max) {
+          errors.push(`${w} [${tier}]: krossvordda ${min}-${max} so'z bo'lishi kerak (${words.length} ta)`);
+        }
+        const answers = words.map((x) => normalize(x.a));
+        if (new Set(answers).size !== answers.length) errors.push(`${w} [${tier}]: krossvord javoblari takrorlangan`);
+        words.forEach((x, i) => {
+          if (normalize(x.q).includes(normalize(x.a))) errors.push(`${w} [${tier}] so'z ${i + 1}: savol javobni o'z ichiga olgan`);
+          if (tier === 'kichik' && longestSentenceWords(x.q) > MAX_WORDS_KICHIK) errors.push(`${w} [kichik] so'z ${i + 1}: gap juda uzun`);
+        });
+      }
+      if (tier === 'kichik' && (task.game === 'memory' || task.game === 'sorting')) {
+        for (const field of ['hint', 'prompt'] as const) {
+          const text = (c as Record<string, unknown>)[field];
+          if (typeof text === 'string' && longestSentenceWords(text) > MAX_WORDS_KICHIK) {
+            errors.push(`${w} [kichik].${field}: gap juda uzun`);
+          }
+        }
       }
       if (task.game === 'puzzle') {
         const img = (c as { image: string }).image;

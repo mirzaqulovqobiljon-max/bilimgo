@@ -268,3 +268,56 @@ legend { font-weight: 700; margin-bottom: 8px; }
   :root { --bobo-h: 108px; }
   .bobo-avatar { width: 64px; height: 74px; }
 }
+
+/* ---------- Crossword ---------- */
+.crossword, .memory, .sorting { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px; }
+.cw-grid { display: grid; gap: 2px; width: 100%; max-width: 420px; margin: 0 auto 12px; }
+.cw-cell {
+  position: relative; background: #fff; border: 2px solid #8a5a2b; border-radius: 4px; display: grid; place-items: center;
+  font-weight: 800; font-size: clamp(0.7rem, 3.6vw, 1.2rem); aspect-ratio: 1; min-width: 0; text-transform: uppercase;
+}
+.cw-cell small { position: absolute; top: 0; left: 2px; font-size: 0.55rem; color: var(--muted); font-weight: 700; }
+.cw-cell.empty { background: transparent; border-color: transparent; }
+.cw-cell.active { background: #fff6d6; border-color: var(--gold); }
+.cw-cell.solved { background: #e9f7e1; border-color: var(--green); }
+.cw-answer { display: grid; gap: 8px; margin-bottom: 10px; }
+.cw-clue { margin: 0; font-size: 1.05rem; }
+.tier-kichik .cw-clue { font-size: 1.2rem; }
+.cw-pic { font-size: 2.2rem; margin-right: 6px; vertical-align: middle; }
+.cw-row { display: flex; gap: 8px; }
+.cw-row input {
+  flex: 1; min-width: 0; font: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 10px 12px; border-radius: 12px; border: 2px solid var(--sand-2);
+}
+.cw-clues { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.cw-clue-btn { width: 100%; text-align: left; border: 0; border-radius: 10px; padding: 10px; background: var(--sand); min-height: 44px; }
+.cw-clue-btn.on { box-shadow: inset 0 0 0 3px var(--turq); }
+.cw-clue-btn.done { opacity: 0.55; text-decoration: line-through; }
+
+/* ---------- Memory ---------- */
+.center { text-align: center; }
+.memory-grid { display: grid; gap: 8px; max-width: 440px; margin: 0 auto; }
+.mcard {
+  aspect-ratio: 3 / 4; border: 0; border-radius: 12px; background: linear-gradient(135deg, var(--lapis), var(--turq));
+  color: #fff; font-size: 1.6rem; box-shadow: var(--shadow); padding: 4px; transition: transform 0.25s; min-width: 0;
+}
+.mcard.up { background: #fff; color: var(--ink); transform: rotateY(0); font-size: clamp(0.8rem, 3.6vw, 1.15rem); font-weight: 800; }
+.mcard.matched { background: #e9f7e1; box-shadow: inset 0 0 0 3px var(--green); }
+.mcard-face { display: block; overflow-wrap: anywhere; line-height: 1.1; }
+.tier-kichik .mcard.up { font-size: 2rem; }
+
+/* ---------- Sorting ---------- */
+.sorting-prompt { font-size: 1.15rem; margin: 0 0 6px; text-align: center; }
+.sort-label { margin: 4px 0; font-weight: 800; color: var(--terra); text-align: center; font-size: 0.9rem; }
+.sort-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sort-item { display: flex; gap: 6px; align-items: stretch; }
+.sort-main {
+  flex: 1; text-align: left; border: 0; border-radius: 12px; padding: 12px; background: #fff; min-height: 52px;
+  box-shadow: inset 0 0 0 2px var(--sand-2); font-weight: 700; font-size: 1.05rem;
+}
+.sort-pos { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--sand-2); margin-right: 6px; font-size: 0.85rem; }
+.sort-item.selected .sort-main { box-shadow: inset 0 0 0 3px var(--gold); background: #fff8e0; }
+.sort-item.locked .sort-main { box-shadow: inset 0 0 0 3px var(--green); background: #f0fae8; }
+.sort-arrows { display: grid; gap: 4px; }
+.sort-arrows button { border: 0; border-radius: 8px; width: 44px; flex: 1; background: var(--sand); font-size: 0.9rem; min-height: 24px; }
+.sort-actions { display: grid; gap: 8px; margin-top: 10px; }

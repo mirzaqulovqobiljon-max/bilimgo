@@ -124,3 +124,33 @@ describe('sentence length helper', () => {
     expect(longestSentenceWords('')).toBe(0);
   });
 });
+
+describe('phase 2 game rules', () => {
+  const crosswordTask = (tiers: AnyRec) => ({ id: 'ona-qishloq-06', level: 'ona-qishloq', game: 'crossword', title: 'K', bobo: 'bobo.praise', tiers });
+  const w = (n: number) => Array.from({ length: n }, (_, i) => ({ q: `Savol ${i}?`, a: 'ABCDEFGHIJKLMNOP'.slice(0, 2) + 'XYZWVUTSRQPONMLK'[i] }));
+
+  it('crossword word count per tier follows the plan table', () => {
+    const r = raw();
+    r.tasks.push(crosswordTask({ kichik: { words: w(7) }, karvon: { words: w(8) } }));
+    const e = errorsOf(r).join('\n');
+    expect(e).toMatch(/ona-qishloq-06 \[kichik\]: krossvordda 4-5 so'z/);
+    expect(e).not.toMatch(/ona-qishloq-06 \[karvon\]: krossvordda/);
+  });
+
+  it('crossword clue must not contain its answer', () => {
+    const r = raw();
+    r.tasks.push(crosswordTask({ kichik: { words: [{ q: 'Bu baliq', a: 'BALIQ' }, ...w(3)] } }));
+    expect(errorsOf(r).join('\n')).toMatch(/savol javobni o'z ichiga olgan/);
+  });
+
+  it('memory cards must be unique, sorting items unique', () => {
+    const r = raw();
+    r.tasks.push({ id: 'ona-qishloq-07', level: 'ona-qishloq', game: 'memory', title: 'M', bobo: 'bobo.praise',
+      tiers: { kichik: { pairs: [{ a: 'X', b: 'Y' }, { a: 'X', b: 'Z' }], hint: 'Yordam.' } } });
+    r.tasks.push({ id: 'ona-qishloq-08', level: 'ona-qishloq', game: 'sorting', title: 'S', bobo: 'bobo.praise',
+      tiers: { karvon: { prompt: 'P', items: ['a', 'a', 'b'], topLabel: 't', bottomLabel: 'b', hint: 'h' } } });
+    const e = errorsOf(r).join('\n');
+    expect(e).toMatch(/kartalar takrorlanmasligi kerak/);
+    expect(e).toMatch(/elementlar takrorlangan/);
+  });
+});

@@ -203,3 +203,51 @@ describe('random helpers', () => {
     expect(pickIndex(1, rng, 0)).toBe(0);
   });
 });
+
+describe('moslashuvchan qiyinlik', () => {
+  it('3 mistakes -> easier, flawless -> back, 5 flawless -> harder', async () => {
+    const { nextAdaptive } = await import('./progress');
+    let a = { shift: 0, streak: 0 };
+    a = nextAdaptive(a, 3);
+    expect(a).toEqual({ shift: -1, streak: 0 });
+    a = nextAdaptive(a, 1);
+    expect(a.shift).toBe(-1);
+    a = nextAdaptive(a, 0);
+    expect(a).toEqual({ shift: 0, streak: 1 });
+    for (let i = 0; i < 4; i++) a = nextAdaptive(a, 0);
+    expect(a).toEqual({ shift: 1, streak: 0 });
+    for (let i = 0; i < 10; i++) a = nextAdaptive(a, 0);
+    expect(a.shift).toBe(1); // never above +1
+    a = nextAdaptive(a, 5);
+    expect(a.shift).toBe(0);
+  });
+
+  it('effectiveTier falls back to own tier when content is missing', async () => {
+    const { effectiveTier } = await import('./progress');
+    const t01 = task('ona-qishloq-01'); // all tiers
+    const t04 = task('ona-qishloq-04'); // karvon + olim
+    expect(effectiveTier(t01, 'karvon', -1)).toBe('kichik');
+    expect(effectiveTier(t01, 'karvon', 1)).toBe('olim');
+    expect(effectiveTier(t01, 'olim', 1)).toBe('olim');
+    expect(effectiveTier(t04, 'karvon', -1)).toBe('karvon');
+    expect(effectiveTier(t01, 'kichik', -1)).toBe('kichik');
+  });
+
+  it('recordTask updates adaptive state and best time', () => {
+    let p = withKid(6);
+    p = recordTask(p, task('ona-qishloq-01'), village, 1, 4, 30_000).progress;
+    expect(p.adaptive.shift).toBe(-1);
+    expect(p.tasks['ona-qishloq-01']!.bestTimeMs).toBe(30_000);
+    p = recordTask(p, task('ona-qishloq-01'), village, 3, 0, 12_345).progress;
+    expect(p.adaptive.shift).toBe(0);
+    expect(p.tasks['ona-qishloq-01']!.bestTimeMs).toBe(12_345);
+    p = recordTask(p, task('ona-qishloq-01'), village, 3, 0, 50_000).progress;
+    expect(p.tasks['ona-qishloq-01']!.bestTimeMs).toBe(12_345);
+  });
+
+  it('old saved progress without "adaptive" still loads', () => {
+    const old = { version: 1, profile: { name: 'A', grade: 3 }, coins: 10, inventory: {}, completedLevels: [], tasks: {}, hintsUsed: {} };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(old));
+    expect(createLocalStore().load().adaptive).toEqual({ shift: 0, streak: 0 });
+  });
+});

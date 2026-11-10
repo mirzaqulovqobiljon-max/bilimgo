@@ -57,10 +57,51 @@ export const PuzzleContentSchema = z.object({
 });
 export type PuzzleContent = z.infer<typeof PuzzleContentSchema>;
 
+// Krossvord: javob bitta so'z (bo'shliqsiz). O' va G' bitta katak.
+export const CrosswordContentSchema = z.object({
+  words: z
+    .array(
+      z.object({
+        q: z.string().min(1),
+        a: z.string().regex(/^[A-Za-zʻ'’`]+$/u, "javob bitta so'z bo'lishi kerak (lotin harflari)").min(2),
+        picture: z.string().optional(),
+      }),
+    )
+    .min(2)
+    .max(15),
+});
+export type CrosswordContent = z.infer<typeof CrosswordContentSchema>;
+
+// Xotira kartalari: a <-> b juftlar (masalan hayvon <-> uyi, so'z <-> tarjima).
+export const MemoryContentSchema = z
+  .object({
+    pairs: z.array(z.object({ a: z.string().min(1), b: z.string().min(1) })).min(2).max(10),
+    hint: z.string().min(1),
+  })
+  .refine((v) => new Set(v.pairs.flatMap((p) => [p.a, p.b])).size === v.pairs.length * 2, {
+    message: 'kartalar takrorlanmasligi kerak',
+  });
+export type MemoryContent = z.infer<typeof MemoryContentSchema>;
+
+// Tartiblash: items to'g'ri tartibda yoziladi, o'yin ularni aralashtiradi.
+export const SortingContentSchema = z
+  .object({
+    prompt: z.string().min(1),
+    items: z.array(z.string().min(1)).min(3).max(8),
+    topLabel: z.string().min(1),
+    bottomLabel: z.string().min(1),
+    hint: z.string().min(1),
+  })
+  .refine((v) => new Set(v.items).size === v.items.length, { message: 'elementlar takrorlangan' });
+export type SortingContent = z.infer<typeof SortingContentSchema>;
+
 /** Every game type registers its content schema here; the engine never hardcodes content. */
 export const GAME_CONTENT_SCHEMAS = {
   riddle: RiddleContentSchema,
   puzzle: PuzzleContentSchema,
+  crossword: CrosswordContentSchema,
+  memory: MemoryContentSchema,
+  sorting: SortingContentSchema,
 } as const;
 export type GameType = keyof typeof GAME_CONTENT_SCHEMAS;
 export const GAME_TYPES = Object.keys(GAME_CONTENT_SCHEMAS) as GameType[];

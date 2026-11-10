@@ -4,6 +4,7 @@ import { tasksForTier } from '../content/validate';
 import type { GameContent, GameType, Level, Task, Tier } from '../content/schema';
 import {
   completeLevel,
+  effectiveTier,
   hintsLeft,
   isItemComplete,
   nextTask,
@@ -21,7 +22,7 @@ import type { MiniGameProps, MiniGameResult } from '../minigames/types';
 
 type Phase =
   | { kind: 'hub' }
-  | { kind: 'play'; task: Task; round: number }
+  | { kind: 'play'; task: Task; round: number; contentTier: Tier; startedAt: number }
   | { kind: 'result'; task: Task; stars: 1 | 2 | 3; newPart: string | null; coins: number; itemDone: boolean }
   | { kind: 'obstacle' }
   | { kind: 'done' };
@@ -73,12 +74,16 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
     if (phase.kind === 'hub') setIntroSeen(true);
   }, [phase.kind]);
 
+  const startedAtRef = { current: phase.kind === 'play' ? phase.startedAt : 0 };
+  const play = (task: Task) =>
+    setPhase({ kind: 'play', task, round: Date.now(), contentTier: effectiveTier(task, tier, progress.adaptive.shift), startedAt: Date.now() });
+
   const finishTask = useCallback(
     (task: Task, r: MiniGameResult) => {
       const stars = starsFor(r.mistakes, r.allowance);
       let outcome: ReturnType<typeof recordTask> | null = null;
       update((p) => {
-        outcome = recordTask(p, task, level, stars, r.mistakes);
+        outcome = recordTask(p, task, level, stars, r.mistakes, startedAtRef.current ? Date.now() - startedAtRef.current : undefined);
         return outcome.progress;
       });
       const o = outcome as ReturnType<typeof recordTask> | null;
@@ -89,7 +94,8 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
       else bobo.say('bobo.praise');
       setPhase({ kind: 'result', task, stars, newPart: o?.newPart ?? null, coins: o?.coinsEarned ?? 0, itemDone: !!o?.newPart && itemDone });
     },
-    [update, level, item, bobo, content.bobo],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [update, level, item, bobo, content.bobo, phase],
   );
 
   const requestHint = useCallback(() => {
@@ -105,7 +111,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
   const openObstacle = () => setPhase({ kind: 'obstacle' });
 
   if (phase.kind === 'play') {
-    const content_ = phase.task.tiers[tier] as GameContent<typeof phase.task.game>;
+    const content_ = phase.task.tiers[phase.contentTier] as GameContent<typeof phase.task.game>;
     return (
       <main className="level-screen play">
         <header className="level-head">
@@ -121,7 +127,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
           key={`${phase.task.id}-${phase.round}`}
           game={phase.task.game}
           content={content_}
-          tier={tier}
+          tier={phase.contentTier}
           onDone={(r) => finishTask(phase.task, r)}
           requestHint={requestHint}
           rng={rng}
@@ -157,7 +163,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
               {phase.itemDone ? "To'siqni yengamiz!" : 'Davom etamiz'}
             </button>
             {phase.stars < 3 && (
-              <button type="button" className="btn ghost" onClick={() => setPhase({ kind: 'play', task: phase.task, round: Date.now() })}>
+              <button type="button" className="btn ghost" onClick={() => play(phase.task)}>
                 Yana o'ynash (3 yulduz uchun)
               </button>
             )}
@@ -242,7 +248,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
               <button
                 type="button"
                 className={`task-card${suggested?.id === t.id ? ' next' : ''}${r ? ' done' : ''}`}
-                onClick={() => setPhase({ kind: 'play', task: t, round: 0 })}
+                onClick={() => play(t)}
               >
                 <span className="task-icon" aria-hidden="true">{g.icon}</span>
                 <span className="task-text">
