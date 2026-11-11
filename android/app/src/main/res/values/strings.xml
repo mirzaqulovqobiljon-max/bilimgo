@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ipak Yo\'li sarguzashti</string>
+    <string name="title_activity_main">Ipak Yo\'li sarguzashti</string>
+    <string name="package_name">uz.ipakyoli.sarguzasht</string>
+    <string name="custom_url_scheme">uz.ipakyoli.sarguzasht</string>
+</resources>

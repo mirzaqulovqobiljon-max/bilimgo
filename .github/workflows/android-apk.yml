@@ -1,0 +1,54 @@
+# APK yig'ish: har push'da (yoki Actions sahifasida "Run workflow" tugmasi bilan).
+# Natija: Actions -> oxirgi ishga tushirish -> Artifacts -> "ipak-yoli-apk".
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: O'rnatish
+        run: npm ci
+
+      - name: Unit testlar (sinovdan o'tmagan narsa APK bo'lmaydi)
+        run: npx vitest run
+
+      - name: Veb qism
+        run: npm run build
+
+      - name: Android loyihaga ko'chirish
+        run: npx cap sync android
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: APK yig'ish (debug imzo bilan — sinov uchun)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Nomini o'zgartirish
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk ipak-yoli-sarguzashti.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ipak-yoli-apk
+          path: ipak-yoli-sarguzashti.apk
+          retention-days: 30
