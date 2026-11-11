@@ -18,3 +18,9 @@ if (typeof window.PointerEvent === 'undefined') {
   }
   window.PointerEvent = PointerEventPolyfill as unknown as typeof PointerEvent;
 }
+
+// jsdom audio ijro etmaydi ("Not implemented" xatosi) — jim soxta ijro.
+window.HTMLMediaElement.prototype.play = function play() {
+  return Promise.resolve();
+};
+window.HTMLMediaElement.prototype.pause = function pause() {};

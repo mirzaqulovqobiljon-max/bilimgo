@@ -3,6 +3,7 @@ import type { BoboDict, BoboLine } from '../content/schema';
 import { IDLE_REMINDER_MS } from '../engine/rules';
 import { pickIndex, type Rng } from '../engine/random';
 import type { BoboMood } from '../assets';
+import { audioFor, VoiceChannel, type Voice } from '../audio/voice';
 
 /**
  * Bobo qaysi holatda chiqadi (rasm tanlash uchun). Kalit nomidan aniqlanadi;
@@ -26,6 +27,13 @@ export interface BoboApi {
   mood: BoboMood;
   muted: boolean;
   toggleMute(): void;
+  /**
+   * Matnni yozilgan ovoz bilan aytadi (bobo yoki dev). Yozuv yo'q bo'lsa false.
+   * queue — joriy gap tugagach; force — ovoz o'chiq bo'lsa ham (bola 🔊 tugmasini o'zi bosdi).
+   */
+  speak(text: string, opts?: { voice?: Voice; queue?: boolean; force?: boolean }): boolean;
+  /** Navbatdagi o'qishlarni bekor qiladi (savol o'zgarganda). */
+  cancelQueued(): void;
 }
 
 const Ctx = createContext<BoboApi | null>(null);
@@ -43,16 +51,20 @@ interface Props {
   idleReminder?: boolean;
   /** 7-10 yoshlilar uchun ovoz yoqilgan, kattalar uchun ixtiyoriy. */
   initialMuted?: boolean;
+  /** Ovoz kanali (testlarda soxta ijrochi bilan beriladi). */
+  channel?: VoiceChannel;
   children: ReactNode;
 }
 
-export function BoboProvider({ dict, rng = Math.random, idleReminder = true, initialMuted = false, children }: Props) {
+export function BoboProvider({ dict, rng = Math.random, idleReminder = true, initialMuted = false, channel, children }: Props) {
   const [current, setCurrent] = useState<BoboLine | null>(null);
   const [mood, setMood] = useState<BoboMood>('gapiradi');
   const [muted, setMuted] = useState(initialMuted);
   const helpRef = useRef<(() => void) | null>(null);
   const lastPick = useRef(new Map<string, number>());
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const voice = useMemo(() => channel ?? new VoiceChannel(), [channel]);
+  const mutedRef = useRef(muted);
+  mutedRef.current = muted;
 
   const resolve = useCallback(
     (what: string | BoboLine): BoboLine => {
@@ -78,16 +90,30 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
     [resolve],
   );
 
-  // Ovoz: MP3 bo'lsa ijro etamiz. Hozircha yozuvlar yo'q (ochiq savol) — faqat matn ko'rinadi.
+  // Ovoz: bobo har gapirganda yozuv bo'lsa ijro etiladi (avval line.audio, keyin matn bo'yicha indeks).
   useEffect(() => {
-    audioRef.current?.pause();
-    if (!current?.audio || muted || typeof Audio === 'undefined') return;
-    const a = new Audio(current.audio);
-    audioRef.current = a;
-    a.play().catch(() => {
-      /* fayl yo'q yoki brauzer avtoijroni blokladi — matn baribir ko'rinadi */
-    });
-  }, [current, muted]);
+    if (!current || muted) return;
+    const file = current.audio ?? audioFor(current.text, 'bobo');
+    if (file) voice.now(file);
+  }, [current, muted, voice]);
+
+  useEffect(() => {
+    if (muted) voice.stop();
+  }, [muted, voice]);
+
+  useEffect(() => () => voice.stop(), [voice]);
+
+  const speak = useCallback<BoboApi['speak']>(
+    (text, opts = {}) => {
+      const file = audioFor(text, opts.voice ?? 'bobo');
+      if (!file) return false;
+      if (mutedRef.current && !opts.force) return true;
+      if (opts.queue) voice.queue(file);
+      else voice.now(file);
+      return true;
+    },
+    [voice],
+  );
 
   // 30 soniya jimlik — bobo eslatadi.
   useEffect(() => {
@@ -121,8 +147,10 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
       mood,
       muted,
       toggleMute: () => setMuted((m) => !m),
+      speak,
+      cancelQueued: () => voice.clearQueue(),
     }),
-    [say, current, mood, muted],
+    [say, current, mood, muted, speak, voice],
   );
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>;

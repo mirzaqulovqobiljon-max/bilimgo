@@ -439,3 +439,12 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .part-fly { display: inline-flex; gap: 4px; vertical-align: middle; }
 .certificate { background-size: 100% 100%; background-repeat: no-repeat; padding: 32% 11% 18%; border: none; } /* foizlar kenglikdan: tepadagi bezak ostidan boshlanadi */
 @media print { .certificate { border: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+/* 🔊 savolni o'qib berish tugmasi — barmoq uchun yetarli katta (44px) */
+.speak-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-left: 4px; border: 0; border-radius: 50%; background: #fff3d6; font-size: 1.1em; cursor: pointer; vertical-align: middle; }
+.speak-btn:active { transform: scale(0.94); }
+.dev-intro { font-style: italic; color: #5b2a86; margin: 4px 0; }
+.q-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.q-row > h2, .q-row > p { flex: 0 1 auto; }
+.cw-q { justify-content: flex-start; }
+.speak-btn { flex: 0 0 44px; width: 44px; }

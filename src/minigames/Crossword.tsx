@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { SpeakButton } from '../components/SpeakButton';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
 import { layoutCrossword, sameAnswer, wordCells } from './crosswordLayout';
@@ -49,6 +50,14 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
     el?.scrollIntoView?.({ block: 'nearest', inline: 'center' });
   }, [active, grid]);
 
+  // Kichiklarga faol savol o'qib beriladi.
+  useEffect(() => {
+    if (tier !== 'kichik' || done) return;
+    bobo.cancelQueued();
+    bobo.speak(content.words[active]!.q, { queue: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, tier]);
+
   const select = (index: number) => {
     if (solved.includes(index)) return;
     setActive(index);
@@ -96,13 +105,16 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
     <section className={`crossword tier-${tier}`} aria-label="Krossvord">
       {!done && (
         <form className="cw-answer" onSubmit={submit}>
-          <p className="cw-clue">
-            {activeWord.picture && <span className="cw-pic" aria-hidden="true">{activeWord.picture}</span>}
-            <b>
-              {activePlacement.number}. {activePlacement.dir === 'across' ? '→' : '↓'}
-            </b>{' '}
-            {activeWord.q} <span className="muted">({activePlacement.tokens.length} harf)</span>
-          </p>
+          <div className="q-row cw-q">
+            <p className="cw-clue">
+              {activeWord.picture && <span className="cw-pic" aria-hidden="true">{activeWord.picture}</span>}
+              <b>
+                {activePlacement.number}. {activePlacement.dir === 'across' ? '→' : '↓'}
+              </b>{' '}
+              {activeWord.q} <span className="muted">({activePlacement.tokens.length} harf)</span>
+            </p>
+            <SpeakButton text={activeWord.q} />
+          </div>
           <div className="cw-row">
             <input
               ref={inputRef}

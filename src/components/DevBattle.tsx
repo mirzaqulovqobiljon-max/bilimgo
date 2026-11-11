@@ -3,9 +3,17 @@ import type { RiddleQuestion, Tier } from '../content/schema';
 import { BATTLE_HP } from '../content/validate';
 import { useBobo } from './BoboProvider';
 import { img } from '../assets';
+import { SpeakButton } from './SpeakButton';
 
 /** Olim darajasida har bir savolga vaqt (rejada: "7 ta savol, vaqt bilan"). */
 export const OLIM_SECONDS_PER_QUESTION = 25;
+
+/** Devning gaplari — dev ovozida yozilgan (tools/ovoz/manifest.py DEV_LINES bilan bir xil; test tekshiradi). */
+export const DEV_LINES = {
+  intro: 'Ho-ho! Bilim kitobini olmoqchimisan? Avval savollarimga javob ber!',
+  sorryKichik: "Kechiring! Kitobni qaytaraman, endi yaxshi bo'laman!",
+  defeated: 'Voy-voy! Bilimning kuchi mendan ham kuchli ekan!',
+} as const;
 
 type Phase = 'fight' | 'hit' | 'block' | 'won';
 
@@ -40,6 +48,21 @@ export function DevBattle({ tier, questions, onDone, delayMs = 900 }: Props) {
   const timed = tier === 'olim';
   const q = questions[queue[0]!]!;
 
+  // Dev o'zini tanishtiradi (bobo kirish so'zidan keyin).
+  useEffect(() => {
+    bobo.speak(DEV_LINES.intro, { voice: 'dev', queue: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Har bir savolni dev o'z ovozida so'raydi (bobo maqtovi/qalqon gapi tugagach).
+  const qText = phase === 'fight' ? q.q : null;
+  useEffect(() => {
+    if (!qText) return;
+    bobo.speak(qText, { voice: 'dev', queue: true });
+    return () => bobo.cancelQueued();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qText, queue[0]]);
+
   const advance = (correct: boolean) => {
     const [cur, ...rest] = queue;
     if (correct) setQueue([...rest, cur!]);
@@ -69,6 +92,7 @@ export function DevBattle({ tier, questions, onDone, delayMs = 900 }: Props) {
     }
     if (phase === 'won') {
       bobo.say(tier === 'kichik' ? 'bobo.battle.won.kichik' : 'bobo.battle.won');
+      bobo.speak(tier === 'kichik' ? DEV_LINES.sorryKichik : DEV_LINES.defeated, { voice: 'dev', queue: true });
       const t = setTimeout(() => onDoneRef.current({ mistakes: mistakes.current }), delayMs * 3);
       return () => clearTimeout(t);
     }
@@ -100,15 +124,25 @@ export function DevBattle({ tier, questions, onDone, delayMs = 900 }: Props) {
         <span className="weapon sword" aria-hidden="true">🗡️</span>
         {phase === 'won' && (
           <p className="dev-says" role="status">
-            {tier === 'kichik' ? "Kechiring! Kitobni qaytaraman, endi yaxshi bo'laman!" : "Dev tutunga aylanib g'oyib bo'ldi!"}
+            {tier === 'kichik' ? (
+              DEV_LINES.sorryKichik
+            ) : (
+              <>
+                {DEV_LINES.defeated} <span className="muted">Dev tutunga aylanib g'oyib bo'ldi.</span>
+              </>
+            )}
           </p>
         )}
       </div>
       {phase !== 'won' && (
         <div className="battle-q">
-          <p className="dev-says">
-            <b>Dev so'raydi:</b> {q.q}
-          </p>
+          {hp === maxHp && mistakes.current === 0 && <p className="dev-intro">{DEV_LINES.intro}</p>}
+          <div className="q-row">
+            <p className="dev-says">
+              <b>Dev so'raydi:</b> {q.q}
+            </p>
+            <SpeakButton text={q.q} voice="dev" />
+          </div>
           {timed && phase === 'fight' && (
             <p className="timer" aria-label={`Qolgan vaqt ${seconds} soniya`}>
               ⏳ {seconds}

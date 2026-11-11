@@ -32,7 +32,7 @@ export default defineConfig({
           ],
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,svg,png,webp,webmanifest}'], // rasmlar ham: internetsiz o'ynash uchun
+          globPatterns: ['**/*.{js,css,html,svg,png,webp,webmanifest,mp3}'], // rasmlar ham: internetsiz o'ynash uchun
           maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // Phaser ~1.5 MB
           navigateFallback: 'index.html',
           navigateFallbackDenylist: [/^\/api\//],

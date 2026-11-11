@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { SpeakButton } from '../components/SpeakButton';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
 import { scramble } from '../engine/random';
@@ -20,6 +21,11 @@ export function Sorting({ content, tier, onDone, requestHint, rng = Math.random,
   const mistakes = useRef(0);
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
+
+  useEffect(() => {
+    if (tier === 'kichik') bobo.speak(content.prompt, { queue: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content.prompt, tier]);
 
   useEffect(() => {
     if (!done) return;
@@ -72,7 +78,9 @@ export function Sorting({ content, tier, onDone, requestHint, rng = Math.random,
     bobo.say(
       n === MISTAKES_BEFORE_HINT
         ? 'bobo.hint.offer'
-        : { text: `${right.size} tasi o'z joyida. Qolganini almashtirib ko'r!` },
+        : right.size === 0
+          ? { text: "Hali hech biri o'z joyida emas. Almashtirib ko'r!" }
+          : { text: `${right.size} tasi o'z joyida. Qolganini almashtirib ko'r!` },
     );
   };
 
@@ -84,7 +92,10 @@ export function Sorting({ content, tier, onDone, requestHint, rng = Math.random,
 
   return (
     <section className={`sorting tier-${tier}`} aria-label="Tartiblash">
-      <h2 className="sorting-prompt">{content.prompt}</h2>
+      <div className="q-row">
+        <h2 className="sorting-prompt">{content.prompt}</h2>
+        <SpeakButton text={content.prompt} />
+      </div>
       <p className="sort-label">⬆ {content.topLabel}</p>
       <ol className="sort-list">
         {order.map((item, pos) => {

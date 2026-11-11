@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
 import type { MiniGameProps } from './types';
+import { SpeakButton } from '../components/SpeakButton';
 
 /**
  * "Bosh qotirma" — savol + 2-4 variant.
@@ -33,6 +34,14 @@ export function Riddle({ content, tier, onDone, requestHint, delayMs = 900 }: Mi
     }, delayMs);
     return () => clearTimeout(t);
   }, [solved, index, total, delayMs]);
+
+  // Kichik sayyohlarga savol o'qib beriladi (bobo gapi tugagach).
+  useEffect(() => {
+    if (tier !== 'kichik') return;
+    bobo.cancelQueued();
+    bobo.speak(q.q, { queue: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, tier]);
 
   const choose = (i: number) => {
     if (solved || wrong.includes(i)) return;
@@ -70,7 +79,10 @@ export function Riddle({ content, tier, onDone, requestHint, delayMs = 900 }: Mi
           {q.picture}
         </div>
       )}
-      <h2 className="riddle-q">{q.q}</h2>
+      <div className="q-row">
+        <h2 className="riddle-q">{q.q}</h2>
+        <SpeakButton text={q.q} />
+      </div>
       <div className="riddle-options" role="group" aria-label="Javob variantlari">
         {q.options.map((opt, i) => {
           const isWrong = wrong.includes(i);
