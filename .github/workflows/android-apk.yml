@@ -4,7 +4,7 @@ name: Android APK
 
 on:
   push:
-    branches: [main]
+    branches: [main, ipak-yoli-apk]
   workflow_dispatch:
 
 jobs:
