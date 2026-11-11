@@ -60,3 +60,12 @@
 - Qolgan 9 ta mini-o'yin.
 - Kirill yozuvi va rus tili.
 - Talaffuzni o'zbek tilida so'zlashuvchi bola yoki o'qituvchi tinglab tekshirishi.
+
+## Android APK (2026-11-11)
+
+- Capacitor 8 orqali yig'ildi: `android/` papkasi, `appId uz.ipakyoli.sarguzasht`, Android 7+, ekran faqat vertikal.
+- APK GitHub Actions'da yig'iladi (`.github/workflows/android-apk.yml`): testlar → build → `cap sync` → `assembleDebug` → Release.
+- Hozircha `mirzaqulovqobiljon-max/bilimgo` repo'sining `ipak-yoli-apk` branch'ida turibdi (repo public). Yuklab olish: Release `ipak-yoli-apk-latest`.
+- Debug imzosi bor (v2), shuning uchun faqat sinov uchun. Play Market uchun release kaliti kerak bo'ladi.
+- APK ichida server yo'q: o'yin to'liq internetsiz ishlaydi, lekin sinf kodi bilan kirish va o'qituvchi paneliga sinxronlash ishlamaydi. Buning uchun `VITE_API_URL` bilan haqiqiy server manzili berilishi kerak.
+- Haqiqiy telefonda hali sinalmagan.
