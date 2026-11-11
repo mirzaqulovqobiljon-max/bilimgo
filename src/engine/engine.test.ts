@@ -123,7 +123,7 @@ describe('item and level flow', () => {
     expect(nextTask(p, village, c.tasks, 'olim')?.id).toBe('ona-qishloq-01');
     for (const id of village.tasks) p = recordTask(p, task(id), village, 2, 1).progress;
     expect(nextTask(p, village, c.tasks, 'olim')).toBeNull();
-    expect(totalStars(p)).toBe(10);
+    expect(totalStars(p)).toBe(village.tasks.length * 2); // 5 asosiy + 1 qo'shimcha (labirint)
   });
 });
 

@@ -260,5 +260,56 @@
   },
   "bobo.battle.won.kichik": {
     "text": "Devning sehri sindi! U kechirim so'rab qochdi."
+  },
+  "bobo.ona-qishloq.labirint": {
+    "text": "Ajoyib! Avval kalitni top, keyin darvozaga bor."
+  },
+  "bobo.ormon.yashirin": {
+    "text": "Atrofga diqqat bilan qara. Ro'yxatdagi buyumlarni rasmdan top."
+  },
+  "bobo.qizilqum.ot": {
+    "text": "To'siqqa yaqinlashganda sakra! Shoshilma, har urinish seni kuchliroq qiladi."
+  },
+  "bobo.tog.sandiq": {
+    "text": "Har bir jumboq bitta raqamni yashirgan. Ularni birma-bir yech."
+  },
+  "bobo.maze.key": {
+    "text": "Kalit topildi! Endi darvozaga bor."
+  },
+  "bobo.maze.locked": {
+    "text": "Darvoza yopiq. Avval oltin kalitni top."
+  },
+  "bobo.maze.trap": {
+    "text": "Ehtiyot bo'l, tuzoq! Boshqa yo'ldan yur."
+  },
+  "bobo.horse.practice": {
+    "text": "Hozir sakra! Katta tugmani bos."
+  },
+  "bobo.horse.hit": {
+    "text": "Hechqisi yo'q! Yana urinib ko'r."
+  },
+  "bobo.horse.assist": {
+    "text": "Qara, yerdagi oltin belgida sakra."
+  },
+  "bobo.chest.open": {
+    "text": "Sandiq ochildi! Aqlingga balli, bolam!"
+  },
+  "bobo.hidden.miss": {
+    "text": "Bu yerda emas. Yana diqqat bilan qara."
+  },
+  "bobo.battle.phase1": {
+    "text": "Kuch emas, bilim g'alaba keltiradi!"
+  },
+  "bobo.battle.phase2": {
+    "text": "Dev sehr otyapti! Shar yaqinlashganda qalqonni ko'tar."
+  },
+  "bobo.battle.phase3": {
+    "text": "Endi sehrli belgilarni to'g'ri tartibda bos."
+  },
+  "bobo.battle.shield.miss": {
+    "text": "Shoshilma, shar yaqinroq kelsin."
+  },
+  "bobo.battle.rune.wrong": {
+    "text": "Belgilarga yana bir bor diqqat bilan qara."
   }
 }

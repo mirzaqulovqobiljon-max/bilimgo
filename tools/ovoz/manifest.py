@@ -18,6 +18,9 @@ DEV_LINES = [
     "Ho-ho! Bilim kitobini olmoqchimisan? Avval savollarimga javob ber!",
     "Kechiring! Kitobni qaytaraman, endi yaxshi bo'laman!",
     "Voy-voy! Bilimning kuchi mendan ham kuchli ekan!",
+    # yakuniy jang fazalari (DevBattle.tsx DEV_PHASE_LINES)
+    "Mana, sehrimni qaytar-chi!",
+    "Sehrli belgilarimni hech kim topa olmaydi!",
 ]
 
 
@@ -53,6 +56,9 @@ def build():
             add(q['hint'], 'bobo', 'maslahat')
         for w in c.get('words', []):
             add(w['q'], 'bobo', 'savol')
+        for pz in c.get('puzzles', []):  # sehrli sandiq jumboqlari
+            add(pz['q'], 'bobo', 'savol')
+            add(pz['hint'], 'bobo', 'maslahat')
         for f in ('prompt', 'hint'):
             if f in c:
                 add(c[f], 'bobo', 'maslahat' if f == 'hint' else 'savol')
@@ -75,6 +81,10 @@ def build():
     add("Hali hech biri o'z joyida emas. Almashtirib ko'r!", 'bobo', 'dinamik')
     for n in range(1, 8):
         add(f"{n} tasi o'z joyida. Qolganini almashtirib ko'r!", 'bobo', 'dinamik')
+    # sehrli sandiq: iliq maslahat (MagicChest.tsx chestFeedback bilan bir xil)
+    add("Hali hech bir raqam to'g'ri emas. Jumboqlarni qayta yech.", 'bobo', 'dinamik')
+    for n in range(1, 5):
+        add(f"{n} ta raqam to'g'ri. Qolganini tekshir.", 'bobo', 'dinamik')
     return out
 
 

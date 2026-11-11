@@ -17,7 +17,7 @@
       "ona-qishloq-04",
       "ona-qishloq-02",
       "ona-qishloq-03",
-      "ona-qishloq-05"
+      "ona-qishloq-05", "ona-qishloq-06"
     ]
   },
   {
@@ -37,7 +37,7 @@
       "ormon-04",
       "ormon-02",
       "ormon-03",
-      "ormon-05"
+      "ormon-05", "ormon-06"
     ],
     "outro": "bobo.ormon.outro"
   },
@@ -79,7 +79,7 @@
       "qizilqum-04",
       "qizilqum-02",
       "qizilqum-03",
-      "qizilqum-05"
+      "qizilqum-05", "qizilqum-06"
     ],
     "outro": "bobo.qizilqum.outro"
   },
@@ -100,7 +100,7 @@
       "tog-04",
       "tog-02",
       "tog-03",
-      "tog-05"
+      "tog-05", "tog-06"
     ],
     "outro": "bobo.tog.outro"
   },

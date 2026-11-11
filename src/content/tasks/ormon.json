@@ -322,5 +322,231 @@
         ]
       }
     }
+  },
+  {
+    "id": "ormon-06",
+    "level": "ormon",
+    "game": "hidden",
+    "title": "Yashirin buyumlar",
+    "extra": true,
+    "bobo": "bobo.ormon.yashirin",
+    "tiers": {
+      "kichik": {
+        "scene": "minigames/yashirin/sahna.webp",
+        "targets": [
+          {
+            "id": "kalit",
+            "label": "Oltin kalit",
+            "icon": "🗝️",
+            "x": 0.845,
+            "y": 0.46,
+            "w": 0.085,
+            "h": 0.2
+          },
+          {
+            "id": "qilich",
+            "label": "Qilich",
+            "icon": "🗡️",
+            "x": 0.38,
+            "y": 0.135,
+            "w": 0.05,
+            "h": 0.145
+          },
+          {
+            "id": "qoziqorin",
+            "label": "Qizil qo'ziqorin",
+            "icon": "🍄",
+            "x": 0.665,
+            "y": 0.395,
+            "w": 0.12,
+            "h": 0.18
+          },
+          {
+            "id": "kitob",
+            "label": "Kitoblar",
+            "icon": "📚",
+            "x": 0.73,
+            "y": 0.74,
+            "w": 0.22,
+            "h": 0.21
+          },
+          {
+            "id": "koza",
+            "label": "Ko'za",
+            "icon": "🏺",
+            "x": 0.39,
+            "y": 0.81,
+            "w": 0.1,
+            "h": 0.19
+          }
+        ],
+        "hint": "Rasmni diqqat bilan ko'zdan kechir."
+      },
+      "karvon": {
+        "scene": "minigames/yashirin/sahna.webp",
+        "targets": [
+          {
+            "id": "kalit",
+            "label": "Oltin kalit",
+            "icon": "🗝️",
+            "x": 0.845,
+            "y": 0.46,
+            "w": 0.085,
+            "h": 0.2
+          },
+          {
+            "id": "qilich",
+            "label": "Qilich",
+            "icon": "🗡️",
+            "x": 0.38,
+            "y": 0.135,
+            "w": 0.05,
+            "h": 0.145
+          },
+          {
+            "id": "oram",
+            "label": "O'ram qog'oz",
+            "icon": "📜",
+            "x": 0.74,
+            "y": 0.275,
+            "w": 0.085,
+            "h": 0.07
+          },
+          {
+            "id": "kamon",
+            "label": "Kamon va o'qdon",
+            "icon": "🏹",
+            "x": 0.665,
+            "y": 0.055,
+            "w": 0.085,
+            "h": 0.185
+          },
+          {
+            "id": "mesh",
+            "label": "Suv meshi",
+            "icon": "🫙",
+            "x": 0.885,
+            "y": 0.17,
+            "w": 0.08,
+            "h": 0.22
+          },
+          {
+            "id": "sandiq",
+            "label": "Sandiq",
+            "icon": "🧰",
+            "x": 0.4,
+            "y": 0.0,
+            "w": 0.09,
+            "h": 0.07
+          },
+          {
+            "id": "billur",
+            "label": "Ko'k billur",
+            "icon": "💎",
+            "x": 0.02,
+            "y": 0.49,
+            "w": 0.055,
+            "h": 0.1
+          }
+        ],
+        "hint": "Daraxtlar va toshlar yonini yaxshilab qara."
+      },
+      "olim": {
+        "scene": "minigames/yashirin/sahna.webp",
+        "targets": [
+          {
+            "id": "sandiq",
+            "label": "Sandiq",
+            "icon": "🧰",
+            "x": 0.4,
+            "y": 0.0,
+            "w": 0.09,
+            "h": 0.07
+          },
+          {
+            "id": "chiroq",
+            "label": "Osma chiroq",
+            "icon": "🏮",
+            "x": 0.295,
+            "y": 0.0,
+            "w": 0.07,
+            "h": 0.08
+          },
+          {
+            "id": "orgimchak",
+            "label": "O'rgimchak to'ri",
+            "icon": "🕸️",
+            "x": 0.835,
+            "y": 0.0,
+            "w": 0.1,
+            "h": 0.21
+          },
+          {
+            "id": "billur",
+            "label": "Ko'k billur",
+            "icon": "💎",
+            "x": 0.02,
+            "y": 0.49,
+            "w": 0.055,
+            "h": 0.1
+          },
+          {
+            "id": "olmaxon",
+            "label": "Olmaxon",
+            "icon": "🐿️",
+            "x": 0.84,
+            "y": 0.92,
+            "w": 0.14,
+            "h": 0.08
+          },
+          {
+            "id": "tangalar",
+            "label": "Tosh ustidagi tangalar",
+            "icon": "🪙",
+            "x": 0.57,
+            "y": 0.66,
+            "w": 0.085,
+            "h": 0.075
+          },
+          {
+            "id": "oram",
+            "label": "O'ram qog'oz",
+            "icon": "📜",
+            "x": 0.74,
+            "y": 0.275,
+            "w": 0.085,
+            "h": 0.07
+          },
+          {
+            "id": "kamon",
+            "label": "Kamon va o'qdon",
+            "icon": "🏹",
+            "x": 0.665,
+            "y": 0.055,
+            "w": 0.085,
+            "h": 0.185
+          },
+          {
+            "id": "mesh",
+            "label": "Suv meshi",
+            "icon": "🫙",
+            "x": 0.885,
+            "y": 0.17,
+            "w": 0.08,
+            "h": 0.22
+          },
+          {
+            "id": "qopcha",
+            "label": "Tanga qopchasi",
+            "icon": "💰",
+            "x": 0.065,
+            "y": 0.14,
+            "w": 0.085,
+            "h": 0.11
+          }
+        ],
+        "hint": "Rasmni kattalashtirib, burchaklarni ham tekshir."
+      }
+    }
   }
 ]

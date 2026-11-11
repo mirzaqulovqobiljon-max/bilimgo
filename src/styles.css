@@ -54,7 +54,7 @@ button:disabled { cursor: default; }
 @keyframes pulse { 50% { transform: scale(1.04); } }
 
 /* ---------- App frame ---------- */
-.app { max-width: 560px; margin: 0 auto; min-height: 100vh; padding-bottom: calc(var(--bobo-h) + 24px); }
+.app { max-width: 560px; margin: 0 auto; min-height: 100vh; padding-bottom: calc(var(--bobo-h) + 110px); } /* uzun gap pufagi ham oxirgi tugmani yopmasin */
 .topbar {
   position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
   padding: 8px 12px; background: rgba(246, 234, 210, 0.94); backdrop-filter: blur(4px);
@@ -487,4 +487,173 @@ legend { font-weight: 700; margin-bottom: 8px; }
 
 @media (prefers-reduced-motion: reduce) {
   .door-leaf, .anim-key, .anim-boat, .boat-bob, .boat-wake, .magic-ring, .magic-item, .spark { animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* =====================================================================
+   5 ta yangi mini-o'yin (texnik topshiriq v1.0) — umumiy
+   ===================================================================== */
+.mg { display: flex; flex-direction: column; gap: 10px; max-width: 640px; margin: 0 auto; }
+.mg-hud { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 14px; font-weight: 800; }
+.mg-hud > span { display: inline-flex; align-items: center; gap: 4px; background: var(--card); border-radius: 999px; padding: 4px 12px; box-shadow: var(--shadow); }
+.mg-hud > span.ok { background: #e3f6dc; }
+.mg-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+.mg-actions .btn.hint { margin-top: 0; }
+.task-card.extra { border: 2px dashed var(--gold); }
+
+/* ---------- Sirli labirint ---------- */
+.maze { background-size: cover; background-position: center; border-radius: var(--radius); padding: 10px; position: relative; }
+.maze::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius); background: rgba(246, 234, 210, 0.55); pointer-events: none; }
+.maze > * { position: relative; }
+.mz-board {
+  position: relative; display: grid; width: min(100%, 440px, calc(100svh - 430px)); min-width: 240px; margin: 0 auto; border-radius: 12px; overflow: hidden;
+  background: #3f7d2c; box-shadow: 0 0 0 4px #c9a65a, var(--shadow); touch-action: none; user-select: none;
+}
+.mz-cell { position: relative; }
+.mz-cell.wall { background: radial-gradient(circle at 35% 30%, #74b84a, #3d7a27 70%); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18); }
+.mz-cell.path { background: #ead7a8; cursor: pointer; }
+.mz-cell.trap { background: #e8b4a4; }
+.mz-spikes { position: absolute; inset: 18%; background: conic-gradient(from 45deg, #8a8f99 0 25%, #c9ced6 0 50%, #8a8f99 0 75%, #c9ced6 0); clip-path: polygon(0 100%, 16% 0, 33% 100%, 50% 0, 66% 100%, 83% 0, 100% 100%); }
+.mz-cell.hint { background: #fff1a8; box-shadow: inset 0 0 0 2px var(--gold); animation: glow 1s ease-in-out infinite; }
+.mz-key { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; animation: float .8s ease-in-out infinite alternate; filter: drop-shadow(0 0 4px #ffd84a); }
+.mz-exit { position: absolute; inset: 0; display: grid; place-items: center; font-size: clamp(10px, 4vw, 22px); }
+.mz-exit.open { animation: glow 1s ease-in-out infinite; }
+.mz-hero { position: absolute; object-fit: contain; transition: left .12s linear, top .12s linear; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .35)); z-index: 2; }
+.mz-board.bump-up { transform: translateY(-2px); } .mz-board.bump-down { transform: translateY(2px); }
+.mz-board.bump-left { transform: translateX(-2px); } .mz-board.bump-right { transform: translateX(2px); }
+.maze.flash .mz-board { box-shadow: 0 0 0 4px #e0573a, var(--shadow); }
+.mz-controls { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.dpad { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(3, 52px); gap: 4px; }
+.dpad-btn { border: 0; border-radius: 12px; background: var(--lapis); color: #fff; font-size: 1.5rem; font-weight: 900; box-shadow: 0 3px 0 #123160; cursor: pointer; touch-action: manipulation; }
+.dpad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #123160; }
+.dpad-btn.up { grid-column: 2; grid-row: 1; } .dpad-btn.left { grid-column: 1; grid-row: 2; }
+.dpad-btn.right { grid-column: 3; grid-row: 2; } .dpad-btn.down { grid-column: 2; grid-row: 3; }
+
+/* ---------- Sehrli sandiq ---------- */
+.chest-stage { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius); background-size: cover; background-position: center; overflow: hidden; box-shadow: var(--shadow); }
+.chest-lock { position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%); display: flex; gap: clamp(4px, 1.5vw, 10px); padding: 8px 10px; border-radius: 14px; background: linear-gradient(#e9c25a, #b8862a); box-shadow: 0 0 0 3px #7a5414, 0 6px 16px rgba(0, 0, 0, .35); }
+.chest-lock.shake { animation: lock-shake .45s; }
+.wheel { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.wheel-btn { width: 44px; height: 34px; border: 0; border-radius: 8px; background: #5a3a12; color: #ffe9a8; font-size: 1rem; cursor: pointer; touch-action: manipulation; }
+.wheel-btn:active { background: #7a5414; }
+.wheel-digit { width: 44px; height: 52px; display: grid; place-items: center; font-size: 2rem; font-weight: 900; color: #3b2a1a; border-radius: 8px; background: linear-gradient(#fffbe9, #f1dc9c 45%, #fffbe9); box-shadow: inset 0 2px 6px rgba(0, 0, 0, .35); outline: none; }
+.wheel-digit.focus, .wheel-digit:focus-visible { box-shadow: inset 0 2px 6px rgba(0, 0, 0, .35), 0 0 0 3px var(--turq); }
+.chest.open .chest-lock { animation: lock-open .8s ease-in forwards; }
+.chest-burst { position: absolute; inset: 0; pointer-events: none; }
+.chest-light { position: absolute; left: 50%; top: 40%; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 80px 70px rgba(255, 230, 140, .85); animation: ring 1.4s ease-out forwards; }
+.chest-coin { position: absolute; left: 50%; top: 45%; font-size: 26px; animation: coin 1.2s ease-out forwards; animation-delay: calc(var(--i) * 60ms); opacity: 0; }
+@keyframes coin { 0% { opacity: 0; transform: translate(-50%, 0) scale(.4); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(-50% + (var(--i) - 4.5) * 26px), -120px) scale(1.1) rotate(calc(var(--i) * 40deg)); } }
+@keyframes lock-open { to { transform: translate(-50%, -50%) scale(.6); opacity: 0; } }
+@keyframes lock-shake { 20%, 60% { transform: translate(-54%, -50%); } 40%, 80% { transform: translate(-46%, -50%); } }
+.chest-puzzles { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.chest-puzzles li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); cursor: pointer; }
+.chest-puzzles li.focus { box-shadow: 0 0 0 3px var(--turq), var(--shadow); }
+.chest-puzzles li.hinted { background: #fff4c4; }
+.chest-num { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--lapis); color: #fff; font-weight: 900; }
+.chest-q { flex: 1; font-weight: 700; }
+
+/* ---------- Yashirin buyumlar ---------- */
+.ho-zoom { gap: 6px; }
+.ho-zoom .btn.small { min-height: 36px; min-width: 44px; padding: 4px 10px; }
+.ho-view { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); touch-action: none; cursor: crosshair; user-select: none; background: #2c4a2a; }
+.ho-view.zoomed { cursor: grab; }
+.ho-stage { position: absolute; inset: 0; transform-origin: 0 0; }
+.ho-stage > img { width: 100%; height: 100%; display: block; pointer-events: none; }
+.ho-found { position: absolute; border-radius: 12px; box-shadow: 0 0 0 3px #ffe066, 0 0 18px 6px rgba(255, 224, 102, .75); animation: found-pop .5s ease-out; pointer-events: none; }
+.ho-check { position: absolute; right: -8px; top: -8px; width: 22px; height: 22px; border-radius: 50%; background: var(--green); color: #fff; font-weight: 900; font-size: 14px; display: grid; place-items: center; }
+@keyframes found-pop { from { transform: scale(1.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.ho-glow { position: absolute; width: 22%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(255, 245, 170, .55), rgba(255, 245, 170, 0) 70%); animation: glow 1.1s ease-in-out infinite; pointer-events: none; }
+.ho-miss { position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, .9); animation: miss .5s ease-out forwards; pointer-events: none; }
+@keyframes miss { to { transform: scale(1.8); opacity: 0; } }
+.ho-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.ho-list li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow); font-weight: 700; }
+.ho-list li.got { background: #e3f6dc; text-decoration: line-through; color: var(--muted); }
+.tier-kichik .ho-list li { font-size: 1.05rem; }
+.tier-kichik .ho-icon { font-size: 1.4rem; }
+
+/* ---------- Ot bilan to'siqlar ---------- */
+.hr-progress { position: relative; height: 10px; border-radius: 999px; background: var(--sand-2); overflow: visible; margin: 0 22px 0 4px; }
+.hr-progress span { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, var(--turq), var(--green)); transition: width .2s linear; }
+.hr-progress i { position: absolute; right: -22px; top: -7px; font-style: normal; }
+.hr-box { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); touch-action: none; user-select: none; background: #8fd0ff; }
+.hr-bg { position: absolute; inset: 0 0 18% 0; background-size: cover; background-position: center 30%; background-repeat: no-repeat; } /* bitta fon; harakatni yer va to'siqlar beradi */
+.hr-ground { position: absolute; left: 0; right: 0; bottom: 0; background-size: auto 100%; background-repeat: repeat-x; }
+.hr-world { position: absolute; left: 0; right: 0; top: 0; }
+.hr-world > * { position: absolute; bottom: 0; left: calc(100% / 14 * 2); will-change: transform; }
+.hr-horse { width: calc(100% / 14 * 3.2); margin-left: calc(100% / 14 * -1.9); transform-origin: 60% 90%; z-index: 3; }
+.hr-horse img { width: 100%; display: block; margin-bottom: -8%; }
+.hr-horse.running img { animation: gallop .32s ease-in-out infinite alternate; }
+.hr-horse.air img, .hr-horse.stun img { animation: none; }
+.hr-horse.stun { filter: saturate(.6) brightness(1.1); animation: blink .2s steps(2) 3; }
+@keyframes gallop { from { transform: translateY(0) rotate(-1.5deg); } to { transform: translateY(-4%) rotate(1.5deg); } }
+@keyframes blink { 50% { opacity: .4; } }
+.hr-obstacle { width: calc(100% / 14 * 1.7); margin-left: calc(100% / 14 * -0.85); display: flex; flex-direction: column-reverse; align-items: center; }
+.hr-obstacle img { width: 100%; display: block; margin-top: -10%; }
+.hr-obstacle img.top { width: 78%; }
+.hr-star { width: calc(100% / 14 * 0.8); margin-left: calc(100% / 14 * -0.4); transition: opacity .2s; filter: drop-shadow(0 0 6px #ffd84a); }
+.hr-marker { width: calc(100% / 14 * 0.5); height: 10px; margin-left: calc(100% / 14 * -0.25); border-radius: 50%; background: #ffd84a; box-shadow: 0 0 12px 4px rgba(255, 216, 74, .9); transition: opacity .2s; }
+.hr-finish { font-size: 28px; margin-left: -10px; }
+.hr-overlay { position: absolute; inset: 0; display: grid; place-content: center; gap: 12px; text-align: center; background: rgba(20, 30, 60, .55); color: #fff; font-weight: 700; padding: 12px; }
+.hr-overlay kbd { background: #fff; color: var(--ink); border-radius: 6px; padding: 1px 6px; }
+.hr-jump { min-width: 180px; font-size: 1.3rem; touch-action: manipulation; }
+.hr-jump.pulse { animation: glow 0.8s ease-in-out infinite; }
+@keyframes float { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hr-horse.running img, .hr-star, .mz-key, .mz-cell.hint, .ho-glow, .chest-coin, .chest-light { animation: none !important; }
+}
+
+/* ---------- Dev bilan yakuniy jang: 3 faza ---------- */
+.battle.finale { position: relative; background-size: cover; background-position: center top; border-radius: var(--radius); padding: 8px; }
+.battle.finale::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius); background: linear-gradient(rgba(30, 20, 60, .25), rgba(246, 234, 210, .82) 55%); pointer-events: none; }
+.battle.finale > * { position: relative; }
+.stage-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.stage-label { font-weight: 900; color: #fff; background: rgba(31, 78, 140, .85); border-radius: 999px; padding: 4px 12px; }
+.stage-banner { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); z-index: 5; font-size: 1.5rem; font-weight: 900; color: #fff; background: linear-gradient(135deg, #5b2a86, #1f4e8c); padding: 14px 22px; border-radius: 18px; box-shadow: 0 0 30px rgba(160, 120, 255, .8); animation: banner 1.2s ease-out; white-space: nowrap; }
+@keyframes banner { from { transform: translate(-50%, -50%) scale(.6); opacity: 0; } 30% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } }
+.battle-pause { position: absolute; inset: 0; z-index: 6; display: grid; place-content: center; gap: 12px; text-align: center; color: #fff; font-weight: 800; font-size: 1.3rem; background: rgba(20, 20, 50, .7); border-radius: var(--radius); }
+.phase-goal { text-align: center; font-weight: 800; margin: 6px 0; }
+.shield-lane { position: relative; height: 70px; margin: 8px 4px; border-radius: 999px; background: linear-gradient(90deg, rgba(255, 255, 255, .5), rgba(150, 110, 230, .35)); overflow: hidden; }
+.shield-zone { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(255, 216, 74, .55), rgba(255, 216, 74, .15)); border-right: 3px solid #f2b134; }
+.orb { position: absolute; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff, #c08bff 35%, #6b2fc4 70%); box-shadow: 0 0 18px 6px rgba(170, 110, 255, .8); }
+.orb.blocked { animation: orb-pop .5s forwards; }
+.orb.missed { animation: orb-fizz .5s forwards; }
+@keyframes orb-pop { to { transform: scale(2); opacity: 0; filter: hue-rotate(80deg) brightness(1.6); } }
+@keyframes orb-fizz { to { transform: scale(.3); opacity: 0; } }
+.hero-shield { position: absolute; left: 6px; top: 50%; transform: translateY(-50%) scale(.85); font-size: 40px; transition: transform .1s; }
+.hero-shield.up { transform: translateY(-50%) scale(1.25); filter: drop-shadow(0 0 10px #ffd84a); }
+.shield-btn { display: block; margin: 6px auto; min-width: 200px; font-size: 1.3rem; touch-action: manipulation; }
+.rune-circle { display: flex; justify-content: center; gap: 8px; padding: 14px; margin: 6px auto; width: fit-content; border-radius: 999px; background: radial-gradient(circle, rgba(120, 70, 200, .35), rgba(120, 70, 200, .1)); box-shadow: 0 0 22px rgba(170, 110, 255, .6); }
+.rune-circle.wrong { animation: shake-x .4s; }
+@keyframes shake-x { 25%, 75% { transform: translateX(-6px); } 50% { transform: translateX(6px); } }
+.rune-slot { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; font-size: 1.6rem; color: #fff; background: #4a2a7a; box-shadow: inset 0 0 8px rgba(0, 0, 0, .4); }
+.rune-slot.lit { background: #f2b134; color: #3b2a1a; box-shadow: 0 0 14px 4px rgba(255, 216, 74, .8); }
+.rune-pad { display: grid; grid-template-columns: repeat(3, 64px); gap: 10px; justify-content: center; margin-top: 8px; }
+.rune-btn { height: 64px; border: 0; border-radius: 16px; font-size: 2rem; color: #fff; background: linear-gradient(#6b3fb0, #3f2273); box-shadow: 0 3px 0 #2a1650; cursor: pointer; touch-action: manipulation; }
+.rune-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2a1650; }
+
+/* ---------- Maket: asosiy tugmalar boboning gap pufagi ostida qolmasin (e2e/layout.mjs tekshiradi) ---------- */
+.mg-hud .btn.hint { margin: 0; min-height: 40px; padding: 6px 12px; font-size: .9rem; }
+@media (max-width: 520px) {
+  .dpad { grid-template-columns: repeat(4, 56px); grid-template-rows: 48px; }
+  .dpad-btn.up, .dpad-btn.left, .dpad-btn.right, .dpad-btn.down { grid-row: 1; }
+  .dpad-btn.left { grid-column: 1; } .dpad-btn.up { grid-column: 2; } .dpad-btn.down { grid-column: 3; } .dpad-btn.right { grid-column: 4; }
+  .battle.finale .dev { width: 110px; height: 128px; }
+  .battle.finale .weapon { font-size: 1.6rem; }
+}
+.chest .mg-actions { margin-top: -2px; }
+/* yakuniy jang: javob variantlari yonma-yon (qisqa javoblar), kirish gapi ixcham */
+.battle.finale .riddle-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.battle.finale .riddle-options .option { min-height: 52px; padding: 8px; }
+.battle.finale .dev-intro { font-size: .9rem; margin: 2px 0; }
+.battle.finale .battle-q .dev-says { margin: 4px 0; }
+/* qalqon va belgilar fazalarida dev kichikroq — tugmalar pufak ustida qolsin */
+@media (max-width: 520px) {
+  .battle.finale.stage-shield .dev, .battle.finale.stage-runes .dev { width: 84px; height: 96px; }
+  .battle.finale .phase-goal { font-size: .9rem; margin: 2px 0; }
+  .battle.finale .dev-says { padding: 6px 10px; margin: 4px 0; }
+  .rune-circle { padding: 8px; gap: 6px; }
+  .rune-slot { width: 40px; height: 40px; font-size: 1.4rem; }
+  .rune-pad { grid-template-columns: repeat(6, 46px); gap: 6px; }
+  .rune-btn { height: 52px; font-size: 1.6rem; }
+  .shield-lane { height: 58px; }
 }

@@ -2,7 +2,7 @@
  * Qisqa tovush effektlari — WebAudio'da sintez qilinadi (fayl yo'q: APK/PWA hajmi oshmaydi, internetsiz ishlaydi).
  * Pedagogik qoida: "xato" tovushi yumshoq va past ("hmm"), qo'rqitmaydi va jazolamaydi.
  */
-export type SfxName = 'tap' | 'correct' | 'wrong' | 'magic' | 'unlock' | 'water' | 'fanfare';
+export type SfxName = 'tap' | 'correct' | 'wrong' | 'magic' | 'unlock' | 'water' | 'fanfare' | 'jump';
 
 type Listener = (name: SfxName) => void;
 
@@ -118,6 +118,11 @@ const SOUNDS: Record<SfxName, (ctx: AudioContext, t: number) => void> = {
   water: (c, t) => {
     noise(c, t, 1.8, 0.09, 'lowpass', 500, 1400, 0.7);
     [0.3, 0.75, 1.2].forEach((d) => tone(c, t + d, 620, 0.12, 'sine', 0.08, 1300));
+  },
+  // sakrash: tez ko'tariluvchi "vush"
+  jump: (c, t) => {
+    tone(c, t, 300, 0.22, 'triangle', 0.12, 700);
+    noise(c, t, 0.18, 0.05, 'bandpass', 900, 2400, 2);
   },
   // buyum to'liq yig'ildi
   fanfare: (c, t) => {

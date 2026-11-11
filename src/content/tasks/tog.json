@@ -331,5 +331,87 @@
         ]
       }
     }
+  },
+  {
+    "id": "tog-06",
+    "level": "tog",
+    "game": "chest",
+    "title": "Sehrli sandiq",
+    "extra": true,
+    "bobo": "bobo.tog.sandiq",
+    "tiers": {
+      "kichik": {
+        "puzzles": [
+          {
+            "q": "4 + 3 = ?",
+            "answer": 7,
+            "hint": "Barmoqlaringda sanab ko'r."
+          },
+          {
+            "q": "9 − 5 = ?",
+            "answer": 4,
+            "hint": "To'qqiztadan beshtasini olib qo'y."
+          },
+          {
+            "q": "15 − 7 = ?",
+            "answer": 8,
+            "hint": "O'n beshdan avval beshni, keyin ikkini ayir."
+          }
+        ]
+      },
+      "karvon": {
+        "puzzles": [
+          {
+            "q": "6 × 7 − 40 = ?",
+            "answer": 2,
+            "hint": "Avval ko'paytir, keyin ayir."
+          },
+          {
+            "q": "Ketma-ketlikni davom ettir: 2, 4, 6, ?",
+            "answer": 8,
+            "hint": "Har safar son nechtaga oshyapti?"
+          },
+          {
+            "q": "Uchburchakning nechta burchagi bor?",
+            "answer": 3,
+            "hint": "Shaklning nomiga e'tibor ber."
+          },
+          {
+            "q": "45 : 9 = ?",
+            "answer": 5,
+            "hint": "Qaysi son 9 ga ko'paytirilsa 45 chiqadi?"
+          }
+        ]
+      },
+      "olim": {
+        "puzzles": [
+          {
+            "q": "17 sonining raqamlari yig'indisidan 8 ni ayiring.",
+            "answer": 0,
+            "hint": "Avval 1 va 7 ni qo'shing."
+          },
+          {
+            "q": "Fibonachchi qatori: 1, 1, 2, 3, 5, ?",
+            "answer": 8,
+            "hint": "Har bir son oldingi ikkitasining yig'indisi."
+          },
+          {
+            "q": "x + 7 = 13 bo'lsa, x nechaga teng?",
+            "answer": 6,
+            "hint": "Tenglikning ikki tomonidan bir xil son ayiring."
+          },
+          {
+            "q": "3 sutkaning 1/8 qismi necha soat?",
+            "answer": 9,
+            "hint": "Avval 3 sutkada necha soat borligini toping."
+          },
+          {
+            "q": "2 × 2 × 2 − 7 = ?",
+            "answer": 1,
+            "hint": "Ikkining kubini hisoblang."
+          }
+        ]
+      }
+    }
   }
 ]

@@ -39,7 +39,9 @@ export function Certificate({ progress, maxStars, date = new Date() }: { progres
         7 bosqichli sayohatni muvaffaqiyatli yakunlagani uchun beriladi.
       </p>
       <p className="cert-stars">
-        ⭐ {stars} / {maxStars}
+        {/* qo'shimcha sarguzasht o'yinlari yulduzi maksimumdan oshsa — bonus sifatida alohida */}
+        ⭐ {Math.min(stars, maxStars)} / {maxStars}
+        {stars > maxStars && <span className="cert-bonus"> + {stars - maxStars} bonus</span>}
       </p>
       <div className="cert-sign">
         <span>Sana: {date.toLocaleDateString('uz-UZ')}</span>

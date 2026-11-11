@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { PICTURE_KEYS, pictureUrl } from './pictures';
 import { BOBO_MOODS, OBSTACLE_SCENE, img } from '../assets';
 import { isImagePath } from '../components/Icon';
-import { longestSentenceWords, parseContent, tasksForTier } from './validate';
+import { EXTRA_GAMES, longestSentenceWords, mainTasksForTier, parseContent, tasksForTier } from './validate';
 
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
 type AnyRec = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -20,29 +20,49 @@ describe('real content', () => {
     expect(() => loadContent()).not.toThrow();
   });
 
-  it('has 7 levels, all with content, every tier 3/4/5 tasks', () => {
+  it('has 7 levels, all with content, every tier 3/4/5 main tasks (35 asosiy topshiriq saqlangan)', () => {
     const c = loadContent();
     expect(c.levels.map((l) => l.order)).toEqual([1, 2, 3, 4, 5, 6, 7]);
     for (const l of c.levels) {
-      expect(tasksForTier(l, c.tasks, 'kichik')).toHaveLength(3);
-      expect(tasksForTier(l, c.tasks, 'karvon')).toHaveLength(4);
-      expect(tasksForTier(l, c.tasks, 'olim')).toHaveLength(5);
+      expect(mainTasksForTier(l, c.tasks, 'kichik')).toHaveLength(3);
+      expect(mainTasksForTier(l, c.tasks, 'karvon')).toHaveLength(4);
+      expect(mainTasksForTier(l, c.tasks, 'olim')).toHaveLength(5);
     }
-    expect(c.tasks).toHaveLength(35);
+    expect(c.tasks.filter((t) => !t.extra)).toHaveLength(35);
   });
 
   it('uses all 5 first-version mini-games; dev battle only in the cave', () => {
     const c = loadContent();
-    expect(new Set(c.tasks.map((t) => t.game))).toEqual(new Set(['riddle', 'puzzle', 'crossword', 'memory', 'sorting']));
+    const main = c.tasks.filter((t) => !t.extra);
+    expect(new Set(main.map((t) => t.game))).toEqual(new Set(['riddle', 'puzzle', 'crossword', 'memory', 'sorting']));
     expect(c.levels.filter((l) => l.obstacle.battle).map((l) => l.id)).toEqual(['gor']);
   });
 
-  it('gives 3 / 4 / 5 tasks to kichik / karvon / olim on Ona qishloq', () => {
+  it('adds the 4 new mini-games as extra adventure tasks on the planned levels, for every tier, without parts', () => {
+    const c = loadContent();
+    const extra = c.tasks.filter((t) => t.extra);
+    expect(Object.fromEntries(extra.map((t) => [t.game, t.level]))).toEqual({
+      maze: 'ona-qishloq',
+      hidden: 'ormon',
+      horse: 'qizilqum',
+      chest: 'tog',
+    });
+    expect(extra.map((t) => t.game).sort()).toEqual([...EXTRA_GAMES].sort());
+    for (const t of extra) {
+      expect(t.rewardPart).toBeUndefined();
+      expect(Object.keys(t.tiers).sort()).toEqual(['karvon', 'kichik', 'olim']);
+      const lvl = c.levels.find((l) => l.id === t.level)!;
+      for (const tier of ['kichik', 'karvon', 'olim'] as const) expect(tasksForTier(lvl, c.tasks, tier).at(-1)!.id).toBe(t.id);
+    }
+  });
+
+  it('gives 3 / 4 / 5 tasks to kichik / karvon / olim on Ona qishloq (+ labirint)', () => {
     const c = loadContent();
     const lvl = c.levels[0]!;
-    expect(tasksForTier(lvl, c.tasks, 'kichik')).toHaveLength(3);
-    expect(tasksForTier(lvl, c.tasks, 'karvon')).toHaveLength(4);
-    expect(tasksForTier(lvl, c.tasks, 'olim')).toHaveLength(5);
+    expect(mainTasksForTier(lvl, c.tasks, 'kichik')).toHaveLength(3);
+    expect(mainTasksForTier(lvl, c.tasks, 'karvon')).toHaveLength(4);
+    expect(mainTasksForTier(lvl, c.tasks, 'olim')).toHaveLength(5);
+    expect(tasksForTier(lvl, c.tasks, 'kichik')).toHaveLength(4);
   });
 
   it('every image the game references exists in public/ (items, parts, puzzles, scenes, bobo, dev, map)', () => {
@@ -210,5 +230,25 @@ describe('phase 2 game rules', () => {
     const e = errorsOf(r).join('\n');
     expect(e).toMatch(/kartalar takrorlanmasligi kerak/);
     expect(e).toMatch(/elementlar takrorlangan/);
+  });
+});
+
+describe("5 ta yangi mini-o'yin rasmlari", () => {
+  it("sahnalar va ot yugurishi spraytlari public/img/minigames ichida bor (PWA keshiga kiradi)", () => {
+    const files = [
+      'labirint/sahna.webp',
+      'yashirin/sahna.webp',
+      'sandiq/sahna.webp',
+      'jang/sahna.webp',
+      'ot/ot.webp',
+      'ot/xoda.webp',
+      'ot/yulduz.webp',
+      'ot/fon.webp',
+      'ot/yer.webp',
+    ];
+    for (const f of files) expect(existsSync(join(process.cwd(), 'public/img/minigames', f)), f).toBe(true);
+    const c = loadContent();
+    for (const t of c.tasks.filter((x) => x.game === 'hidden'))
+      for (const v of Object.values(t.tiers)) expect(existsSync(join(process.cwd(), 'public/img', (v as { scene: string }).scene))).toBe(true);
   });
 });

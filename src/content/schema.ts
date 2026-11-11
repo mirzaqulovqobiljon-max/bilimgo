@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { mazeProblems } from '../engine/maze';
+import { chestProblems } from '../engine/chest';
 
 /** Yosh darajalari: Kichik sayyoh (1-4 sinf), Karvonboshi (5-8), Olim (9-11). */
 export const TIERS = ['kichik', 'karvon', 'olim'] as const;
@@ -109,6 +111,65 @@ export const SortingContentSchema = z
   .refine((v) => new Set(v.items).size === v.items.length, { message: 'elementlar takrorlangan' });
 export type SortingContent = z.infer<typeof SortingContentSchema>;
 
+// ---------- 5 ta yangi mini-o'yin (texnik topshiriq v1.0, 11.11.2026) ----------
+const CellSchema = z.tuple([z.number().int().nonnegative(), z.number().int().nonnegative()]);
+
+/** Sirli labirint: '#' — devor, '.' — yo'l; koordinata [x, y]. Yechimsiz xarita sxemadan o'tmaydi. */
+export const MazeContentSchema = z
+  .object({
+    rows: z.array(z.string().regex(/^[#.]+$/, "faqat '#' va '.'")).min(5).max(25),
+    start: CellSchema,
+    key: CellSchema,
+    exit: CellSchema,
+    traps: z.array(CellSchema).max(8).default([]),
+    hint: z.string().min(1),
+  })
+  .superRefine((m, ctx) => {
+    for (const message of mazeProblems(m)) ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+  });
+export type MazeContent = z.infer<typeof MazeContentSchema>;
+
+/** Yashirin buyumlar: koordinatalar rasmga nisbatan 0..1 (ekran o'lchamidan mustaqil). */
+const HiddenTargetSchema = z
+  .object({
+    id,
+    label: z.string().min(1),
+    icon: z.string().min(1),
+    x: z.number().min(0).max(1),
+    y: z.number().min(0).max(1),
+    w: z.number().positive().max(1),
+    h: z.number().positive().max(1),
+  })
+  .refine((t) => t.x + t.w <= 1.0001 && t.y + t.h <= 1.0001, { message: 'nishon rasmdan chiqib ketgan' });
+export const HiddenContentSchema = z
+  .object({
+    scene: z.string().regex(/^minigames\/[a-z0-9/-]+\.webp$/),
+    targets: z.array(HiddenTargetSchema).min(3).max(12),
+    hint: z.string().min(1),
+  })
+  .refine((c) => new Set(c.targets.map((t) => t.id)).size === c.targets.length, { message: 'nishon id takrorlangan' });
+export type HiddenContent = z.infer<typeof HiddenContentSchema>;
+
+/** Ot bilan to'siqlar: trek — to'siqlar ketma-ketligi ("ikki" — ketma-ket ikki to'siq). */
+export const HorseContentSchema = z.object({
+  track: z.array(z.enum(['past', 'baland', 'ikki'])).min(3).max(15),
+  hint: z.string().min(1),
+});
+export type HorseContent = z.infer<typeof HorseContentSchema>;
+
+/** Sehrli sandiq: har jumboq kodning bitta raqamini beradi; arifmetik misollar avtomatik tekshiriladi. */
+export const ChestContentSchema = z
+  .object({
+    puzzles: z
+      .array(z.object({ q: z.string().min(1), answer: z.number().int().min(0).max(9), hint: z.string().min(1) }))
+      .min(3)
+      .max(5),
+  })
+  .superRefine((c, ctx) => {
+    for (const message of chestProblems(c.puzzles)) ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+  });
+export type ChestContent = z.infer<typeof ChestContentSchema>;
+
 /** Every game type registers its content schema here; the engine never hardcodes content. */
 export const GAME_CONTENT_SCHEMAS = {
   riddle: RiddleContentSchema,
@@ -116,6 +177,10 @@ export const GAME_CONTENT_SCHEMAS = {
   crossword: CrosswordContentSchema,
   memory: MemoryContentSchema,
   sorting: SortingContentSchema,
+  maze: MazeContentSchema,
+  hidden: HiddenContentSchema,
+  horse: HorseContentSchema,
+  chest: ChestContentSchema,
 } as const;
 export type GameType = keyof typeof GAME_CONTENT_SCHEMAS;
 export const GAME_TYPES = Object.keys(GAME_CONTENT_SCHEMAS) as GameType[];
@@ -136,6 +201,11 @@ export const TaskSchema = z
     title: z.string().min(1),
     // bitta qism yoki bir nechta (qilich-qalqon 6 qism, kichiklarda 3 topshiriq); yo'q — bonus topshiriq
     rewardPart: z.union([id, z.array(id).min(1)]).optional(),
+    /**
+     * Qo'shimcha sarguzasht o'yini (5 ta yangi mini-o'yin): asosiy 3/4/5 topshiriq hisobiga kirmaydi,
+     * qism bermaydi — faqat yulduz va birinchi g'alabadagi tanga (mavjud recordTask orqali).
+     */
+    extra: z.boolean().optional(),
     bobo: boboKey,
     tiers: TierMapSchema,
   })

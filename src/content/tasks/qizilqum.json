@@ -391,5 +391,52 @@
         "hint": "Orol dengiziga quyilgan daryolar eng uzunlari."
       }
     }
+  },
+  {
+    "id": "qizilqum-06",
+    "level": "qizilqum",
+    "game": "horse",
+    "title": "Ot bilan to'siqlar",
+    "extra": true,
+    "bobo": "bobo.qizilqum.ot",
+    "tiers": {
+      "kichik": {
+        "track": [
+          "past",
+          "past",
+          "past",
+          "past",
+          "past"
+        ],
+        "hint": "Xoda yaqinlashganda sakra."
+      },
+      "karvon": {
+        "track": [
+          "past",
+          "baland",
+          "past",
+          "past",
+          "baland",
+          "past",
+          "baland",
+          "baland"
+        ],
+        "hint": "Baland to'siqda biroz erta sakra."
+      },
+      "olim": {
+        "track": [
+          "past",
+          "baland",
+          "ikki",
+          "past",
+          "baland",
+          "ikki",
+          "baland",
+          "past",
+          "ikki"
+        ],
+        "hint": "Ketma-ket to'siqlarda yerga tushishing bilan yana sakra."
+      }
+    }
   }
 ]

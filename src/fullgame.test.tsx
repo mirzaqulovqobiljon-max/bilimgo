@@ -8,12 +8,20 @@ import { createLocalStore } from './engine/storage';
 import { seededRng } from './engine/random';
 import { maxStarsFor } from './screens/LevelScreen';
 import { gradeToTier } from './engine/rules';
+import { TickerContext, manualTicker } from './minigames/ticker';
+import { tasksForTier } from './content/validate';
 
 vi.mock('./components/map/phaserMap', () => ({ createMap: vi.fn(() => ({ destroy: vi.fn() })) }));
 
+const clock = manualTicker();
+
 async function start(name: string, grade: number) {
   const u = userEvent.setup({ delay: null });
-  render(<App content={content} store={createLocalStore()} rng={seededRng(7)} delayMs={0} />);
+  render(
+    <TickerContext.Provider value={clock.ticker}>
+      <App content={content} store={createLocalStore()} rng={seededRng(7)} delayMs={0} />
+    </TickerContext.Provider>,
+  );
   await u.type(screen.getByLabelText('Isming'), name);
   await u.click(screen.getByRole('button', { name: new RegExp(`^${grade}$`) }));
   await u.click(screen.getByRole('button', { name: 'Sayohatni boshlash' }));
@@ -30,7 +38,7 @@ describe.each([
   it(`7 bosqich, barcha buyumlar, dev jangi, final va sertifikat${mistakes ? ' (xatolar bilan)' : ''}`, async () => {
     const u = await start(name, grade);
     for (const [i, title] of titles.entries()) {
-      await playLevel(u, content, title, { makeMistakes: mistakes });
+      await playLevel(u, content, title, { makeMistakes: mistakes, tick: (dt) => clock.tick(dt) });
       if (i < titles.length - 1) {
         expect(screen.getByText(`${title} — o'tildi!`)).toBeInTheDocument();
         await u.click(screen.getByRole('button', { name: 'Xaritaga qaytish' }));
@@ -50,8 +58,10 @@ describe.each([
     for (const item of content.items) {
       expect(screen.getByTestId(`bag-${item.id}`)).toHaveTextContent(`${item.parts.length}/${item.parts.length}`);
     }
-    // Tangalar: har topshiriq uchun 10
-    expect(screen.getByLabelText(`Jami tanga: ${(max / 3) * 10}`)).toBeInTheDocument();
+    // Tangalar: har topshiriq uchun 10 (asosiy + 4 ta qo'shimcha sarguzasht o'yini, faqat birinchi g'alabada)
+    const allTasks = content.levels.reduce((n, l) => n + tasksForTier(l, content.tasks, tier).length, 0);
+    expect(allTasks).toBe(max / 3 + 4);
+    expect(screen.getByLabelText(`Jami tanga: ${allTasks * 10}`)).toBeInTheDocument();
 
     // Xaritada hamma bosqich o'tilgan
     await u.click(screen.getByRole('button', { name: 'Yopish' }));

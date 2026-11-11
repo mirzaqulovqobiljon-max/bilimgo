@@ -1132,5 +1132,197 @@
   "voice": "dev",
   "file": "audio/uz/dev-31a99f2bc4.mp3",
   "sec": 5.52
+ },
+ "bobo-7ef891daa3": {
+  "text": "Ajoyib! Avval kalitni top, keyin darvozaga bor.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-7ef891daa3.mp3",
+  "sec": 3.79
+ },
+ "bobo-4880aebcbe": {
+  "text": "Atrofga diqqat bilan qara. Ro'yxatdagi buyumlarni rasmdan top.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-4880aebcbe.mp3",
+  "sec": 5.04
+ },
+ "bobo-c5aceca975": {
+  "text": "To'siqqa yaqinlashganda sakra! Shoshilma, har urinish seni kuchliroq qiladi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-c5aceca975.mp3",
+  "sec": 6.22
+ },
+ "bobo-d8392c1932": {
+  "text": "Har bir jumboq bitta raqamni yashirgan. Ularni birma-bir yech.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-d8392c1932.mp3",
+  "sec": 5.06
+ },
+ "bobo-babde7d223": {
+  "text": "Kalit topildi! Endi darvozaga bor.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-babde7d223.mp3",
+  "sec": 2.98
+ },
+ "bobo-6467b21a1f": {
+  "text": "Darvoza yopiq. Avval oltin kalitni top.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-6467b21a1f.mp3",
+  "sec": 3.17
+ },
+ "bobo-435aa7e199": {
+  "text": "Ehtiyot bo'l, tuzoq! Boshqa yo'ldan yur.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-435aa7e199.mp3",
+  "sec": 3.05
+ },
+ "bobo-56240d9083": {
+  "text": "Hozir sakra! Katta tugmani bos.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-56240d9083.mp3",
+  "sec": 2.47
+ },
+ "bobo-01602d22c0": {
+  "text": "Hechqisi yo'q! Yana urinib ko'r.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-01602d22c0.mp3",
+  "sec": 2.4
+ },
+ "bobo-1566241d64": {
+  "text": "Qara, yerdagi oltin belgida sakra.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-1566241d64.mp3",
+  "sec": 2.86
+ },
+ "bobo-f4d02d4d36": {
+  "text": "Sandiq ochildi! Aqlingga balli, bolam!",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-f4d02d4d36.mp3",
+  "sec": 2.66
+ },
+ "bobo-82d70e4ee1": {
+  "text": "Bu yerda emas. Yana diqqat bilan qara.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-82d70e4ee1.mp3",
+  "sec": 2.95
+ },
+ "bobo-f99edfd10c": {
+  "text": "Kuch emas, bilim g'alaba keltiradi!",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-f99edfd10c.mp3",
+  "sec": 2.88
+ },
+ "bobo-9674e3c273": {
+  "text": "Dev sehr otyapti! Shar yaqinlashganda qalqonni ko'tar.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-9674e3c273.mp3",
+  "sec": 4.44
+ },
+ "bobo-f58983a9c4": {
+  "text": "Endi sehrli belgilarni to'g'ri tartibda bos.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-f58983a9c4.mp3",
+  "sec": 3.58
+ },
+ "bobo-be2aa9b273": {
+  "text": "Shoshilma, shar yaqinroq kelsin.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-be2aa9b273.mp3",
+  "sec": 2.59
+ },
+ "bobo-a237625248": {
+  "text": "Belgilarga yana bir bor diqqat bilan qara.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-a237625248.mp3",
+  "sec": 3.48
+ },
+ "bobo-0529cf0a4f": {
+  "text": "Yonib turgan yo'l bo'ylab yur.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-0529cf0a4f.mp3",
+  "sec": 2.26
+ },
+ "bobo-3184e7f3a9": {
+  "text": "Rasmni diqqat bilan ko'zdan kechir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-3184e7f3a9.mp3",
+  "sec": 2.93
+ },
+ "bobo-623d8eff7b": {
+  "text": "Xoda yaqinlashganda sakra.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-623d8eff7b.mp3",
+  "sec": 2.33
+ },
+ "bobo-c83a6c4d4b": {
+  "text": "4 + 3 = ?",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-c83a6c4d4b.mp3",
+  "sec": 2.5
+ },
+ "bobo-96201db751": {
+  "text": "9 − 5 = ?",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-96201db751.mp3",
+  "sec": 2.64
+ },
+ "bobo-04a5a3a15e": {
+  "text": "To'qqiztadan beshtasini olib qo'y.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-04a5a3a15e.mp3",
+  "sec": 3.02
+ },
+ "bobo-67e8ad0bb9": {
+  "text": "15 − 7 = ?",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-67e8ad0bb9.mp3",
+  "sec": 2.74
+ },
+ "bobo-d113c02fa8": {
+  "text": "O'n beshdan avval beshni, keyin ikkini ayir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-d113c02fa8.mp3",
+  "sec": 3.48
+ },
+ "bobo-2c87ff3751": {
+  "text": "Hali hech bir raqam to'g'ri emas. Jumboqlarni qayta yech.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-2c87ff3751.mp3",
+  "sec": 4.7
+ },
+ "bobo-1dca100d54": {
+  "text": "1 ta raqam to'g'ri. Qolganini tekshir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-1dca100d54.mp3",
+  "sec": 3.1
+ },
+ "bobo-aca2665223": {
+  "text": "2 ta raqam to'g'ri. Qolganini tekshir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-aca2665223.mp3",
+  "sec": 3.36
+ },
+ "bobo-433ac2295c": {
+  "text": "3 ta raqam to'g'ri. Qolganini tekshir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-433ac2295c.mp3",
+  "sec": 3.17
+ },
+ "bobo-c55be8a603": {
+  "text": "4 ta raqam to'g'ri. Qolganini tekshir.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-c55be8a603.mp3",
+  "sec": 3.5
+ },
+ "dev-dc5e3ec8fe": {
+  "text": "Mana, sehrimni qaytar-chi!",
+  "voice": "dev",
+  "file": "audio/uz/dev-dc5e3ec8fe.mp3",
+  "sec": 3.1
+ },
+ "dev-d91cf45cd2": {
+  "text": "Sehrli belgilarimni hech kim topa olmaydi!",
+  "voice": "dev",
+  "file": "audio/uz/dev-d91cf45cd2.mp3",
+  "sec": 4.94
  }
 }

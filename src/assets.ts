@@ -14,6 +14,9 @@ export const img = {
   certificate: 'img/sertifikat-ramka.webp',
   puzzle: (key: string) => `img/puzzle/${key}.webp`,
   obstacle: (scene: string, open: boolean) => `img/tosiq/${scene}-${open ? 'keyin' : 'oldin'}.webp`,
+  item: (id: string) => `img/buyum/${id}.webp`,
+  /** 5 ta yangi mini-o'yin rasmlari (tools/minioyin_rasmlar.py): img/minigames/<o'yin>/<fayl>. */
+  minigame: (scene: 'labirint' | 'yashirin' | 'ot' | 'sandiq' | 'jang', file: string) => `img/minigames/${scene}/${file}`,
 };
 
 /** To'siq turi -> sahna rasmi. */

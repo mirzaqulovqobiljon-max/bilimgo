@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { sfx } from '../audio/sfx';
 import type { ContentBundle } from '../content/validate';
-import { tasksForTier } from '../content/validate';
+import { mainTasksForTier, tasksForTier } from '../content/validate';
 import { partsOf, type GameContent, type GameType, type Level, type Task, type Tier } from '../content/schema';
 import {
   completeLevel,
@@ -49,8 +49,9 @@ function GameHost<G extends GameType>(props: { game: G } & MiniGameProps<G>) {
   return <Comp {...(rest as MiniGameProps<G>)} />;
 }
 
+/** Sertifikat chegarasi faqat asosiy topshiriqlardan — qo'shimcha o'yinlar yulduzi bonus bo'lib qo'shiladi. */
 export function maxStarsFor(content: ContentBundle, tier: Tier): number {
-  return content.levels.reduce((sum, l) => sum + tasksForTier(l, content.tasks, tier).length * 3, 0);
+  return content.levels.reduce((sum, l) => sum + mainTasksForTier(l, content.tasks, tier).length * 3, 0);
 }
 
 export function LevelScreen({ level, content, progress, tier, update, onExit, rng, delayMs }: Props) {
@@ -82,6 +83,11 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
   useBoboScreen(introKey, helpKey);
   useEffect(() => {
     if (phase.kind === 'hub') setIntroSeen(true);
+  }, [phase.kind]);
+
+  // Yangi ekran (o'yin, natija, to'siq) tepadan ochilsin — hub pastga surilgan bo'lsa ham.
+  useEffect(() => {
+    document.scrollingElement?.scrollTo?.(0, 0);
   }, [phase.kind]);
 
   const play = (task: Task) =>
@@ -201,7 +207,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
     return (
       <main className="level-screen">
         {battle ? (
-          <DevBattle tier={tier} questions={battle[tier].questions} onDone={finishLevel} delayMs={delayMs} />
+          <DevBattle tier={tier} questions={battle[tier].questions} onDone={finishLevel} delayMs={delayMs} rng={rng} finale />
         ) : (
           <ObstacleScene
             level={level}
@@ -274,7 +280,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
             <li key={t.id}>
               <button
                 type="button"
-                className={`task-card${suggested?.id === t.id ? ' next' : ''}${r ? ' done' : ''}`}
+                className={`task-card${suggested?.id === t.id ? ' next' : ''}${r ? ' done' : ''}${t.extra ? ' extra' : ''}`}
                 onClick={() => play(t)}
               >
                 <span className="task-icon" aria-hidden="true">{g.icon}</span>
@@ -282,7 +288,11 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
                   <b>{t.title}</b>
                   <small>
                     {g.name} ·{' '}
-                    {parts.length ? `mukofot: ${parts.map((p) => p.name.toLowerCase()).join(', ')}` : "qo'shimcha sinov"}
+                    {parts.length
+                      ? `mukofot: ${parts.map((p) => p.name.toLowerCase()).join(', ')}`
+                      : t.extra
+                        ? '✨ sarguzasht o\'yini'
+                        : "qo'shimcha sinov"}
                   </small>
                 </span>
                 {r ? <Stars value={r.stars} /> : <span className="task-go" aria-hidden="true">▶</span>}

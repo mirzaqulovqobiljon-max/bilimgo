@@ -53,6 +53,14 @@ export function tasksForTier(level: Level, tasks: readonly Task[], tier: Tier): 
     .filter((t): t is Task => t !== undefined && t.tiers[tier] !== undefined);
 }
 
+/** Asosiy topshiriqlar (3/4/5 qoidasi, qismlar) — qo'shimcha sarguzasht o'yinlarisiz. */
+export function mainTasksForTier(level: Level, tasks: readonly Task[], tier: Tier): Task[] {
+  return tasksForTier(level, tasks, tier).filter((t) => !t.extra);
+}
+
+/** Yangi 5 mini-o'yindan qaysilari qo'shimcha sarguzasht topshirig'i bo'lib keladi. */
+export const EXTRA_GAMES = ['maze', 'hidden', 'horse', 'chest'] as const;
+
 /** Dev jangi: zarbalar soni (jon chizig'i). Rejada: 5 zarba; olim — 7 savol. */
 export const BATTLE_HP: Record<Tier, number> = { kichik: 5, karvon: 5, olim: 7 };
 
@@ -156,7 +164,7 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
     if (level.tasks.length === 0 || !reward) continue;
 
     for (const tier of TIERS) {
-      const seq = tasksForTier(level, b.tasks, tier);
+      const seq = mainTasksForTier(level, b.tasks, tier);
       const tw = `${w} [${tier}]`;
       if (seq.length !== TASKS_PER_TIER[tier]) {
         errors.push(`${tw}: ${TASKS_PER_TIER[tier]} ta topshiriq kerak, ${seq.length} ta bor`);
@@ -184,6 +192,8 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
     boboKey(task.bobo, w);
     const level = b.levels.find((l) => l.id === task.level);
     if (!level) errors.push(`${w}: level topilmadi "${task.level}"`);
+    if (task.extra && partsOf(task).length) errors.push(`${w}: qo'shimcha o'yin qism bermaydi (rewardPart olib tashlansin)`);
+    if ((EXTRA_GAMES as readonly string[]).includes(task.game) && !task.extra) errors.push(`${w}: "${task.game}" faqat qo'shimcha (extra) topshiriq bo'ladi`);
     if (level) {
       const item = itemById.get(level.reward);
       for (const part of partsOf(task)) {
@@ -210,6 +220,14 @@ export function checkRules(b: ContentBundle, knownPictures: readonly string[]): 
           if (normalize(x.q).includes(normalize(x.a))) errors.push(`${w} [${tier}] so'z ${i + 1}: savol javobni o'z ichiga olgan`);
           if (tier === 'kichik' && longestSentenceWords(x.q) > MAX_WORDS_KICHIK) errors.push(`${w} [kichik] so'z ${i + 1}: gap juda uzun`);
         });
+      }
+      if (tier === 'kichik' && ['maze', 'hidden', 'horse', 'chest'].includes(task.game)) {
+        const texts: string[] = [];
+        const cc = c as { hint?: string; puzzles?: { q: string; hint: string }[]; targets?: { label: string }[] };
+        if (cc.hint) texts.push(cc.hint);
+        cc.puzzles?.forEach((x) => texts.push(x.q, x.hint));
+        cc.targets?.forEach((x) => texts.push(x.label));
+        texts.filter((t) => longestSentenceWords(t) > MAX_WORDS_KICHIK).forEach((t) => errors.push(`${w} [kichik]: gap juda uzun "${t}"`));
       }
       if (tier === 'kichik' && (task.game === 'memory' || task.game === 'sorting')) {
         for (const field of ['hint', 'prompt'] as const) {

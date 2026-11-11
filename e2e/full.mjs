@@ -5,6 +5,8 @@ import { chromium } from 'playwright-core';
 import { preview } from 'vite';
 
 const grade = Number(process.argv[2] ?? 2);
+// VIEWPORT=desktop — kompyuter ekrani (sichqoncha + klaviatura), aks holda telefon (touch)
+const desktop = process.env.VIEWPORT === 'desktop';
 const root = new URL('../src/content/', import.meta.url).pathname;
 const levels = JSON.parse(readFileSync(root + 'levels.json', 'utf8')).sort((a, b) => a.order - b.order);
 const tasks = readdirSync(root + 'tasks').flatMap((f) => JSON.parse(readFileSync(root + 'tasks/' + f, 'utf8')));
@@ -13,8 +15,38 @@ const questions = [
   ...levels.flatMap((l) => (l.obstacle.battle ? Object.values(l.obstacle.battle).flatMap((b) => b.questions) : [])),
 ];
 const words = tasks.flatMap((t) => Object.values(t.tiers).flatMap((v) => v.words ?? []));
+const tiersOf = (game) => tasks.filter((t) => t.game === game).flatMap((t) => Object.values(t.tiers));
 
-const SHOTS = new URL(`./screens-full-${grade}/`, import.meta.url).pathname;
+/** Labirint: BFS (tuzoqlardan aylanib) — start -> kalit -> chiqish. */
+function mazePath(m) {
+  const wall = ([x, y]) => m.rows[y]?.[x] !== '.';
+  const trap = ([x, y]) => m.traps.some((t) => t[0] === x && t[1] === y);
+  const bfs = (a, b) => {
+    const prev = new Map([[a.join(), null]]);
+    const q = [a];
+    while (q.length) {
+      const c = q.shift();
+      if (c[0] === b[0] && c[1] === b[1]) {
+        const path = [];
+        for (let k = c; k; k = prev.get(k.join())) path.unshift(k);
+        return path;
+      }
+      for (const [dx, dy] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
+        const n = [c[0] + dx, c[1] + dy];
+        if (!prev.has(n.join()) && !wall(n) && !trap(n)) (prev.set(n.join(), c), q.push(n));
+      }
+    }
+    return null;
+  };
+  const p = [...bfs(m.start, m.key), ...bfs(m.key, m.exit).slice(1)];
+  return p.slice(1).map((c, i) => {
+    const dx = c[0] - p[i][0];
+    const dy = c[1] - p[i][1];
+    return dx === 1 ? 'ArrowRight' : dx === -1 ? 'ArrowLeft' : dy === 1 ? 'ArrowDown' : 'ArrowUp';
+  });
+}
+
+const SHOTS = new URL(`./screens-full-${grade}${desktop ? '-desktop' : ''}/`, import.meta.url).pathname;
 mkdirSync(SHOTS, { recursive: true });
 const PORT = 4174;
 const server = await preview({ preview: { port: PORT, strictPort: true }, logLevel: 'silent' });
@@ -23,7 +55,11 @@ const errors = [];
 const shotted = new Set();
 let n = 0;
 try {
-  const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  const ctx = await browser.newContext(
+    desktop
+      ? { viewport: { width: 1280, height: 800 } }
+      : { viewport: { width: 360, height: 740 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true },
+  );
   const page = await ctx.newPage();
   page.setDefaultTimeout(10000);
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
@@ -48,10 +84,81 @@ try {
     for (;;) {
       const cards = page.locator('.task-card:not(.done)');
       if ((await cards.count()) === 0) break;
-      const bonus = cards.filter({ hasText: "qo'shimcha sinov" });
+      const extra = page.locator('.task-card.extra:not(.done)');
+      const bonus = (await extra.count()) ? extra : cards.filter({ hasText: "qo'shimcha sinov" });
       await ((await bonus.count()) ? bonus.first() : cards.first()).click();
-      await page.locator('.riddle, .puzzle, .crossword, .memory, .sorting').first().waitFor();
-      if (await has('.riddle')) {
+      await page.locator('.riddle, .puzzle, .crossword, .memory, .sorting, .maze, .chest, .hidden-game, .horse').first().waitFor();
+      if (await has('.maze')) {
+        await shotOnce('labirint');
+        const cols = await page.$eval('.mz-board', (e) => e.style.gridTemplateColumns.match(/repeat\((\d+)/)[1]);
+        const m = tiersOf('maze').find((x) => String(x.rows[0].length) === cols);
+        const keys = mazePath(m);
+        for (const [i, k] of keys.entries()) {
+          // telefonda ekrandagi tugmalar, kompyuterda klaviatura (yarmi WASD)
+          if (!desktop) await page.getByRole('button', { name: { ArrowUp: 'Yuqoriga', ArrowDown: 'Pastga', ArrowLeft: 'Chapga', ArrowRight: "O'ngga" }[k] }).click();
+          else await page.keyboard.press(i % 2 ? k : { ArrowUp: 'w', ArrowDown: 's', ArrowLeft: 'a', ArrowRight: 'd' }[k]);
+          if (i === Math.floor(keys.length / 2)) await shotOnce('labirint-yarim');
+        }
+      } else if (await has('.chest')) {
+        await shotOnce('sandiq');
+        const qs = await page.$$eval('.chest-q', (els) => els.map((e) => e.textContent));
+        const c = tiersOf('chest').find((x) => x.puzzles.every((p, i) => p.q === qs[i]));
+        for (const [i, pz] of c.puzzles.entries()) {
+          if (desktop) {
+            await page.getByRole('spinbutton', { name: `${i + 1}-raqam` }).click();
+            await page.keyboard.press(String(pz.answer));
+          } else {
+            const up = Math.min(pz.answer, 10 - pz.answer);
+            for (let k = 0; k < up; k++)
+              await page.getByRole('button', { name: `${i + 1}-raqamni ${pz.answer <= 5 ? 'oshirish' : 'kamaytirish'}` }).click();
+          }
+        }
+        await page.getByRole('button', { name: /Tekshirish/ }).click();
+        await page.waitForTimeout(500);
+        await shotOnce('sandiq-ochildi');
+      } else if (await has('.hidden-game')) {
+        await shotOnce('yashirin');
+        const ids = await page.$$eval('.ho-list li', (els) => els.map((e) => e.dataset.target));
+        const h = tiersOf('hidden').find((x) => x.targets.length === ids.length && x.targets.every((t, i) => t.id === ids[i]));
+        const box = await page.locator('.ho-stage').boundingBox();
+        for (const t of h.targets) {
+          const x = box.x + (t.x + t.w / 2) * box.width;
+          const y = box.y + (t.y + t.h / 2) * box.height;
+          if (desktop) await page.mouse.click(x, y);
+          else await page.touchscreen.tap(x, y);
+          await page.waitForTimeout(40);
+        }
+        await shotOnce('yashirin-topildi');
+      } else if (await has('.horse')) {
+        await shotOnce('ot-boshlash');
+        await page.getByRole('button', { name: /Boshlash/ }).click();
+        let shot = false;
+        while (!(await has('.horse.phase-done')) && (await has('.horse'))) {
+          // brauzer ichida, har kadrda: to'siq sakrash nuqtasiga kelganmi
+          const ready = await page
+            .waitForFunction(
+              () => {
+                const b = document.querySelector('.hr-box');
+                if (!b || document.querySelector('.horse.phase-done')) return 'done';
+                return b.dataset.next && Number(b.dataset.next) <= Number(b.dataset.lead) && b.dataset.y === '0.00' ? 'jump' : false;
+              },
+              null,
+              { polling: 'raf', timeout: 20000 },
+            )
+            .then((h) => h.jsonValue());
+          if (ready === 'done') break;
+          if (desktop) await page.keyboard.press('Space');
+          else await page.locator('.hr-jump').dispatchEvent('pointerdown');
+          if (!shot) {
+            await page.waitForTimeout(220);
+            await shotOnce('ot-sakrash');
+            shot = true;
+          }
+          await page.waitForFunction(() => document.querySelector('.hr-box')?.dataset.y !== '0.00' || !!document.querySelector('.horse.phase-done'), null, { polling: 'raf', timeout: 3000 }).catch(() => {});
+        }
+        const mistakes = await page.locator('.horse .mg-hud').textContent();
+        console.log(`    ot: ${mistakes.trim()}`);
+      } else if (await has('.riddle')) {
         while (await has('.riddle')) {
           const text = await page.locator('.riddle-q').textContent().catch(() => null);
           if (!text) break;
@@ -122,6 +229,33 @@ try {
         const q = questions.find((x) => x.q === text);
         await enabled.filter({ hasText: q.options[q.answer] }).first().click();
       }
+      if (await has('.battle.finale')) {
+        // 2-faza: qalqon
+        await page.locator('.phase-shield').waitFor({ timeout: 8000 });
+        await shotOnce('jang-qalqon');
+        while (await has('.phase-shield')) {
+          const r = await page
+            .waitForFunction(
+              () => {
+                const el = document.querySelector('.phase-shield');
+                if (!el) return 'done';
+                return el.dataset.orb && Number(el.dataset.orb) >= Number(el.dataset.zone) + 0.06 ? 'raise' : false;
+              },
+              null,
+              { polling: 'raf', timeout: 15000 },
+            )
+            .then((h) => h.jsonValue());
+          if (r === 'done') break;
+          if (desktop) await page.keyboard.press('Space');
+          else await page.locator('.shield-btn').dispatchEvent('pointerdown');
+          await page.waitForTimeout(150);
+        }
+        // 3-faza: sehrli belgilar
+        await page.locator('.phase-runes').waitFor({ timeout: 8000 });
+        await shotOnce('jang-belgilar');
+        const target = await page.$eval('.phase-runes', (e) => e.dataset.target);
+        for (const r of target) await page.getByRole('button', { name: `Belgi ${r}` }).click();
+      }
       await page.waitForTimeout(400);
       await shotOnce('battle-won');
     } else {
@@ -154,6 +288,7 @@ try {
   console.log(`\nFULL E2E PASSED (grade ${grade}) — screenshots in ${SHOTS}`);
 } catch (e) {
   console.error('\nFULL E2E FAILED:', e);
+  for (const pg of browser.contexts().flatMap((c) => c.pages())) await pg.screenshot({ path: `${SHOTS}XATO.png`, fullPage: true }).catch(() => {});
   process.exitCode = 1;
 } finally {
   await browser.close();
