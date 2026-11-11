@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { sfx } from '../audio/sfx';
 import type { ContentBundle } from '../content/validate';
 import { tasksForTier } from '../content/validate';
 import { partsOf, type GameContent, type GameType, type Level, type Task, type Tier } from '../content/schema';
@@ -102,6 +103,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
     const o = outcome as ReturnType<typeof recordTask> | null;
     if (!o) return;
     const itemDone = o.newParts.length > 0 && isItemComplete(o.progress, item);
+    if (itemDone) sfx.play('fanfare');
     if (itemDone) bobo.say(wonKey(item.id));
     else if (o.newParts.length) bobo.say('bobo.part.won');
     else if (partsOf(task).length === 0 && o.firstTime) bobo.say('bobo.bonus.won');

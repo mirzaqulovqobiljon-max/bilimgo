@@ -3,7 +3,8 @@ import type { BoboDict, BoboLine } from '../content/schema';
 import { IDLE_REMINDER_MS } from '../engine/rules';
 import { pickIndex, type Rng } from '../engine/random';
 import type { BoboMood } from '../assets';
-import { audioFor, VoiceChannel, type Voice } from '../audio/voice';
+import { audioFor, VoiceChannel, type SayOptions, type Voice } from '../audio/voice';
+import { sfx } from '../audio/sfx';
 
 /**
  * Bobo qaysi holatda chiqadi (rasm tanlash uchun). Kalit nomidan aniqlanadi;
@@ -17,9 +18,20 @@ export function moodFor(what: string | BoboLine): BoboMood {
   return 'gapiradi';
 }
 
+/**
+ * Reaksiya gaplari (maqtov, natija, dalda) — qisqa va muhim, oxirigacha aytiladi.
+ * Kirish so'zlari, maslahatlar va savollar esa bola harakat qilsa bo'linishi mumkin.
+ */
+export function isReaction(what: string | BoboLine): boolean {
+  return typeof what === 'string' && /^bobo\.(praise|encourage|retry|part\.won|bonus\.won|battle\.(block|won)|[a-z0-9-]+\.won)/.test(what);
+}
+
 export interface BoboApi {
-  /** Lug'atdan kalit bo'yicha yoki tayyor matn bilan gapirtiradi. */
-  say(what: string | BoboLine, mood?: BoboMood): void;
+  /**
+   * Lug'atdan kalit bo'yicha yoki tayyor matn bilan gapirtiradi.
+   * opts.ifIdle — ovoz faqat bobo jim bo'lsa (tez-tez takrorlanadigan reaksiyalar uchun); matn baribir ko'rinadi.
+   */
+  say(what: string | BoboLine, mood?: BoboMood, opts?: { ifIdle?: boolean }): void;
   /** "Bobo" tugmasi bosilganda nima bo'lishini joriy ekran belgilaydi (odatda qoidani takrorlash). */
   setHelp(fn: (() => void) | null): void;
   help(): void;
@@ -82,10 +94,16 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
     [dict, rng],
   );
 
-  const say = useCallback(
-    (what: string | BoboLine, m?: BoboMood) => {
+  // Ovoz uchun alohida hisoblagich: bir xil gap ketma-ket aytilsa ham qayta eshitiladi,
+  // `current` obyekti esa o'zgarmaydi (unga bog'liq effektlar qayta ishlab ketmasin).
+  const sayOpts = useRef<SayOptions>({});
+  const [saySeq, setSaySeq] = useState(0);
+  const say = useCallback<BoboApi['say']>(
+    (what, m, opts) => {
+      sayOpts.current = { protect: isReaction(what), ifIdle: opts?.ifIdle };
       setCurrent(resolve(what));
       setMood(m ?? moodFor(what));
+      setSaySeq((n) => n + 1);
     },
     [resolve],
   );
@@ -94,10 +112,13 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
   useEffect(() => {
     if (!current || muted) return;
     const file = current.audio ?? audioFor(current.text, 'bobo');
-    if (file) voice.now(file);
-  }, [current, muted, voice]);
+    if (file) voice.say(file, sayOpts.current);
+    sayOpts.current = {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current, saySeq, muted, voice]);
 
   useEffect(() => {
+    sfx.setMuted(muted);
     if (muted) voice.stop();
   }, [muted, voice]);
 

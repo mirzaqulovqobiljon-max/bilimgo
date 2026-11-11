@@ -10,6 +10,7 @@
     "typecheck": "tsc -b",
     "test:e2e": "node e2e/play.mjs",
     "test:e2e:voice": "node e2e/voice.mjs",
+    "test:e2e:anim": "node e2e/anim.mjs",
     "test:server": "npm --prefix server test",
     "test:all": "npm test && npm run test:server",
     "test:e2e:full": "node e2e/full.mjs 2 && node e2e/full.mjs 6 && node e2e/full.mjs 10"

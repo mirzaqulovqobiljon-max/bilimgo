@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { sfx } from '../audio/sfx';
 import { useBobo } from '../components/BoboProvider';
 import { shuffle } from '../engine/random';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
@@ -46,17 +47,21 @@ export function Memory({ content, tier, onDone, requestHint, rng = Math.random, 
     if (a.pair === b.pair) {
       setMatched((m) => [...m, a.id, b.id]);
       setOpen([]);
-      bobo.say('bobo.praise');
+      sfx.play('correct');
+      // har juftda gapirsa, tez o'ynaganda gaplar to'planib qoladi — faqat bobo jim bo'lsa
+      bobo.say('bobo.praise', undefined, { ifIdle: true });
       return;
     }
     const knewIt = seen.current.has(a.id) || seen.current.has(b.id);
     seen.current.add(a.id);
     seen.current.add(b.id);
+    sfx.play('wrong');
     if (knewIt) {
       mistakes.current += 1;
       const n = realMistakes + 1;
       setRealMistakes(n);
-      bobo.say(n === MISTAKES_BEFORE_HINT ? 'bobo.hint.offer' : 'bobo.encourage');
+      if (n === MISTAKES_BEFORE_HINT) bobo.say('bobo.hint.offer');
+      else bobo.say('bobo.encourage', undefined, { ifIdle: true });
     }
     const t = setTimeout(() => setOpen([]), delayMs);
     return () => clearTimeout(t);
@@ -71,6 +76,7 @@ export function Memory({ content, tier, onDone, requestHint, rng = Math.random, 
 
   const flip = (id: number) => {
     if (open.length >= 2 || open.includes(id) || matched.includes(id)) return;
+    sfx.play('tap');
     setOpen([...open, id]);
   };
 

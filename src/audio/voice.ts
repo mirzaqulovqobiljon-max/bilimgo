@@ -44,14 +44,26 @@ const htmlClip: ClipFactory = (url) => {
   };
 };
 
+type Pending = { file: string; kind: 'say' | 'queue'; protect: boolean };
+
+export interface SayOptions {
+  /** Himoyalangan gap (maqtov, natija) oxirigacha aytiladi — keyingi bobo gapi uni bo'lmaydi. */
+  protect?: boolean;
+  /** Faqat kanal bo'sh bo'lsa gapiradi (tez-tez bo'ladigan reaksiyalar to'planib qolmasin). */
+  ifIdle?: boolean;
+}
+
 /**
  * Bitta ovoz kanali: bir vaqtda faqat bitta gap eshitiladi (bola chalkashmasin).
- * - now(): joriy gapni to'xtatib, darhol gapiradi (bobo javobga munosabati).
- * - queue(): joriy gap tugagach gapiradi (masalan, savolni o'qib berish maqtovdan keyin).
+ * - say(): bobo reaksiyasi. Joriy gap himoyalangan bo'lsa — kutadi (navbatda faqat eng oxirgisi qoladi),
+ *   aks holda (kirish so'zi, savol) uni bo'lib darhol gapiradi.
+ * - now(): bola o'zi bosgan 🔊 — har doim darhol.
+ * - queue(): joriy gaplar tugagach (masalan, savolni o'qib berish).
  */
 export class VoiceChannel {
   private current: Clip | null = null;
-  private pending: string[] = [];
+  private currentProtected = false;
+  private pending: Pending[] = [];
   private timer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
@@ -65,14 +77,31 @@ export class VoiceChannel {
     return this.current !== null;
   }
 
+  say(file: string, opts: SayOptions = {}): void {
+    const protect = opts.protect ?? false;
+    if (opts.ifIdle && (this.current || this.pending.some((p) => p.kind === 'say'))) return;
+    if (!this.current) return this.start(file, protect);
+    if (!this.currentProtected) {
+      this.current.stop();
+      this.current = null;
+      return this.start(file, protect);
+    }
+    // Joriy gap himoyalangan: eskirgan kutayotgan gaplarni tashlab, shu gapni savollardan oldinga qo'yamiz.
+    // Himoyalangan yangi gap boshqa kutayotgan reaksiyalarni almashtiradi (oxirgisi yutadi);
+    // oddiy yangi gap esa kutayotgan himoyalangan gapdan keyin turadi.
+    this.pending = this.pending.filter((p) => p.kind !== 'say' || (p.protect && !protect));
+    const at = this.pending.findIndex((p) => p.kind === 'queue');
+    this.pending.splice(at < 0 ? this.pending.length : at, 0, { file, kind: 'say', protect });
+  }
+
   now(file: string): void {
     this.current?.stop();
     this.current = null;
-    this.start(file);
+    this.start(file, false);
   }
 
   queue(file: string): void {
-    this.pending.push(file);
+    this.pending.push({ file, kind: 'queue', protect: false });
     if (this.current || this.timer) return;
     this.timer = setTimeout(() => {
       this.timer = null;
@@ -89,14 +118,15 @@ export class VoiceChannel {
     this.current = null;
   }
 
-  /** Faqat navbatni tozalaydi (masalan, savol o'zgardi — eski savol endi kerak emas). */
+  /** Faqat navbatdagi o'qishlarni tozalaydi (savol o'zgardi — eski savol endi kerak emas). */
   clearQueue(): void {
-    this.pending = [];
+    this.pending = this.pending.filter((p) => p.kind !== 'queue');
   }
 
-  private start(file: string) {
+  private start(file: string, protect: boolean) {
     const clip = this.factory(this.base + file);
     this.current = clip;
+    this.currentProtected = protect;
     clip.onEnd(() => {
       if (this.current !== clip) return;
       this.current = null;
@@ -106,7 +136,7 @@ export class VoiceChannel {
   }
 
   private next() {
-    const file = this.pending.shift();
-    if (file) this.start(file);
+    const p = this.pending.shift();
+    if (p) this.start(p.file, p.protect);
   }
 }

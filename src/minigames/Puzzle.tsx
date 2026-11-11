@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { sfx } from '../audio/sfx';
 import { useBobo } from '../components/BoboProvider';
 import { pictureUrl } from '../content/pictures';
 import { scramble } from '../engine/random';
@@ -32,6 +33,7 @@ export function Puzzle({ content, tier, onDone, rng = Math.random, delayMs = 700
 
   useEffect(() => {
     if (!solved) return;
+    sfx.play('correct');
     bobo.say('bobo.praise');
     const t = setTimeout(
       () => onDoneRef.current({ mistakes: mistakes.current, allowance: Math.ceil(content.pieces / 4) }),
@@ -46,6 +48,8 @@ export function Puzzle({ content, tier, onDone, rng = Math.random, delayMs = 700
     const next = [...order];
     [next[a], next[b]] = [next[b]!, next[a]!];
     if (next[a] !== a && next[b] !== b) mistakes.current += 1;
+    // bo'lak joyiga tushsa — "to'g'ri" tovushi, aks holda yengil "chiq"
+    sfx.play(next[a] === a || next[b] === b ? 'correct' : 'tap');
     setOrder(next);
   };
 

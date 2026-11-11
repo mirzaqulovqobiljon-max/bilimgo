@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { sfx } from '../audio/sfx';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
 import type { MiniGameProps } from './types';
@@ -47,10 +48,12 @@ export function Riddle({ content, tier, onDone, requestHint, delayMs = 900 }: Mi
     if (solved || wrong.includes(i)) return;
     if (i === q.answer) {
       setSolved(true);
+      sfx.play('correct');
       bobo.say('bobo.praise');
       return;
     }
     mistakes.current += 1;
+    sfx.play('wrong');
     const next = [...wrong, i];
     setWrong(next);
     bobo.say(next.length === MISTAKES_BEFORE_HINT ? 'bobo.hint.offer' : 'bobo.encourage');

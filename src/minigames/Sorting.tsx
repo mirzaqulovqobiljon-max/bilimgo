@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { sfx } from '../audio/sfx';
 import { SpeakButton } from '../components/SpeakButton';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
@@ -69,10 +70,12 @@ export function Sorting({ content, tier, onDone, requestHint, rng = Math.random,
     setSelected(null);
     if (right.size === order.length) {
       setDone(true);
+      sfx.play('correct');
       bobo.say('bobo.praise');
       return;
     }
     mistakes.current += 1;
+    sfx.play('wrong');
     const n = wrongChecks + 1;
     setWrongChecks(n);
     bobo.say(

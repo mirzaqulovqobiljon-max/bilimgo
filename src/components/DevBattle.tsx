@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { sfx } from '../audio/sfx';
 import type { RiddleQuestion, Tier } from '../content/schema';
 import { BATTLE_HP } from '../content/validate';
 import { useBobo } from './BoboProvider';
@@ -72,6 +73,7 @@ export function DevBattle({ tier, questions, onDone, delayMs = 900 }: Props) {
       next.splice(Math.min(1, next.length), 0, cur!);
       setQueue(next);
     }
+    sfx.play(correct ? 'correct' : 'wrong');
     if (correct) {
       const next = hp - 1;
       setHp(next);

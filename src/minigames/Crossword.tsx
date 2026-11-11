@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { sfx } from '../audio/sfx';
 import { SpeakButton } from '../components/SpeakButton';
 import { useBobo } from '../components/BoboProvider';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
@@ -73,12 +74,14 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
       const next = [...solved, active];
       setSolved(next);
       setInput('');
+      sfx.play('correct');
       bobo.say('bobo.praise');
       const nextWord = grid.placements.find((p) => !next.includes(p.index));
       if (nextWord) setActive(nextWord.index);
       return;
     }
     mistakes.current += 1;
+    sfx.play('wrong');
     const n = (wrongCount[active] ?? 0) + 1;
     setWrongCount({ ...wrongCount, [active]: n });
     bobo.say(n === MISTAKES_BEFORE_HINT ? 'bobo.hint.offer' : 'bobo.encourage');
