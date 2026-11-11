@@ -3,6 +3,7 @@ import { useBobo } from '../components/BoboProvider';
 import { shuffle } from '../engine/random';
 import { MISTAKES_BEFORE_HINT } from '../engine/rules';
 import type { MiniGameProps } from './types';
+import { img } from '../assets';
 
 interface Card {
   id: number;
@@ -80,7 +81,7 @@ export function Memory({ content, tier, onDone, requestHint, rng = Math.random, 
       return;
     }
     setHintUsed(true);
-    bobo.say({ text: content.hint });
+    bobo.say({ text: content.hint }, 'oylaydi');
     const pair = cards.find((c) => !matched.includes(c.id))!.pair;
     const ids = cards.filter((c) => c.pair === pair).map((c) => c.id);
     setPeek(ids);
@@ -100,12 +101,13 @@ export function Memory({ content, tier, onDone, requestHint, rng = Math.random, 
               key={c.id}
               type="button"
               className={`mcard${up ? ' up' : ''}${matched.includes(c.id) ? ' matched' : ''}`}
+              style={up ? undefined : { backgroundImage: `url(${img.cardBack})` }}
               onClick={() => flip(c.id)}
               aria-label={up ? c.face : 'Yopiq karta'}
               data-pair={c.pair}
               disabled={matched.includes(c.id)}
             >
-              <span className="mcard-face">{up ? c.face : '❖'}</span>
+              <span className="mcard-face">{up ? c.face : ''}</span>
             </button>
           );
         })}

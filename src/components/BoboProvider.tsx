@@ -2,14 +2,28 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { BoboDict, BoboLine } from '../content/schema';
 import { IDLE_REMINDER_MS } from '../engine/rules';
 import { pickIndex, type Rng } from '../engine/random';
+import type { BoboMood } from '../assets';
+
+/**
+ * Bobo qaysi holatda chiqadi (rasm tanlash uchun). Kalit nomidan aniqlanadi;
+ * tayyor matnlar uchun (masalan topshiriq maslahati) chaqiruvchi o'zi beradi.
+ */
+export function moodFor(what: string | BoboLine): BoboMood {
+  if (typeof what !== 'string') return 'gapiradi';
+  if (/praise|\.won|bonus|outro/.test(what)) return 'maqtaydi';
+  if (/hint/.test(what)) return 'oylaydi';
+  if (/^bobo\.[a-z0-9-]+\.[a-z0-9-]+$/.test(what) && !/^bobo\.(map|battle|part|hint)\./.test(what)) return 'korsatadi';
+  return 'gapiradi';
+}
 
 export interface BoboApi {
   /** Lug'atdan kalit bo'yicha yoki tayyor matn bilan gapirtiradi. */
-  say(what: string | BoboLine): void;
+  say(what: string | BoboLine, mood?: BoboMood): void;
   /** "Bobo" tugmasi bosilganda nima bo'lishini joriy ekran belgilaydi (odatda qoidani takrorlash). */
   setHelp(fn: (() => void) | null): void;
   help(): void;
   current: BoboLine | null;
+  mood: BoboMood;
   muted: boolean;
   toggleMute(): void;
 }
@@ -34,6 +48,7 @@ interface Props {
 
 export function BoboProvider({ dict, rng = Math.random, idleReminder = true, initialMuted = false, children }: Props) {
   const [current, setCurrent] = useState<BoboLine | null>(null);
+  const [mood, setMood] = useState<BoboMood>('gapiradi');
   const [muted, setMuted] = useState(initialMuted);
   const helpRef = useRef<(() => void) | null>(null);
   const lastPick = useRef(new Map<string, number>());
@@ -55,7 +70,13 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
     [dict, rng],
   );
 
-  const say = useCallback((what: string | BoboLine) => setCurrent(resolve(what)), [resolve]);
+  const say = useCallback(
+    (what: string | BoboLine, m?: BoboMood) => {
+      setCurrent(resolve(what));
+      setMood(m ?? moodFor(what));
+    },
+    [resolve],
+  );
 
   // Ovoz: MP3 bo'lsa ijro etamiz. Hozircha yozuvlar yo'q (ochiq savol) — faqat matn ko'rinadi.
   useEffect(() => {
@@ -74,7 +95,10 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
     let timer: ReturnType<typeof setTimeout>;
     const reset = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => setCurrent(resolve('bobo.idle')), IDLE_REMINDER_MS);
+      timer = setTimeout(() => {
+        setCurrent(resolve('bobo.idle'));
+        setMood('korsatadi');
+      }, IDLE_REMINDER_MS);
     };
     reset();
     window.addEventListener('pointerdown', reset);
@@ -94,10 +118,11 @@ export function BoboProvider({ dict, rng = Math.random, idleReminder = true, ini
       },
       help: () => (helpRef.current ? helpRef.current() : say('bobo.idle')),
       current,
+      mood,
       muted,
       toggleMute: () => setMuted((m) => !m),
     }),
-    [say, current, muted],
+    [say, current, mood, muted],
   );
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>;

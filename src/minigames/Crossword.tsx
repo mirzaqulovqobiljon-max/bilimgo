@@ -84,7 +84,7 @@ export function Crossword({ content, tier, onDone, requestHint, delayMs = 700 }:
     const first = wordCells(p)[0]!;
     setRevealed(new Set([...revealed, first]));
     setHinted(new Set([...hinted, active]));
-    bobo.say({ text: `Bu so'z "${p.tokens[0]}" harfi bilan boshlanadi.` });
+    bobo.say({ text: `Bu so'z "${p.tokens[0]}" harfi bilan boshlanadi.` }, 'oylaydi');
   };
 
   const activeWord = content.words[active]!;

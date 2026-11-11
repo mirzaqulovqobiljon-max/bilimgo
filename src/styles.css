@@ -212,7 +212,8 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .piece.locked { box-shadow: inset 0 0 0 3px rgba(76, 175, 80, 0.85); cursor: default; }
 .puzzle-board.solved { gap: 0; padding: 0; background: transparent; transition: gap 0.4s, padding 0.4s; }
 .puzzle-board.solved .piece { border-radius: 0; box-shadow: none; }
-.puzzle-head h2 { flex: 1; }
+.puzzle-head { flex-wrap: wrap; }
+.puzzle-head h2 { flex: 1 1 140px; }
 .puzzle-preview { width: 64px; flex: none; border-radius: 10px; box-shadow: var(--shadow); }
 
 /* ---------- Result ---------- */
@@ -408,5 +409,33 @@ legend { font-weight: 700; margin-bottom: 8px; }
 .t-table th, .t-table td { text-align: left; padding: 6px; border-bottom: 1px solid var(--sand-2); vertical-align: top; }
 .toggle { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
 .register-form select { font: inherit; font-size: 1.05rem; padding: 12px; border-radius: 12px; border: 2px solid var(--sand-2); background: #fff; }
-.map-canvas[data-state='loading'], .map-canvas[data-state='failed'] { height: 0; min-height: 0; }
-.map-loading { position: static; margin: 8px 0 0; }
+.map-canvas[data-state='failed'] { height: 0; min-height: 0; }
+/* Phaser o'lchamini konteynerdan oladi: yuklanish paytida balandlik 0 bo'lmasin, ro'yxat ustida turadi. */
+.map-list-overlay { position: absolute; inset: 0; overflow-y: auto; background: rgba(246, 234, 210, 0.96); z-index: 2; }
+.map-loading { position: absolute; bottom: 8px; left: 0; right: 0; margin: 0; z-index: 3; }
+
+/* ---------- Rasmlar (2026-11 rasmlar to'plami) ---------- */
+.icon-img { display: inline-block; vertical-align: middle; object-fit: contain; }
+.bobo-avatar { position: relative; display: inline-block; flex: none; }
+.bobo-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.18s ease; }
+.bobo-avatar img.on { opacity: 1; }
+.bobo-figure .bobo-avatar { filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)); }
+
+.scene { position: relative; width: 100%; aspect-ratio: 15 / 13; border-radius: 12px; overflow: hidden; background: #d9c8a5; }
+.scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scene-after { opacity: 0; transition: opacity 0.9s ease; }
+.scene.open .scene-after { opacity: 1; }
+.obstacle-target { border-radius: 14px; }
+.phase-idle .obstacle-target { box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.55); }
+
+.dev { width: 150px; height: 188px; object-fit: contain; transition: transform 0.5s ease, opacity 0.9s ease; }
+.dev-won.dev-soft { transform: translateX(60px) scale(0.85); opacity: 1; }
+.dev-won:not(.dev-soft) { opacity: 0.85; filter: none; transform: none; }
+.battle-stage { min-height: 200px; }
+
+.mcard:not(.up) { background-size: cover; background-position: center; }
+.item-big .icon-img, .result-item .icon-img { filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2)); }
+.slot .icon-img { width: 34px; height: 34px; }
+.part-fly { display: inline-flex; gap: 4px; vertical-align: middle; }
+.certificate { background-size: 100% 100%; background-repeat: no-repeat; padding: 32% 11% 18%; border: none; } /* foizlar kenglikdan: tepadagi bezak ostidan boshlanadi */
+@media print { .certificate { border: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }

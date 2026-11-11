@@ -2,169 +2,169 @@
   {
     "id": "kalit",
     "name": "Kalit",
-    "icon": "🔑",
+    "icon": "img/buyum/kalit.webp",
     "parts": [
       {
         "id": "dasta",
         "name": "Kalit dastasi",
-        "icon": "🟤"
+        "icon": "img/qism/kalit-dasta.webp"
       },
       {
         "id": "tishlar",
         "name": "Kalit tishlari",
-        "icon": "⚙️"
+        "icon": "img/qism/kalit-tishlar.webp"
       },
       {
         "id": "halqa",
         "name": "Kalit halqasi",
-        "icon": "⭕"
+        "icon": "img/qism/kalit-halqa.webp"
       }
     ]
   },
   {
     "id": "mashal",
     "name": "Mash'al",
-    "icon": "🔥",
+    "icon": "img/buyum/mashal.webp",
     "parts": [
       {
         "id": "tayoq",
         "name": "Tayoq",
-        "icon": "🪵"
+        "icon": "img/qism/mashal-tayoq.webp"
       },
       {
         "id": "latta",
         "name": "Latta",
-        "icon": "🧣"
+        "icon": "img/qism/mashal-latta.webp"
       },
       {
         "id": "chaqmoqtosh",
         "name": "Chaqmoqtosh",
-        "icon": "🪨"
+        "icon": "img/qism/mashal-chaqmoqtosh.webp"
       }
     ]
   },
   {
     "id": "qayiq",
     "name": "Qayiq",
-    "icon": "⛵",
+    "icon": "img/buyum/qayiq.webp",
     "parts": [
       {
         "id": "taxta",
         "name": "Taxta",
-        "icon": "🪵"
+        "icon": "img/qism/qayiq-taxta.webp"
       },
       {
         "id": "eshkak",
         "name": "Eshkak",
-        "icon": "🏏"
+        "icon": "img/qism/qayiq-eshkak.webp"
       },
       {
         "id": "yelkan",
         "name": "Yelkan",
-        "icon": "🏳️"
+        "icon": "img/qism/qayiq-yelkan.webp"
       }
     ]
   },
   {
     "id": "ot-mesh",
     "name": "Ot va suv meshi",
-    "icon": "🐎",
+    "icon": "img/buyum/ot-mesh.webp",
     "parts": [
       {
         "id": "egar",
         "name": "Egar",
-        "icon": "🪑"
+        "icon": "img/qism/ot-egar.webp"
       },
       {
         "id": "jilov",
         "name": "Jilov",
-        "icon": "➰"
+        "icon": "img/qism/ot-jilov.webp"
       },
       {
         "id": "mesh",
         "name": "Suv meshi",
-        "icon": "💧"
+        "icon": "img/qism/ot-mesh.webp"
       }
     ]
   },
   {
     "id": "arqon",
     "name": "Arqon",
-    "icon": "🪢",
+    "icon": "img/buyum/arqon.webp",
     "parts": [
       {
         "id": "bolak-1",
         "name": "1-arqon bo'lagi",
-        "icon": "〰️"
+        "icon": "img/qism/arqon-1.webp"
       },
       {
         "id": "bolak-2",
         "name": "2-arqon bo'lagi",
-        "icon": "〰️"
+        "icon": "img/qism/arqon-2.webp"
       },
       {
         "id": "bolak-3",
         "name": "3-arqon bo'lagi",
-        "icon": "〰️"
+        "icon": "img/qism/arqon-3.webp"
       }
     ]
   },
   {
     "id": "qilich-qalqon",
     "name": "Qilich va qalqon",
-    "icon": "🛡️",
+    "icon": "img/buyum/qilich-qalqon.webp",
     "parts": [
       {
         "id": "tig",
         "name": "Qilich tig'i",
-        "icon": "🗡️"
+        "icon": "img/qism/qilich-tig.webp"
       },
       {
         "id": "sop",
         "name": "Qilich dastasi",
-        "icon": "🟫"
+        "icon": "img/qism/qilich-dasta.webp"
       },
       {
         "id": "qin",
         "name": "Qilich qini",
-        "icon": "📏"
+        "icon": "img/qism/qilich-qin.webp"
       },
       {
         "id": "temir-1",
         "name": "1-temir bo'lak",
-        "icon": "🔩"
+        "icon": "img/qism/qalqon-1.webp"
       },
       {
         "id": "temir-2",
         "name": "2-temir bo'lak",
-        "icon": "🔩"
+        "icon": "img/qism/qalqon-2.webp"
       },
       {
         "id": "temir-3",
         "name": "3-temir bo'lak",
-        "icon": "🔩"
+        "icon": "img/qism/qalqon-3.webp"
       }
     ]
   },
   {
     "id": "tumor",
     "name": "Sehrli kalit-tumor",
-    "icon": "🧿",
+    "icon": "img/buyum/tumor.webp",
     "parts": [
       {
         "id": "kok-tosh",
         "name": "Ko'k tosh",
-        "icon": "💎"
+        "icon": "img/qism/tumor-tosh.webp"
       },
       {
         "id": "oltin-zanjir",
         "name": "Oltin zanjir",
-        "icon": "📿"
+        "icon": "img/qism/tumor-zanjir.webp"
       },
       {
         "id": "sehrli-yozuv",
         "name": "Sehrli yozuv",
-        "icon": "📜"
+        "icon": "img/qism/tumor-yozuv.webp"
       }
     ]
   }

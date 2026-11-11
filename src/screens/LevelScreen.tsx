@@ -19,6 +19,7 @@ import { ObstacleScene } from '../components/ObstacleScene';
 import { DevBattle } from '../components/DevBattle';
 import { Certificate } from '../components/Certificate';
 import { Stars } from '../components/Bag';
+import { Icon } from '../components/Icon';
 import { GAME_LABEL, MINI_GAMES } from '../minigames/registry';
 import type { MiniGameProps, MiniGameResult } from '../minigames/types';
 
@@ -160,13 +161,17 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
           <Stars value={phase.stars} label={`${phase.stars} yulduz`} />
           {parts.length > 0 && (
             <p className="result-part">
-              <span className="part-fly" aria-hidden="true">{parts.map((p) => p.icon).join(' ')}</span>{' '}
+              <span className="part-fly">
+                {parts.map((p) => (
+                  <Icon key={p.id} icon={p.icon} size={56} />
+                ))}
+              </span>{' '}
               {parts.map((p) => p.name).join(' va ')} sumkaga tushdi!
             </p>
           )}
           {phase.itemDone && (
             <p className="result-item">
-              <span aria-hidden="true">{item.icon}</span> {item.name} to'liq yig'ildi!
+              <Icon icon={item.icon} size={64} /> {item.name} to'liq yig'ildi!
             </p>
           )}
           {phase.coins > 0 && <p className="result-coins">+{phase.coins} 🪙</p>}
@@ -214,7 +219,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
           <p className="done-emoji" aria-hidden="true">{isFinal ? '📖' : '🎉'}</p>
           <h1>{isFinal ? 'Bilim kitobi qaytarildi!' : `${level.title} — o'tildi!`}</h1>
           <p>
-            {level.obstacle.title} yengildi. Sumkangda: {required.icon} {required.name}
+            {level.obstacle.title} yengildi. Sumkangda: <Icon icon={required.icon} size={28} /> {required.name}
           </p>
           {isFinal && <Certificate progress={progress} maxStars={maxStarsFor(content, tier)} />}
           <div className="result-actions">
@@ -244,11 +249,11 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
       </header>
 
       <section className="item-slots" aria-label={`${item.name} qismlari`}>
-        <span className="item-big" aria-hidden="true">{item.icon}</span>
+        <span className="item-big"><Icon icon={item.icon} size={60} /></span>
         <ol style={{ gridTemplateColumns: `repeat(${Math.min(item.parts.length, 3)}, 1fr)` }}>
           {item.parts.map((p) => (
             <li key={p.id} className={have.includes(p.id) ? 'slot have' : 'slot'}>
-              <span aria-hidden="true">{have.includes(p.id) ? p.icon : '?'}</span>
+              {have.includes(p.id) ? <Icon icon={p.icon} size={34} /> : <span aria-hidden="true">?</span>}
               <small>{p.name}</small>
             </li>
           ))}
@@ -287,7 +292,7 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
 
       {ready && !levelDone && (
         <button type="button" className="btn primary big pulse" onClick={() => setPhase({ kind: 'obstacle' })}>
-          {required.icon} {level.obstacle.battle ? 'Dev bilan jangga!' : "To'siqni yengamiz!"}
+          <Icon icon={required.icon} size={30} /> {level.obstacle.battle ? 'Dev bilan jangga!' : "To'siqni yengamiz!"}
         </button>
       )}
     </main>

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { MAP_H, MAP_W, type MapNode } from './mapModel';
+import { img } from '../../assets';
 
 /**
  * Xarita Phaser 3'da: rasm assetlarisiz, faqat Graphics + Text bilan chiziladi —
@@ -20,20 +21,14 @@ class MapScene extends Phaser.Scene {
   constructor(
     private nodes: MapNode[],
     private onSelect: (id: string) => void,
+    /** Fon rasmi brauzerda (CSS) yuklandimi; yuklanmasa — zaxira fon chiziladi. */
+    private bgLoaded: Promise<boolean>,
   ) {
     super('map');
   }
 
-  create() {
-    const g = this.add.graphics();
-    const res = Math.min(2, window.devicePixelRatio || 1);
-    const text = (x: number, y: number, s: string, size: number, color = '#3b2a1a') =>
-      this.add
-        .text(x, y, s, { fontFamily: 'system-ui, sans-serif', fontSize: `${size}px`, color, align: 'center' })
-        .setOrigin(0.5)
-        .setResolution(res);
-
-    // Fon: qumli tekislik, pastda yashil qishloq, tepada tog'lar.
+  /** Rasmsiz zaxira fon (eski chizilgan xarita). */
+  private drawFallback(g: Phaser.GameObjects.Graphics) {
     g.fillGradientStyle(0xbfe3f2, 0xbfe3f2, 0xf3dfb3, 0xf3dfb3, 1);
     g.fillRect(0, 0, MAP_W, MAP_H);
     g.fillStyle(0xa5d67a, 1).fillEllipse(90, 600, 260, 140);
@@ -54,18 +49,41 @@ class MapScene extends Phaser.Scene {
     // G'or va qal'a atrofi
     g.fillStyle(0x6d6d78, 1).fillEllipse(285, 200, 120, 70);
     g.fillStyle(0x4a4a58, 1).fillTriangle(110, 120, 180, 40, 250, 120);
+  }
 
+  preload() {
+    this.load.image('caravan', img.caravan);
+  }
+
+  create() {
+    const g = this.add.graphics();
+    const res = Math.min(2, window.devicePixelRatio || 1);
+    const text = (x: number, y: number, s: string, size: number, color = '#3b2a1a') =>
+      this.add
+        .text(x, y, s, { fontFamily: 'system-ui, sans-serif', fontSize: `${size}px`, color, align: 'center' })
+        .setOrigin(0.5)
+        .setResolution(res);
+
+    void this.bgLoaded.then((ok) => {
+      if (ok || !this.sys.isActive()) return;
+      const fb = this.add.graphics().setDepth(-2);
+      this.drawFallback(fb);
+      fb.generateTexture('map-fallback', MAP_W, MAP_H);
+      fb.destroy();
+      this.add.image(0, 0, 'map-fallback').setOrigin(0, 0).setDepth(-2);
+    });
     // Yo'l (nuqtali chiziq)
     const pts = this.nodes.map((n) => new Phaser.Math.Vector2(n.x, n.y));
     if (pts.length > 1) {
       const curve = new Phaser.Curves.Spline(pts);
       const sampled = curve.getSpacedPoints(90);
-      g.fillStyle(0x8a5a2b, 0.75);
-      sampled.forEach((p, i) => i % 2 === 0 && g.fillCircle(p.x, p.y, 3));
+      g.fillStyle(0xfff3d6, 0.95);
+      sampled.forEach((p, i) => i % 2 === 0 && g.fillCircle(p.x, p.y, 4));
+      g.fillStyle(0x8a5a2b, 0.9);
+      sampled.forEach((p, i) => i % 2 === 0 && g.fillCircle(p.x, p.y, 2.5));
     }
 
-    // Optimallashtirish: statik fon (yuzlab shakl) har kadrda qayta chizilmasin —
-    // bir marta teksturaga "pishiramiz" va oddiy rasm sifatida ko'rsatamiz.
+    // Optimallashtirish: yo'l nuqtalari har kadrda qayta chizilmasin — bir marta teksturaga "pishiramiz".
     g.generateTexture('map-bg', MAP_W, MAP_H);
     g.destroy();
     this.add.image(0, 0, 'map-bg').setOrigin(0, 0).setDepth(-1);
@@ -87,7 +105,9 @@ class MapScene extends Phaser.Scene {
         this.tweens.add({ targets: ring, scale: 1.12, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
       }
       if (node.current) {
-        const camel = text(node.x - 40, node.y - 18, '🐫', 30);
+        const camel = this.textures.exists('caravan')
+          ? this.add.image(node.x - 42, node.y - 18, 'caravan').setDisplaySize(44, 44)
+          : text(node.x - 40, node.y - 18, '🐫', 30);
         this.tweens.add({ targets: camel, y: node.y - 24, duration: 600, yoyo: true, repeat: -1 });
       }
     }
@@ -95,17 +115,28 @@ class MapScene extends Phaser.Scene {
 }
 
 export function createMap(parent: HTMLElement, nodes: MapNode[], onSelect: (id: string) => void): MapHandle {
+  const bgLoaded = new Promise<boolean>((resolve) => {
+    const im = new Image();
+    im.onload = () => resolve(true);
+    im.onerror = () => resolve(false);
+    im.src = img.map;
+  });
   const game = new Phaser.Game({
     type: Phaser.AUTO,
     parent,
     width: MAP_W,
     height: MAP_H,
+    transparent: true, // fon rasmini brauzer chizadi (pastda) — aniq va arzon
     backgroundColor: '#f3dfb3',
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     audio: { noAudio: true },
     fps: { target: 30, limit: 30 }, // batareya va eski telefonlar uchun: 30 kadrdan ortiq chizilmaydi
     banner: false,
-    scene: new MapScene(nodes, onSelect),
+    scene: new MapScene(nodes, onSelect, bgLoaded),
   });
+  // Tezlik: xarita rasmi canvas'ning CSS foni — brauzer uni ekran aniqligida bir marta chizadi,
+  // Phaser esa 360x640 da faqat nuqtalar va animatsiyalarni chizadi (2x Phaser: 13 FPS, bu usul: ~34 FPS).
+  game.canvas.style.backgroundImage = `url("${img.map}")`;
+  game.canvas.style.backgroundSize = '100% 100%';
   return { destroy: () => game.destroy(true) };
 }

@@ -1,6 +1,11 @@
+/// <reference types="node" />
 import { describe, expect, it } from 'vitest';
 import { RAW_CONTENT, loadContent } from './index';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { PICTURE_KEYS, pictureUrl } from './pictures';
+import { BOBO_MOODS, OBSTACLE_SCENE, img } from '../assets';
+import { isImagePath } from '../components/Icon';
 import { longestSentenceWords, parseContent, tasksForTier } from './validate';
 
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
@@ -40,9 +45,26 @@ describe('real content', () => {
     expect(tasksForTier(lvl, c.tasks, 'olim')).toHaveLength(5);
   });
 
-  it('renders puzzle pictures as data URLs', () => {
-    expect(pictureUrl('qishloq-darvoza')).toMatch(/^data:image\/svg\+xml/);
+  it('every image the game references exists in public/ (items, parts, puzzles, scenes, bobo, dev, map)', () => {
+    const c = loadContent();
+    const pub = (p: string) => existsSync(join(process.cwd(), 'public', p));
+    const refs: string[] = [
+      ...c.items.flatMap((i) => [i.icon, ...i.parts.map((p) => p.icon)]).filter(isImagePath),
+      ...PICTURE_KEYS.map(pictureUrl),
+      ...c.levels.filter((l) => OBSTACLE_SCENE[l.obstacle.type]).flatMap((l) => [true, false].map((o) => img.obstacle(OBSTACLE_SCENE[l.obstacle.type]!, o))),
+      ...BOBO_MOODS.map(img.bobo),
+      ...(['oddiy', 'zarba', 'kechirim', 'tutun'] as const).map(img.dev),
+      img.map, img.caravan, img.cardBack, img.certificate,
+    ];
+    expect(refs.length).toBeGreaterThan(60);
+    expect(refs.filter((r) => !pub(r))).toEqual([]);
     expect(() => pictureUrl('yoq')).toThrow();
+  });
+
+  it('all items and parts use images, every obstacle type except battle has a scene', () => {
+    const c = loadContent();
+    expect(c.items.flatMap((i) => [i.icon, ...i.parts.map((p) => p.icon)]).every(isImagePath)).toBe(true);
+    for (const l of c.levels) if (!l.obstacle.battle) expect(OBSTACLE_SCENE[l.obstacle.type]).toBeDefined();
   });
 });
 

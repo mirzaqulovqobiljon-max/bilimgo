@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { RiddleQuestion, Tier } from '../content/schema';
 import { BATTLE_HP } from '../content/validate';
 import { useBobo } from './BoboProvider';
+import { img } from '../assets';
 
 /** Olim darajasida har bir savolga vaqt (rejada: "7 ta savol, vaqt bilan"). */
 export const OLIM_SECONDS_PER_QUESTION = 25;
@@ -16,26 +17,9 @@ interface Props {
 }
 
 function DevFigure({ state, tier }: { state: Phase; tier: Tier }) {
-  return (
-    <svg viewBox="0 0 160 170" className={`dev dev-${state}${tier === 'kichik' ? ' dev-soft' : ''}`} aria-hidden="true">
-      <path d="M40 40 L30 8 L58 30Z M120 40 L130 8 L102 30Z" fill="#e8d9b5" />
-      <ellipse cx="80" cy="115" rx="58" ry="52" fill="#6a4c93" />
-      <circle cx="80" cy="62" r="40" fill="#7d5ba6" />
-      <ellipse cx="64" cy="58" rx="9" ry="11" fill="#fff" />
-      <ellipse cx="96" cy="58" rx="9" ry="11" fill="#fff" />
-      <circle cx="66" cy="60" r="4.5" fill="#222" />
-      <circle cx="94" cy="60" r="4.5" fill="#222" />
-      {state === 'won' && tier === 'kichik' ? (
-        <path d="M66 84 Q80 76 94 84" stroke="#222" strokeWidth="4" fill="none" strokeLinecap="round" />
-      ) : (
-        <path d="M62 82 Q80 92 98 82" stroke="#222" strokeWidth="4" fill="#3a2350" strokeLinecap="round" />
-      )}
-      <path d="M52 44 L74 50 M108 44 L86 50" stroke="#2b1a3a" strokeWidth="5" strokeLinecap="round" />
-      <rect x="48" y="138" width="20" height="26" rx="8" fill="#5a3f80" />
-      <rect x="92" y="138" width="20" height="26" rx="8" fill="#5a3f80" />
-      <circle cx="80" cy="120" r="10" fill="#c5f" opacity=".7" className="dev-magic" />
-    </svg>
-  );
+  // Kichiklarda dev o'ldirilmaydi: kichrayib, kechirim so'raydi. Kattalarda — tutunga aylanadi.
+  const src = state === 'won' ? img.dev(tier === 'kichik' ? 'kechirim' : 'tutun') : img.dev(state === 'hit' ? 'zarba' : 'oddiy');
+  return <img src={src} alt="" aria-hidden="true" draggable={false} className={`dev dev-${state}${tier === 'kichik' ? ' dev-soft' : ''}`} />;
 }
 
 /**

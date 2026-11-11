@@ -4,15 +4,19 @@ import { levelStatus, type LevelStatus, type Progress } from '../../engine/progr
 export const MAP_W = 360;
 export const MAP_H = 640;
 
-/** Yo'l pastdan (ona qishloq) yuqoriga (dev qal'asi) ilonizi bo'lib ko'tariladi. */
+/**
+ * Nuqtalar xarita rasmidagi (public/img/xarita.webp) joylarga mos:
+ * qishloq (pastda), o'rmon, daryo, cho'l (tuyaning yonida), tog'lar, g'or (o'ng tepada), qal'a (tepada).
+ * Xarita rasmi almashtirilsa — shu koordinatalarni yangilang (360x640 tizimida).
+ */
 const POSITIONS: ReadonlyArray<readonly [number, number]> = [
-  [90, 575],
-  [265, 505],
-  [100, 425],
-  [260, 345],
-  [95, 262],
-  [262, 182],
-  [180, 82],
+  [230, 580],
+  [115, 495],
+  [265, 395],
+  [200, 265],
+  [275, 165],
+  [295, 52],
+  [165, 62],
 ];
 
 export const OBSTACLE_ICON: Record<string, string> = {

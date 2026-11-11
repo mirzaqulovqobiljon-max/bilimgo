@@ -78,7 +78,8 @@ export function Sorting({ content, tier, onDone, requestHint, rng = Math.random,
 
   const hint = () => {
     setHintUsed(true);
-    bobo.say(requestHint() ? { text: content.hint } : 'bobo.hint.none');
+    if (requestHint()) bobo.say({ text: content.hint }, 'oylaydi');
+    else bobo.say('bobo.hint.none');
   };
 
   return (

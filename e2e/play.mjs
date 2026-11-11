@@ -42,10 +42,10 @@ try {
   const box = await canvas.boundingBox();
   const sx = box.width / 360, sy = box.height / 640;
   // locked node 2 first
-  await page.mouse.click(box.x + 265 * sx, box.y + 505 * sy);
+  await page.mouse.click(box.x + 115 * sx, box.y + 495 * sy); // 2-nuqta (mapModel.ts)
   if (!/oldingi to'siqni/.test(await bubble())) throw new Error('locked node did not answer');
   ok('Phaser map rendered; locked node -> bobo explains');
-  await page.mouse.click(box.x + 90 * sx, box.y + 575 * sy);
+  await page.mouse.click(box.x + 230 * sx, box.y + 580 * sy); // 1-nuqta
   await page.getByText('Kalit: 0/3').waitFor();
   ok('clicked node 1 on canvas -> level hub');
   await shot('hub');

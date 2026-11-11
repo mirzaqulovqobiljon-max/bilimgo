@@ -55,7 +55,10 @@ export function MapScreen({ levels, progress, onEnter }: Props) {
       {mapState === 'loading' && <p className="map-loading">Xarita yuklanmoqda…</p>}
       {/* Ekran o'quvchilar, klaviatura va Phaser ishlamagan eski qurilmalar uchun. */}
       {/* Xarita yuklanguncha (sekin internet) yoki yuklanmasa — bola shu ro'yxatdan o'ynayveradi. */}
-      <nav className={mapState === 'ready' ? 'map-list sr-only' : 'map-list'} aria-label="Bosqichlar">
+      <nav
+        className={mapState === 'ready' ? 'map-list sr-only' : mapState === 'loading' ? 'map-list map-list-overlay' : 'map-list'}
+        aria-label="Bosqichlar"
+      >
         <ol>
           {nodes.map((n) => (
             <li key={n.id}>

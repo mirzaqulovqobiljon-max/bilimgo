@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Item } from '../content/schema';
 import { isItemComplete, partsCollected, type Progress } from '../engine/progress';
+import { Icon } from './Icon';
 
 interface Props {
   items: readonly Item[];
@@ -36,7 +37,7 @@ export function Bag({ items, progress }: Props) {
               const done = n === item.parts.length;
               return (
                 <li key={item.id} className={done ? 'bag-item done' : 'bag-item'} data-testid={`bag-${item.id}`}>
-                  <span className="bag-item-icon" aria-hidden="true">{item.icon}</span>
+                  <span className="bag-item-icon"><Icon icon={item.icon} size={40} /></span>
                   <span className="bag-item-name">
                     {item.name} <b>{n}/{item.parts.length}</b>
                   </span>
@@ -48,7 +49,7 @@ export function Bag({ items, progress }: Props) {
                         title={p.name}
                         aria-label={`${p.name}: ${have.includes(p.id) ? 'bor' : "yo'q"}`}
                       >
-                        {have.includes(p.id) ? p.icon : '·'}
+                        {have.includes(p.id) ? <Icon icon={p.icon} size={26} /> : '·'}
                       </span>
                     ))}
                   </span>

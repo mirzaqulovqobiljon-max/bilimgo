@@ -49,7 +49,7 @@ export function Riddle({ content, tier, onDone, requestHint, delayMs = 900 }: Mi
 
   const hint = () => {
     if (requestHint()) {
-      bobo.say({ text: q.hint });
+      bobo.say({ text: q.hint }, 'oylaydi');
       setHintShown(true);
     } else {
       bobo.say('bobo.hint.none');

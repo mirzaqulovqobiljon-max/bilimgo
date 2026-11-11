@@ -1,6 +1,7 @@
 import type { Progress } from '../engine/progress';
 import { totalStars } from '../engine/progress';
 import { TIER_LABEL, gradeToTier } from '../engine/rules';
+import { img } from '../assets';
 
 export type CertificateLevel = 'oltin' | 'kumush' | 'bronza';
 
@@ -27,7 +28,7 @@ export function Certificate({ progress, maxStars, date = new Date() }: { progres
     }
   };
   return (
-    <section className={`certificate cert-${lvl}`} aria-label="Sertifikat">
+    <section className={`certificate cert-${lvl}`} aria-label="Sertifikat" style={{ backgroundImage: `url(${img.certificate})` }}>
       <p className="cert-top">Ipak Yo'li sarguzashti</p>
       <h1>SERTIFIKAT</h1>
       <p className="cert-badge">{LABEL[lvl]} daraja</p>
