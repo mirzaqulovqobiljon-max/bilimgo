@@ -69,3 +69,29 @@
 - Debug imzosi bor (v2), shuning uchun faqat sinov uchun. Play Market uchun release kaliti kerak bo'ladi.
 - APK ichida server yo'q: o'yin to'liq internetsiz ishlaydi, lekin sinf kodi bilan kirish va o'qituvchi paneliga sinxronlash ishlamaydi. Buning uchun `VITE_API_URL` bilan haqiqiy server manzili berilishi kerak.
 - Haqiqiy telefonda hali sinalmagan.
+
+## 5 ta yangi mini-o'yin (2026-11-11)
+
+Texnik topshiriq v1.0 va foydalanuvchi bergan PNG paketi asosida qo'shildi. Eski 35 ta topshiriq va avvalgi o'yinlar o'zgarmadi.
+- **Sirli labirint** — Ona qishloq.
+- **Yashirin buyumlar** — Qorong'i o'rmon.
+- **Ot bilan to'siqlar** — Qizilqum.
+- **Sehrli sandiq** — Baland tog'.
+- **Dev bilan yakuniy jang** — Dev g'ori, 3 faza: savol, qalqon, sehrli belgilar.
+
+Yangi o'yinlar "qo'shimcha sarguzasht" topshirig'i sifatida qo'shildi:
+- buyum qismi bermaydi;
+- yulduz va birinchi g'alabadagi tanga mavjud `recordTask` orqali beriladi;
+- sertifikat chegarasi eskicha qoldi, qo'shimcha yulduzlar unda "bonus" bo'lib ko'rinadi.
+
+Batafsil ma'lumot: `docs/mini-oyinlar.md`.
+
+Sinov natijalari:
+- 220 ta unit/UI test o'tdi.
+- Chrome'da butun o'yin yangi o'yinlar bilan o'ynab chiqildi: telefonda 2-, 6- va 10-sinf, kompyuterda 2-, 6- va 10-sinf.
+- Maket tekshiruvi: boboning gap pufagi asosiy tugmalarni yopmaydi.
+- Ot yugurishi 60 FPS beradi, protsessor 4 baravar sekinlashtirilganda ham.
+
+Sinovlar paytida topilgan va tuzatilgan kamchiliklar. Ular eski maketga ham tegishli edi:
+- uzun gap pufagi oxirgi tugmani yopib qo'yardi;
+- yangi ekran ochilganda sahifa tepaga qaytmasdi.
