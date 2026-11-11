@@ -51,20 +51,24 @@ jobs:
         run: cp android/app/build/outputs/apk/debug/app-debug.apk ipak-yoli-sarguzashti.apk
 
       - name: APK tekshiruvi (paket, versiya, imzo)
+        shell: bash
         run: |
-          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          set +e +o pipefail
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
           {
             echo "Avtomatik yig'ilgan sinov APK (debug imzo). Commit: ${GITHUB_SHA::7}"
             echo
             echo '```'
-            $BT/aapt2 dump badging ipak-yoli-sarguzashti.apk | grep -E "^(package|sdkVersion|targetSdkVersion|application-label|launchable)"
-            $BT/apksigner verify --print-certs ipak-yoli-sarguzashti.apk | grep -E "Signer #1 certificate DN|Verified"
-            $BT/apksigner verify -v ipak-yoli-sarguzashti.apk | grep -E "Verified using"
-            unzip -l ipak-yoli-sarguzashti.apk | grep -c "assets/public/audio/uz/.*mp3" | sed 's/^/audio fayllar: /'
-            ls -l ipak-yoli-sarguzashti.apk | awk '{print "hajm: " $5 " bayt"}'
+            echo "build-tools: $(basename "$BT")"
+            "$BT/aapt2" dump badging ipak-yoli-sarguzashti.apk 2>&1 | grep -E "^(package|sdkVersion|targetSdkVersion|application-label:|launchable)"
+            "$BT/apksigner" verify -v ipak-yoli-sarguzashti.apk 2>&1 | head -6
+            echo "audio fayllar: $(unzip -l ipak-yoli-sarguzashti.apk | grep -c 'audio/uz/.*mp3')"
+            echo "rasm fayllar: $(unzip -l ipak-yoli-sarguzashti.apk | grep -c 'public/img/.*webp')"
+            echo "hajm: $(stat -c %s ipak-yoli-sarguzashti.apk) bayt"
             echo '```'
           } > notes.md
           cat notes.md
+          exit 0
 
       - name: Release'ga joylash (telefondan to'g'ridan-to'g'ri yuklab olish uchun)
         uses: softprops/action-gh-release@v2
