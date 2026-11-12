@@ -1324,5 +1324,83 @@
   "voice": "dev",
   "file": "audio/uz/dev-d91cf45cd2.mp3",
   "sec": 4.94
+ },
+ "bobo-8d0e971b40": {
+  "text": "Bir bor ekan, go'zal bir qishloq bor ekan.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-8d0e971b40.mp3",
+  "sec": 3.41
+ },
+ "bobo-0c333ceadb": {
+  "text": "Qishloqda sehrli Bilim kitobi bor edi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-0c333ceadb.mp3",
+  "sec": 3.05
+ },
+ "bobo-e5053581a8": {
+  "text": "Bolalar undan o'qish va hisoblashni o'rganishardi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-e5053581a8.mp3",
+  "sec": 4.15
+ },
+ "dev-bb6bdbcd24": {
+  "text": "Ho-ho-ho! Bu kitob endi meniki!",
+  "voice": "dev",
+  "file": "audio/uz/dev-bb6bdbcd24.mp3",
+  "sec": 3.48
+ },
+ "bobo-5becef05a0": {
+  "text": "Kitob ketdi. Qishloq jim bo'lib qoldi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-5becef05a0.mp3",
+  "sec": 2.74
+ },
+ "bobo-d185495724": {
+  "text": "Harflar o'chdi, bolalar xafa bo'lishdi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-d185495724.mp3",
+  "sec": 3.26
+ },
+ "bobo-54414c296e": {
+  "text": "Bolam, sen bizga yordam ber!",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-54414c296e.mp3",
+  "sec": 2.16
+ },
+ "bobo-bf7a370905": {
+  "text": "Kitobni birga qaytaramiz. Yo'lga chiqamizmi?",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-bf7a370905.mp3",
+  "sec": 3.84
+ },
+ "dev-2cec0d1b11": {
+  "text": "Kechiringlar! Kitobni o'zim qaytaraman.",
+  "voice": "dev",
+  "file": "audio/uz/dev-2cec0d1b11.mp3",
+  "sec": 4.68
+ },
+ "dev-75df5b0f90": {
+  "text": "Bilim kuchli ekan. Endi men ham o'qiyman!",
+  "voice": "dev",
+  "file": "audio/uz/dev-75df5b0f90.mp3",
+  "sec": 4.68
+ },
+ "bobo-c50eab100b": {
+  "text": "Kitob qaytdi! Qishloq yana quvondi.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-c50eab100b.mp3",
+  "sec": 2.9
+ },
+ "bobo-fcfaf50f99": {
+  "text": "Dev ham endi bizning do'stimiz.",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-fcfaf50f99.mp3",
+  "sec": 2.45
+ },
+ "bobo-9789e73885": {
+  "text": "Rahmat, bolam! Sen haqiqiy qahramonsan!",
+  "voice": "bobo",
+  "file": "audio/uz/bobo-9789e73885.mp3",
+  "sec": 3.26
  }
 }

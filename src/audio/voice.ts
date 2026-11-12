@@ -18,7 +18,7 @@ export interface Clip {
 }
 export type ClipFactory = (url: string) => Clip;
 
-const htmlClip: ClipFactory = (url) => {
+export const defaultClipFactory: ClipFactory = (url) => {
   const a = new Audio(url);
   let ended: () => void = () => {};
   const finish = () => ended();
@@ -67,7 +67,7 @@ export class VoiceChannel {
   private timer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
-    private factory: ClipFactory = htmlClip,
+    private factory: ClipFactory = defaultClipFactory,
     private base = import.meta.env.BASE_URL ?? './',
     /** Navbatdagi gap ekran o'zgarganda bobo kirish so'zini aytib ulgurishi uchun kutadi. */
     private queueDelayMs = 350,

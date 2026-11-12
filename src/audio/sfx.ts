@@ -2,7 +2,7 @@
  * Qisqa tovush effektlari — WebAudio'da sintez qilinadi (fayl yo'q: APK/PWA hajmi oshmaydi, internetsiz ishlaydi).
  * Pedagogik qoida: "xato" tovushi yumshoq va past ("hmm"), qo'rqitmaydi va jazolamaydi.
  */
-export type SfxName = 'tap' | 'correct' | 'wrong' | 'magic' | 'unlock' | 'water' | 'fanfare' | 'jump';
+export type SfxName = 'tap' | 'correct' | 'wrong' | 'magic' | 'unlock' | 'water' | 'fanfare' | 'jump' | 'thunder' | 'whoosh';
 
 type Listener = (name: SfxName) => void;
 
@@ -13,6 +13,10 @@ class Sfx {
 
   setMuted(m: boolean) {
     this.muted = m;
+  }
+
+  get isMuted(): boolean {
+    return this.muted;
   }
 
   /** Testlar va diagnostika uchun: qaysi tovush chalindi. */
@@ -123,6 +127,17 @@ const SOUNDS: Record<SfxName, (ctx: AudioContext, t: number) => void> = {
   jump: (c, t) => {
     tone(c, t, 300, 0.22, 'triangle', 0.12, 700);
     noise(c, t, 0.18, 0.05, 'bandpass', 900, 2400, 2);
+  },
+  // kirish videosi: uzoqdan gumburlash (yumshoq — 7 yoshlilarni qo'rqitmasin)
+  thunder: (c, t) => {
+    noise(c, t, 0.12, 0.08, 'highpass', 2500, 2500);
+    noise(c, t + 0.05, 2.2, 0.16, 'lowpass', 260, 70, 0.8);
+    tone(c, t + 0.05, 55, 1.6, 'sine', 0.1, 38);
+  },
+  // kitob uchib ketishi / dev g'oyib bo'lishi
+  whoosh: (c, t) => {
+    noise(c, t, 0.7, 0.1, 'bandpass', 400, 2600, 1.2);
+    tone(c, t, 500, 0.6, 'sine', 0.05, 1400);
   },
   // buyum to'liq yig'ildi
   fanfare: (c, t) => {

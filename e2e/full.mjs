@@ -75,6 +75,7 @@ try {
   await page.getByLabel('Isming').fill('Aziza');
   await page.getByRole('button', { name: new RegExp(`^${grade}$`) }).click();
   await page.getByRole('button', { name: 'Sayohatni boshlash' }).click();
+  await page.getByRole('button', { name: /O'tkazib yuborish/ }).click(); // ertak (alohida: e2e/story.mjs)
   await page.locator('.map-canvas canvas').waitFor();
 
   for (const level of levels) {
@@ -269,6 +270,18 @@ try {
       await page.mouse.up();
       await page.waitForTimeout(1000);
       await shotOnce(`obstacle-${level.obstacle.type}-open`);
+    }
+    if (level.order === 7) {
+      // Yakuniy ertak: haqiqiy ovoz bilan oxirigacha ko'riladi
+      await page.getByRole('dialog', { name: "Ertak: o'yin yakuni" }).waitFor({ timeout: 8000 });
+      await page.getByRole('button', { name: "▶ Yakunni ko'rish" }).click({ force: true });
+      await page.waitForTimeout(2500);
+      await shotOnce('outro-kechirim');
+      await page.locator('.story-frame[data-scene="bayram"]').waitFor({ timeout: 30000 });
+      await page.waitForTimeout(2500);
+      await shotOnce('outro-bayram');
+      await page.getByRole('button', { name: 'Sertifikatni olish 🏅' }).click({ timeout: 30000 });
+      console.log('  ✓ yakuniy ertak oxirigacha ko\'rildi');
     }
     await page.locator('.done').waitFor({ timeout: 8000 });
     console.log(`  ✓ ${level.order}. ${level.title}`);

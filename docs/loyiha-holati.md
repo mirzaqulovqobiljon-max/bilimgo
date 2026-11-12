@@ -95,3 +95,29 @@ Sinov natijalari:
 Sinovlar paytida topilgan va tuzatilgan kamchiliklar. Ular eski maketga ham tegishli edi:
 - uzun gap pufagi oxirgi tugmani yopib qo'yardi;
 - yangi ekran ochilganda sahifa tepaga qaytmasdi.
+
+## Ertak videolari va yangi dev (2026-11-12)
+
+- **Video turi:** o'yin ichidagi animatsion sahna (`src/story/StoryVideo.tsx`), MP4 emas.
+  - Rasmlar + CSS animatsiya + yozilgan ovoz + subtitr.
+  - APK ga ~0.9 MB qo'shildi; MP4 bo'lsa 5–10 MB bo'lardi.
+  - Internetsiz ishlaydi, matni JSON'da tahrirlanadi.
+- **Ssenariy:** `src/content/story.uz.json`, zod bilan tekshiriladi; har gap 10 so'zdan kam.
+  - Boshlanish, 5 sahna: qishloq → Bilim kitobi → dev kitobni olib ketadi (tutun → kuladi → uchib ketadi) → qishloq homush → bobo "Bolam, sen bizga yordam ber!".
+  - Yakun, 2 sahna: dev kechirim so'rab kitobni qaytaradi → bayram, dev endi do'st.
+- **Qachon chiqadi:**
+  - Boshlanish yangi o'yinchiga ro'yxatdan keyin bir marta chiqadi (`progress.introSeen`).
+  - Xaritada "▶ Ertakni qayta ko'rish" tugmasi bor.
+  - Yakun dev qal'asi yengilgach, sertifikatdan oldin chiqadi; "▶ Yakuniy ertakni ko'rish" tugmasi bilan qayta ko'riladi.
+  - Doim "O'tkazib yuborish" tugmasi va o'z ovoz tugmasi bor.
+  - Ovoz bloklansa ham subtitr o'qib ulgurilguncha turadi.
+- **Yangi dev (foydalanuvchi bergan 14 rasm):** `tools/yangi_rasmlar.py`.
+  - Rasmlardagi oq fon olib tashlangan.
+  - Bayram rasmidagi yopishtirilgan dev qirqilgan; dev videoda alohida chiqadi.
+  - Jang (oddiy/zarba), yakuniy jang va g'alabada yangi dev ishlatiladi.
+  - G'alabada barcha yoshlarga "kechirim" holati ko'rsatiladi: dev o'ldirilmaydi.
+- **Ovoz:** 13 ta yangi gap (bobo — Amir, dev — Qora Shoh), `tools/ovoz/import_story.py`.
+- **Sinov:**
+  - `src/story/story.test.tsx` — 13 test.
+  - `e2e/story.mjs` — telefon va kompyuterda butun ertak haqiqiy ovoz bilan; sahnalar, ovoz tartibi, rasmlar, qayta ko'rish tekshiriladi.
+  - `e2e/full.mjs` — yakuniy ertak oxirigacha ko'riladi.

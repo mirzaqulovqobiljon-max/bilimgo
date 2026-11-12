@@ -34,6 +34,8 @@ export const ProgressSchema = z.object({
   adaptive: z
     .object({ shift: z.number().int().min(-1).max(1), streak: z.number().int().min(0) })
     .default({ shift: 0, streak: 0 }),
+  /** O'yin boshidagi ertak ko'rildi (yoki o'tkazib yuborildi) — qayta avtomatik chiqmaydi. */
+  introSeen: z.boolean().default(false),
 });
 export type Progress = z.infer<typeof ProgressSchema>;
 
@@ -47,6 +49,7 @@ export function initialProgress(): Progress {
     tasks: {},
     hintsUsed: {},
     adaptive: { shift: 0, streak: 0 },
+    introSeen: false,
   };
 }
 
@@ -180,4 +183,13 @@ export function effectiveTier(task: Task, base: Tier, shift: number): Tier {
   const i = Math.min(2, Math.max(0, TIER_ORDER.indexOf(base) + shift));
   const t = TIER_ORDER[i]!;
   return task.tiers[t] !== undefined ? t : base;
+}
+
+export function markIntroSeen(p: Progress): Progress {
+  return p.introSeen ? p : { ...p, introSeen: true };
+}
+
+/** Ertak avtomatik faqat yangi o'yinchiga chiqadi (eski o'yinchilar xaritadagi tugma orqali ko'radi). */
+export function shouldAutoplayIntro(p: Progress): boolean {
+  return p.profile !== null && !p.introSeen && Object.keys(p.tasks).length === 0 && p.completedLevels.length === 0;
 }

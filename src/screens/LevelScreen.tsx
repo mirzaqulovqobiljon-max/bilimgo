@@ -19,6 +19,8 @@ import { useBobo, useBoboScreen } from '../components/BoboProvider';
 import { ObstacleScene } from '../components/ObstacleScene';
 import { DevBattle } from '../components/DevBattle';
 import { Certificate } from '../components/Certificate';
+import { StoryVideo } from '../story/StoryVideo';
+import { OUTRO } from '../story/script';
 import { Stars } from '../components/Bag';
 import { Icon } from '../components/Icon';
 import { GAME_LABEL, MINI_GAMES } from '../minigames/registry';
@@ -29,6 +31,7 @@ type Phase =
   | { kind: 'play'; task: Task; round: number; contentTier: Tier; startedAt: number }
   | { kind: 'result'; task: Task; stars: 1 | 2 | 3; newParts: string[]; coins: number; itemDone: boolean }
   | { kind: 'obstacle' }
+  | { kind: 'outro' }
   | { kind: 'done' };
 
 interface Props {
@@ -130,7 +133,8 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
 
   const finishLevel = () => {
     update((p) => completeLevel(p, level, content.items));
-    setPhase({ kind: 'done' });
+    // oxirgi bosqich: avval yakuniy ertak (dev kechirim so'raydi, qishloq bayram qiladi), so'ng sertifikat
+    setPhase({ kind: isFinal ? 'outro' : 'done' });
   };
 
   if (phase.kind === 'play') {
@@ -220,6 +224,19 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
     );
   }
 
+  if (phase.kind === 'outro') {
+    return (
+      <StoryVideo
+        script={OUTRO}
+        onDone={() => setPhase({ kind: 'done' })}
+        title="Bilim kitobi qaytdi!"
+        playLabel="▶ Yakunni ko'rish"
+        endLabel="Sertifikatni olish 🏅"
+        ariaLabel="Ertak: o'yin yakuni"
+      />
+    );
+  }
+
   if (phase.kind === 'done') {
     return (
       <main className="level-screen done">
@@ -237,6 +254,11 @@ export function LevelScreen({ level, content, progress, tier, update, onExit, rn
             <button type="button" className="btn ghost" onClick={() => setPhase({ kind: 'hub' })}>
               Topshiriqlarni qayta o'ynash
             </button>
+            {isFinal && (
+              <button type="button" className="btn ghost" onClick={() => setPhase({ kind: 'outro' })}>
+                ▶ Yakuniy ertakni ko'rish
+              </button>
+            )}
           </div>
         </div>
       </main>

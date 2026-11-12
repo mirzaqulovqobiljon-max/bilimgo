@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { App } from './App';
-import { content } from './test/utils';
+import { content, skipStory } from './test/utils';
 import { createLocalStore } from './engine/storage';
 import { seededRng } from './engine/random';
 
@@ -22,6 +22,7 @@ async function register(u: ReturnType<typeof user>, name: string, grade: number)
   await u.type(screen.getByLabelText('Isming'), name);
   await u.click(screen.getByRole('button', { name: new RegExp(`^${grade}$`) }));
   await u.click(screen.getByRole('button', { name: 'Sayohatni boshlash' }));
+  await skipStory(u);
 }
 
 async function solvePuzzle(u: ReturnType<typeof user>) {

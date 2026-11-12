@@ -197,6 +197,9 @@ async function playCurrentGame(u: User, c: ContentBundle, opts: AutoplayOptions)
 }
 
 /** Xaritadan bosqichga kirib, hamma topshiriqni bajaradi va to'siqni yengadi. */
+/** Yo'l-yo'lakay chiqqan ertaklar (testlar tekshiradi). */
+export const storiesSeen: string[] = [];
+
 export async function playLevel(u: User, c: ContentBundle, title: string, opts: AutoplayOptions = {}) {
   const nav = screen.getByRole('navigation', { name: 'Bosqichlar' });
   await u.click(within(nav).getByRole('button', { name: new RegExp(`\\. ${title} — ochiq`) }));
@@ -228,5 +231,11 @@ export async function playLevel(u: User, c: ContentBundle, title: string, opts: 
     await u.click(take);
     await u.click(document.querySelector<HTMLButtonElement>('.obstacle-target')!);
   }
+  // oxirgi bosqich: avval yakuniy ertak chiqadi
+  await waitFor(() => !!document.querySelector('.done, .story'), 'bosqich yakuni', 6000);
+  const story = document.querySelector('.story');
+  if (story) storiesSeen.push(story.getAttribute('aria-label') ?? '');
+  const skip = [...document.querySelectorAll<HTMLButtonElement>('.story .story-btn')].find((b) => /O'tkazib/.test(b.textContent ?? ''));
+  if (skip) await u.click(skip);
   await waitFor(() => !!document.querySelector('.done'), 'bosqich yakuni', 6000);
 }

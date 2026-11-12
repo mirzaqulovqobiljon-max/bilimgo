@@ -4,7 +4,9 @@ import type { Level } from './content/schema';
 import { Bobo } from './components/Bobo';
 import { BoboProvider } from './components/BoboProvider';
 import { Bag } from './components/Bag';
-import { initialProgress, setProfile, tierOf, totalStars, type Progress } from './engine/progress';
+import { initialProgress, markIntroSeen, setProfile, shouldAutoplayIntro, tierOf, totalStars, type Progress } from './engine/progress';
+import { StoryVideo } from './story/StoryVideo';
+import { INTRO } from './story/script';
 import { mergeProgress, progressKey } from './engine/merge';
 import { TIER_LABEL } from './engine/rules';
 import type { ProgressStore } from './engine/storage';
@@ -97,6 +99,10 @@ export function App({ content, store, rng, delayMs, api, kv }: Props) {
     void engine.pull(ref.current).then((merged) => {
       lastPushed.current = progressKey(merged);
       update(() => merged);
+      if (introAfterSync.current) {
+        introAfterSync.current = false;
+        if (shouldAutoplayIntro(merged)) setShowIntro(true);
+      }
     });
     return () => {
       off();
@@ -114,6 +120,13 @@ export function App({ content, store, rng, delayMs, api, kv }: Props) {
 
   const [levelId, setLevelId] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+  // Ertak: yangi o'yinchiga avtomatik (bir marta), keyin xaritadagi tugma orqali
+  const [showIntro, setShowIntro] = useState(() => shouldAutoplayIntro(ref.current));
+  const introAfterSync = useRef(false);
+  const closeIntro = useCallback(() => {
+    setShowIntro(false);
+    update(markIntroSeen);
+  }, [update]);
   const level = useMemo(() => content.levels.find((l) => l.id === levelId) ?? null, [content.levels, levelId]);
 
   useEffect(() => {
@@ -133,6 +146,10 @@ export function App({ content, store, rng, delayMs, api, kv }: Props) {
               setAccount(acc);
             }
             update((s) => setProfile(s, p));
+            // sinf kodi bilan kirganda: avval serverdagi natijalar kelsin — boshqa qurilmada
+            // o'ynab yurgan o'quvchiga ertak qayta chiqmasin (qaror pull'dan keyin)
+            if (acc) introAfterSync.current = true;
+            else if (shouldAutoplayIntro(ref.current)) setShowIntro(true);
           }}
         />
       </BoboProvider>
@@ -151,6 +168,18 @@ export function App({ content, store, rng, delayMs, api, kv }: Props) {
     lastPushed.current = '';
     update(() => initialProgress());
   };
+
+  if (showIntro) {
+    return (
+      <StoryVideo
+        script={INTRO}
+        onDone={closeIntro}
+        title="Ipak yo'li sarguzashti"
+        endLabel="Ha, yo'lga chiqamiz! 🐪"
+        ariaLabel="Ertak: o'yin boshlanishi"
+      />
+    );
+  }
 
   return (
     <BoboProvider dict={content.bobo} rng={rng} initialMuted={tier !== 'kichik'}>
@@ -190,6 +219,9 @@ export function App({ content, store, rng, delayMs, api, kv }: Props) {
             {myClass && <ClassGoal data={myClass} />}
             <MapScreen levels={content.levels} progress={progress} onEnter={(l: Level) => setLevelId(l.id)} />
             <div className="reset-row">
+              <button type="button" className="btn small ghost" onClick={() => setShowIntro(true)}>
+                ▶ Ertakni qayta ko'rish
+              </button>
               {confirmReset ? (
                 <>
                   <span>

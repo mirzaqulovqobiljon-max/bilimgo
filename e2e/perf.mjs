@@ -56,6 +56,10 @@ try {
     await page.getByRole('button', { name: /^2$/ }).click();
     const t1 = Date.now();
     await page.getByRole('button', { name: 'Sayohatni boshlash' }).click();
+    // ertak birinchi ekranining tayyorligi ham o'lchanadi
+    await page.locator('.story-bg').evaluate((img) => img.decode());
+    check('Ertak ekrani ochildi', Date.now() - t1, BUDGET[profile].mapReady, 'ms');
+    await page.getByRole('button', { name: /O'tkazib yuborish/ }).click();
     await page.locator('.map-canvas[data-state="ready"] canvas').waitFor();
     const mapReady = Date.now() - t1 + 0;
     check('Xarita tayyor (Sayohatni boshlash bosilgandan)', mapReady, BUDGET[profile].mapReady, 'ms');

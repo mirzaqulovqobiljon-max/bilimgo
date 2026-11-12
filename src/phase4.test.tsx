@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { TeacherApp } from './teacher/TeacherApp';
-import { content } from './test/utils';
+import { content, skipStory } from './test/utils';
 import { fakeServer } from './test/fakeServer';
 import { createLocalStore } from './engine/storage';
+import { initialProgress } from './engine/progress';
 import { seededRng } from './engine/random';
 import { memoryKV } from './net/kv';
 import { loadAccount } from './net/account';
@@ -17,6 +18,19 @@ const renderApp = (srv: ReturnType<typeof fakeServer>, kv = memoryKV()) =>
   render(<App content={content} store={createLocalStore()} rng={seededRng(3)} delayMs={0} api={srv.api} kv={kv} />);
 
 describe("sinf kodi bilan kirish", () => {
+  it("boshqa qurilmada o'ynagan o'quvchiga ertak qayta chiqmaydi (serverda introSeen)", async () => {
+    const srv = fakeServer();
+    srv.docs.set('11111111-1111-4111-8111-111111111111', { ...initialProgress(), introSeen: true, coins: 10 });
+    const u = userEvent.setup({ delay: null });
+    renderApp(srv);
+    await u.click(await screen.findByRole('button', { name: /Sinf kodi bilan kirish/ }));
+    await u.type(screen.getByLabelText('Sinf kodi'), 'k7p3qa');
+    await u.click(screen.getByRole('button', { name: 'Davom etish' }));
+    await u.click(await screen.findByRole('button', { name: 'Aziza' }));
+    expect(await screen.findByLabelText('Jami tanga: 10')).toBeInTheDocument();
+    expect(screen.queryByRole('dialog', { name: /Ertak/ })).not.toBeInTheDocument();
+  });
+
   it('existing student picks their name; progress syncs to the server; class goal is shown', async () => {
     const srv = fakeServer();
     const u = userEvent.setup({ delay: null });
@@ -26,6 +40,7 @@ describe("sinf kodi bilan kirish", () => {
     await u.click(screen.getByRole('button', { name: 'Davom etish' }));
     expect(await screen.findByText(/15-maktab/)).toBeInTheDocument();
     await u.click(screen.getByRole('button', { name: 'Aziza' }));
+    await skipStory(u);
 
     expect(await screen.findByText(/Kichik sayyoh · 3-A/)).toBeInTheDocument();
     expect(loadAccount()?.name).toBe('Aziza');
@@ -54,6 +69,7 @@ describe("sinf kodi bilan kirish", () => {
     await u.clear(screen.getByLabelText('Isming'));
     await u.type(screen.getByLabelText('Isming'), 'Bekzod');
     await u.click(screen.getByRole('button', { name: 'Sayohatni boshlash' }));
+    await skipStory(u);
     expect(await screen.findByText('Bekzod')).toBeInTheDocument();
   });
 
@@ -81,6 +97,7 @@ describe("sinf kodi bilan kirish", () => {
     await u.type(screen.getByLabelText('Sinf kodi'), 'K7P3QA');
     await u.click(screen.getByRole('button', { name: 'Davom etish' }));
     await u.click(await screen.findByRole('button', { name: 'Aziza' }));
+    await skipStory(u);
     await screen.findByText(/Kichik sayyoh · 3-A/);
 
     srv.online = false;

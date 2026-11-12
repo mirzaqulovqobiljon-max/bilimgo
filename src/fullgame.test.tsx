@@ -2,8 +2,8 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { App } from './App';
-import { content } from './test/utils';
-import { playLevel } from './test/autoplay';
+import { content, skipStory } from './test/utils';
+import { playLevel, storiesSeen } from './test/autoplay';
 import { createLocalStore } from './engine/storage';
 import { seededRng } from './engine/random';
 import { maxStarsFor } from './screens/LevelScreen';
@@ -25,6 +25,9 @@ async function start(name: string, grade: number) {
   await u.type(screen.getByLabelText('Isming'), name);
   await u.click(screen.getByRole('button', { name: new RegExp(`^${grade}$`) }));
   await u.click(screen.getByRole('button', { name: 'Sayohatni boshlash' }));
+  // ertak (o'yin boshi) — yangi o'yinchiga avtomatik chiqadi
+  expect(await screen.findByRole('dialog', { name: "Ertak: o'yin boshlanishi" })).toBeInTheDocument();
+  await skipStory(u);
   return u;
 }
 
@@ -44,8 +47,10 @@ describe.each([
         await u.click(screen.getByRole('button', { name: 'Xaritaga qaytish' }));
       }
     }
-    // Final
+    // Final: avval yakuniy ertak (dev kechirim so'raydi), so'ng sertifikat
+    expect(storiesSeen.at(-1)).toBe("Ertak: o'yin yakuni");
     expect(screen.getByText('Bilim kitobi qaytarildi!')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: "▶ Yakuniy ertakni ko'rish" })).toBeInTheDocument();
     const cert = screen.getByRole('region', { name: 'Sertifikat' });
     expect(within(cert).getByText(name)).toBeInTheDocument();
     const tier = gradeToTier(grade);

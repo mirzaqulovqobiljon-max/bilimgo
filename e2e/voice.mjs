@@ -37,6 +37,7 @@ try {
   await page.getByLabel('Isming').fill('Aziza');
   await page.getByRole('button', { name: /^2$/ }).click(); // 2-sinf -> kichik sayyoh, ovoz yoqiq
   await page.getByRole('button', { name: 'Sayohatni boshlash' }).click();
+  await page.getByRole('button', { name: /O'tkazib yuborish/ }).click(); // ertak (alohida: e2e/story.mjs)
   await page.locator('.map-canvas canvas').waitFor({ timeout: 15000 });
   await page.waitForFunction(() => window.__played.length > 0);
   ok(`xaritada bobo gapirdi: ${await page.evaluate(() => window.__played[0])}`);

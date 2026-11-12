@@ -33,6 +33,7 @@ try {
   await page.getByLabel('Isming').fill('Aziza');
   await page.getByRole('button', { name: /^2$/ }).click();
   await page.getByRole('button', { name: 'Sayohatni boshlash' }).click();
+  await page.getByRole('button', { name: /O'tkazib yuborish/ }).click(); // ertak (alohida: e2e/story.mjs)
 
   // Phaser map: wait for canvas, click on node 1 by its map coordinates
   const canvas = page.locator('.map-canvas canvas');

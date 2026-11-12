@@ -1,0 +1,73 @@
+{
+  "intro": {
+    "scenes": [
+      {
+        "id": "qishloq",
+        "bg": "img/intro/qishloq.webp",
+        "fx": "sunny",
+        "lines": [{ "voice": "bobo", "text": "Bir bor ekan, go'zal bir qishloq bor ekan." }]
+      },
+      {
+        "id": "kitob",
+        "bg": "img/intro/kitob-sahna.webp",
+        "fx": "book-glow",
+        "sfx": "magic",
+        "lines": [
+          { "voice": "bobo", "text": "Qishloqda sehrli Bilim kitobi bor edi." },
+          { "voice": "bobo", "text": "Bolalar undan o'qish va hisoblashni o'rganishardi." }
+        ]
+      },
+      {
+        "id": "dev",
+        "bg": "img/intro/boron.webp",
+        "fx": "dev-steals",
+        "sfx": "thunder",
+        "leadMs": 2600,
+        "minMs": 6400,
+        "lines": [{ "voice": "dev", "text": "Ho-ho-ho! Bu kitob endi meniki!" }]
+      },
+      {
+        "id": "homush",
+        "bg": "img/intro/homush.webp",
+        "fx": "gloomy",
+        "lines": [
+          { "voice": "bobo", "text": "Kitob ketdi. Qishloq jim bo'lib qoldi." },
+          { "voice": "bobo", "text": "Harflar o'chdi, bolalar xafa bo'lishdi." }
+        ]
+      },
+      {
+        "id": "bobo",
+        "bg": "img/intro/homush.webp",
+        "fx": "bobo-calls",
+        "lines": [
+          { "voice": "bobo", "text": "Bolam, sen bizga yordam ber!" },
+          { "voice": "bobo", "text": "Kitobni birga qaytaramiz. Yo'lga chiqamizmi?" }
+        ]
+      }
+    ]
+  },
+  "outro": {
+    "scenes": [
+      {
+        "id": "kechirim",
+        "bg": "img/intro/homush.webp",
+        "fx": "dev-sorry",
+        "lines": [
+          { "voice": "dev", "text": "Kechiringlar! Kitobni o'zim qaytaraman." },
+          { "voice": "dev", "text": "Bilim kuchli ekan. Endi men ham o'qiyman!" }
+        ]
+      },
+      {
+        "id": "bayram",
+        "bg": "img/intro/bayram.webp",
+        "fx": "celebrate",
+        "sfx": "fanfare",
+        "lines": [
+          { "voice": "bobo", "text": "Kitob qaytdi! Qishloq yana quvondi." },
+          { "voice": "bobo", "text": "Dev ham endi bizning do'stimiz." },
+          { "voice": "bobo", "text": "Rahmat, bolam! Sen haqiqiy qahramonsan!" }
+        ]
+      }
+    ]
+  }
+}

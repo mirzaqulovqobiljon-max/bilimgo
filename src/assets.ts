@@ -7,7 +7,7 @@ export type BoboMood = (typeof BOBO_MOODS)[number];
 
 export const img = {
   bobo: (m: BoboMood) => `img/bobo/${m}.webp`,
-  dev: (s: 'oddiy' | 'zarba' | 'kechirim' | 'tutun') => `img/dev/${s}.webp`,
+  dev: (s: 'oddiy' | 'zarba' | 'kechirim' | 'tutun' | 'kuladi' | 'uchadi') => `img/dev/${s}.webp`,
   map: 'img/xarita.webp',
   caravan: 'img/karvon-belgi.webp',
   cardBack: 'img/karta-orqasi.webp',

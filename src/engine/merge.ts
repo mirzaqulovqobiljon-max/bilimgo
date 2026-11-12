@@ -43,6 +43,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
     hintsUsed,
     // moslashuvchan qiyinlik — ko'proq o'ynalgan qurilmaniki dolzarbroq
     adaptive: playsOf(b) >= playsOf(a) ? b.adaptive : a.adaptive,
+    introSeen: a.introSeen || b.introSeen,
   };
 }
 

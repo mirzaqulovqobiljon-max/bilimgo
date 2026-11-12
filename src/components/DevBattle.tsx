@@ -50,7 +50,8 @@ interface Props {
 
 function DevFigure({ state, tier }: { state: Phase; tier: Tier }) {
   // Kichiklarda dev o'ldirilmaydi: kichrayib, kechirim so'raydi. Kattalarda — tutunga aylanadi.
-  const src = state === 'won' ? img.dev(tier === 'kichik' ? 'kechirim' : 'tutun') : img.dev(state === 'hit' ? 'zarba' : 'oddiy');
+  // dev hech kimga o'ldirilmaydi: yengilganda kechirim so'raydi (yakuniy ertak bilan bir xil)
+  const src = state === 'won' ? img.dev('kechirim') : img.dev(state === 'hit' ? 'zarba' : 'oddiy');
   return <img src={src} alt="" aria-hidden="true" draggable={false} className={`dev dev-${state}${tier === 'kichik' ? ' dev-soft' : ''}`} />;
 }
 

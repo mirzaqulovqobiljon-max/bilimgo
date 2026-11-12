@@ -71,6 +71,12 @@ def build():
                     add(q['q'], 'dev', 'dev-savol')
     for line in DEV_LINES:
         add(line, 'dev', 'dev')
+    # Ertak videolari (o'yin boshi va oxiri): src/content/story.uz.json
+    story = json.loads((C / 'story.uz.json').read_text())
+    for part in ('intro', 'outro'):
+        for sc in story[part]['scenes']:
+            for l in sc['lines']:
+                add(l['text'], l['voice'], 'ertak')
     # Dinamik iboralar (kodda yig'iladigan matnlar)
     add('Endi yonib turgan joyni bos.', 'bobo', 'dinamik')
     add('Yana bir oz yaqinroq olib bor.', 'bobo', 'dinamik')

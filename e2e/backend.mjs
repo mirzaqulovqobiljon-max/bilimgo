@@ -87,6 +87,7 @@ try {
   await sp.getByLabel('Isming').fill('Aziza');
   await sp.screenshot({ path: `${SHOTS}${++n}-student-join.png` });
   await sp.getByRole('button', { name: 'Sayohatni boshlash' }).click();
+  await sp.getByRole('button', { name: /O'tkazib yuborish/ }).click(); // ertak (alohida: e2e/story.mjs)
   await sp.getByText('Kichik sayyoh · 3-A').waitFor();
   await sp.getByRole('status', { name: 'Natijalar saqlandi' }).waitFor();
   ok('student joined with class code + first name only');

@@ -657,3 +657,161 @@ legend { font-weight: 700; margin-bottom: 8px; }
   .rune-btn { height: 52px; font-size: 1.6rem; }
   .shield-lane { height: 58px; }
 }
+
+/* ============ Ertak videolari: o'yin boshi va oxiri (src/story) ============ */
+.story { position: fixed; inset: 0; z-index: 100; background: #120c08; display: grid; place-items: center; }
+.story-frame {
+  position: relative; overflow: hidden; background: #000;
+  width: min(100vw, calc(100dvh * 4 / 3)); height: 100dvh; max-height: 100vh;
+}
+.story-scene { position: absolute; inset: 0; animation: sfade 0.8s ease-out both; }
+.story-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  animation: kenburns 16s linear both; transform-origin: 50% 55%; user-select: none;
+}
+@keyframes sfade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14); } }
+@keyframes floaty { to { translate: 0 -10px; } }
+
+.story-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: rgba(255,255,255,.18); z-index: 5; }
+.story-bar span { display: block; height: 100%; background: var(--gold); transition: width .6s ease; }
+.story-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 6; }
+.story-btn {
+  min-height: 44px; min-width: 44px; padding: 8px 14px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(20, 12, 6, .6); color: #fff; font: inherit; font-weight: 700;
+}
+.story-start {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-content: center; gap: 22px; padding: 24px; text-align: center;
+  background: radial-gradient(circle at 50% 45%, rgba(0,0,0,.1), rgba(0,0,0,.62));
+}
+.story-start h1 { color: #fff; font-size: clamp(1.8rem, 6vw, 2.8rem); margin: 0; text-shadow: 0 3px 12px rgba(0,0,0,.7); }
+.story-play { background: var(--gold); width: auto; min-width: 240px; animation: pulse 1.4s ease-in-out infinite; }
+
+.story-sub {
+  position: absolute; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 4;
+  width: min(92%, 640px); padding: 12px 18px 14px; border-radius: 18px; color: #fff;
+  background: rgba(24, 14, 6, .8); box-shadow: 0 6px 24px rgba(0,0,0,.4);
+}
+.story-sub b { color: var(--gold); font-size: .9rem; letter-spacing: .02em; }
+.story-sub.voice-dev b { color: #d1b0ff; }
+.story-sub p { margin: 4px 0 0; font-size: clamp(1.1rem, 4.4vw, 1.45rem); line-height: 1.35; animation: sfade .4s ease-out both; }
+.story-end-row { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.story-go { background: var(--gold); flex: 1 1 220px; width: auto; }
+.story-end-row .btn.ghost { color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.4); }
+
+/* 1. Quyoshli qishloq */
+.sfx-sun {
+  position: absolute; width: 70vmax; height: 70vmax; right: -26vmax; top: -40vmax; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 170, .7), rgba(255, 220, 120, .2) 35%, transparent 65%);
+  animation: sunpulse 4s ease-in-out infinite;
+}
+@keyframes sunpulse { 50% { transform: scale(1.08); opacity: .85; } }
+.sfx-birds i {
+  position: absolute; top: 14%; left: -10%; width: 22px; height: 8px;
+  border-top: 3px solid #3b2a1a; border-radius: 50% 50% 0 0; animation: flyby 10s linear infinite;
+}
+.sfx-birds i::after { content: ''; position: absolute; left: 18px; top: -3px; width: 22px; height: 8px; border-top: 3px solid #3b2a1a; border-radius: 50% 50% 0 0; }
+.sfx-birds i:nth-child(2) { top: 20%; animation-delay: -3.5s; scale: .8; }
+.sfx-birds i:nth-child(3) { top: 10%; animation-delay: -7s; scale: .65; }
+@keyframes flyby { from { left: -10%; } to { left: 110%; } }
+
+/* 2. Sehrli kitob */
+.sfx-glow {
+  position: absolute; inset: 0; mix-blend-mode: screen;
+  background: radial-gradient(circle at 52% 70%, rgba(255, 220, 120, .6), transparent 40%);
+  animation: sunpulse 2.2s ease-in-out infinite;
+}
+.sfx-letters span {
+  position: absolute; left: calc(14% + var(--i) * 7.8%); bottom: 30%; opacity: 0;
+  font-weight: 800; font-size: clamp(1.4rem, 5vw, 2.4rem); color: #ffe08a; text-shadow: 0 0 12px rgba(255, 200, 60, .9);
+}
+.sfx-letters.up span { animation: rise 3.4s ease-out infinite; animation-delay: calc(var(--i) * .33s); }
+@keyframes rise { 0% { transform: translateY(0) scale(.6); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-40vh) scale(1.1); opacity: 0; } }
+
+/* 3. Dev kitobni olib ketadi. Vaqtlar FX_SFX bilan mos:
+   1.1s dev tutundan chiqadi, 2.2s kitob uchadi, 2.9s dev kitobni ko'tarib kuladi, 4.9s uchib ketadi. */
+.fx-dev-steals .story-scene { animation: sfade .5s ease-out both, shake .5s ease-in-out .15s 2; }
+@keyframes shake { 25% { transform: translate(-6px, 2px); } 50% { transform: translate(5px, -3px); } 75% { transform: translate(-3px, 3px); } }
+.sfx-storm { position: absolute; inset: 0; background: rgba(30, 8, 60, .35); animation: sfade 1.2s ease-in both; }
+.sfx-flash { position: absolute; inset: 0; background: #fff; opacity: 0; animation: flash 1.4s ease-out .1s both; }
+@keyframes flash { 0%, 100% { opacity: 0; } 8% { opacity: .7; } 16% { opacity: 0; } 24% { opacity: .4; } 40% { opacity: 0; } }
+.sfx-book {
+  position: absolute; left: 8%; top: 60%; width: 34%; max-width: 360px; opacity: 0;
+  filter: drop-shadow(0 0 20px rgba(255, 210, 90, .95));
+  animation: sfade .6s ease-out .3s forwards, floaty 1.2s ease-in-out infinite alternate, steal .7s cubic-bezier(.5, 0, .3, 1) 2.2s forwards;
+}
+@keyframes steal { 0% { opacity: 1; } 85% { opacity: 1; } 100% { left: 60%; top: 26%; width: 12%; opacity: 0; } }
+.sfx-smoke i {
+  position: absolute; left: 52%; top: 36%; width: 36%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(170, 100, 230, .75), rgba(110, 50, 170, 0) 70%);
+  opacity: 0; animation: puff 1.6s ease-out .8s both;
+}
+.sfx-smoke i:nth-child(2) { left: 64%; top: 50%; animation-delay: .95s; }
+.sfx-smoke i:nth-child(3) { left: 46%; top: 54%; animation-delay: 1.05s; }
+.sfx-smoke i:nth-child(4) { left: 62%; top: 20%; animation: puff 1.6s ease-out 4.8s both; }
+@keyframes puff { 0% { transform: scale(.2); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+
+.sfx-dev { position: absolute; opacity: 0; filter: drop-shadow(0 8px 16px rgba(0,0,0,.45)); pointer-events: none; }
+.fx-dev-steals .sfx-dev { left: 50%; top: 18%; height: 64%; transform-origin: 50% 85%; }
+.d-tutun { animation: popin .7s cubic-bezier(.3, 1.5, .5, 1) 1.1s forwards, fadeout .3s ease-in 2.9s forwards; }
+.d-kuladi { animation: appear .3s ease-out 2.9s forwards, wobble .5s ease-in-out 3.2s 3, fadeout .25s ease-in 4.9s forwards; }
+.d-uchadi { animation: appear .2s ease-out 4.9s forwards, flyaway 1.3s ease-in 5s forwards; }
+@keyframes popin { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeout { from { opacity: 1; } to { opacity: 0; } }
+@keyframes wobble { 50% { rotate: -4deg; } }
+@keyframes flyaway { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate(70%, -90%) scale(.3) rotate(10deg); } }
+
+/* 4. Qishloq homush */
+.fx-gloomy .story-bg, .fx-bobo-calls .story-bg { filter: saturate(.75); }
+.sfx-letters.down span { color: #dcdcdc; text-shadow: none; bottom: auto; top: 14%; animation: fall 3.6s ease-in infinite; animation-delay: calc(var(--i) * .35s); }
+@keyframes fall { 0% { transform: translateY(0) rotate(0); opacity: .9; } 100% { transform: translateY(50vh) rotate(40deg); opacity: 0; } }
+.sfx-rain {
+  position: absolute; inset: -20% 0 0; opacity: .3;
+  background: repeating-linear-gradient(105deg, transparent 0 18px, rgba(220, 230, 255, .55) 18px 19px, transparent 19px 46px);
+  animation: rain .6s linear infinite;
+}
+@keyframes rain { to { transform: translateY(46px); } }
+
+/* 5. Bobo yordam so'raydi */
+.sfx-warm {
+  position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(circle at 72% 70%, rgba(255, 200, 110, .55), transparent 55%);
+  animation: sfade 3s ease-in .8s forwards;
+}
+.sfx-warm.center { background: radial-gradient(circle at 50% 62%, rgba(255, 210, 120, .6), transparent 55%); }
+.sfx-bobo {
+  position: absolute; right: 6%; bottom: 15%; height: 70%; max-height: 600px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
+  animation: slidein 1.1s cubic-bezier(.25, 1.3, .5, 1) .3s both, floaty 2.4s ease-in-out 1.5s infinite alternate;
+}
+@keyframes slidein { from { transform: translateX(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Yakun 1: dev kechirim so'raydi */
+.d-kechirim { left: 50%; bottom: 14%; height: 64%; translate: -50% 0; animation: popin 1s cubic-bezier(.3, 1.4, .5, 1) .4s forwards; }
+.sfx-hearts span {
+  position: absolute; left: calc(32% + var(--i) * 9%); top: 30%; font-size: clamp(1.4rem, 5vw, 2.2rem); opacity: 0;
+  animation: rise 3s ease-out infinite; animation-delay: calc(1.2s + var(--i) * .45s);
+}
+
+/* Yakun 2: bayram */
+.d-friend { right: 3%; bottom: 10%; height: 62%; animation: slidein 1.1s cubic-bezier(.25, 1.3, .5, 1) 1s forwards, floaty 1.6s ease-in-out 2.2s infinite alternate; }
+.sfx-confetti i {
+  position: absolute; top: -6%; left: calc(var(--i) * 5.6%); width: 10px; height: 16px; border-radius: 2px;
+  background: hsl(calc(var(--i) * 47), 85%, 58%);
+  animation: confetti 3.8s linear infinite; animation-delay: calc(var(--i) * -.23s);
+}
+@keyframes confetti { to { transform: translateY(115vh) rotate(720deg); } }
+
+@media (max-aspect-ratio: 3/4) {
+  .sfx-book { left: 3%; top: 66%; width: 42%; }
+  .fx-dev-steals .sfx-dev { left: 36%; top: 26%; width: 62%; height: auto; }
+  .sfx-bobo { height: 52%; right: 2%; bottom: 22%; }
+  .d-kechirim { height: auto; width: 86%; bottom: 24%; }
+  .d-friend { height: 40%; bottom: 24%; right: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-bg, .sfx-birds i, .sfx-letters span, .sfx-rain, .sfx-sun, .sfx-glow, .sfx-confetti i { animation: none !important; }
+  .fx-dev-steals .story-scene { animation: sfade .5s ease-out both; }
+  .sfx-flash { display: none; }
+}
