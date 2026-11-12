@@ -106,9 +106,9 @@ class MapScene extends Phaser.Scene {
       }
       if (node.current) {
         const camel = this.textures.exists('caravan')
-          ? this.add.image(node.x - 42, node.y - 18, 'caravan').setDisplaySize(44, 44)
+          ? this.add.image(node.x - 52, node.y - 22, 'caravan').setDisplaySize(62, 62) // tuyaga mingan bola (foydalanuvchi rasmi)
           : text(node.x - 40, node.y - 18, '🐫', 30);
-        this.tweens.add({ targets: camel, y: node.y - 24, duration: 600, yoyo: true, repeat: -1 });
+        this.tweens.add({ targets: camel, y: node.y - 28, duration: 600, yoyo: true, repeat: -1 });
       }
     }
   }
